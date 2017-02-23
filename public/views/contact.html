@@ -1,0 +1,14 @@
+<div class="jumbotron text-center">
+	<h1>Contact Page</h1>
+
+	<p>{{ message }}</p>
+
+</div>
+<div class="text-center">
+	<p>
+		contacts:
+	</p>
+	<div ng-repeat="contact in contacts">
+		{{contact.Name}} -- {{contact.Email}}
+	</div>
+</div>

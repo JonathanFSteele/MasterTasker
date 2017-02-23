@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<!-- define angular app -->
+<html ng-app="scotchApp">
+
+<head>
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
+
+  <!-- Javascript Files -->
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+  <script src="app.main.js"></script>
+  <script src="config.route.js"></script>
+
+  <!-- Controller Go Here -->
+  <script src="scripts/controllers/home.js"></script>
+  <script src="scripts/controllers/contact.js"></script>
+  <script src="scripts/controllers/about.js"></script>
+</head>
+
+<!-- define angular controller -->
+<body ng-controller="mainController">
+
+  <nav class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/">Angular Routing Example{{fname}}</a>
+      </div>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+        <li><a href="#about"><i class="fa fa-shield"></i> About</a></li>
+        <li><a href="#contact"><i class="fa fa-comment"></i> Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div id="main">
+    <div class="text-center">
+      <h4>
+        {{fname}}
+      </h4>
+    </div>
+    <!-- angular templating -->
+    <div ng-view>
+		    <!-- this is where content will be injected -->
+    </div>
+
+  </div>
+  <br />
+  <footer class="text-center">
+
+    <p style="background-color:#eee">
+      <br />
+        Demo Site -JFS XD
+      <br />
+    </p>
+  </footer>
+
+</body>
+
+</html>
