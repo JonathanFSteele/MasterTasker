@@ -8,21 +8,27 @@
 				controller  : 'mainController'
 			})
 
-			// route for the home page
+			// route for the tasks page
 			.when('/', {
-				templateUrl : 'views/home.html',
-				controller  : 'homeController'
+				templateUrl : 'views/tasks.html',
+				controller  : 'tasksController'
 			})
 
-			// route for the about page
-			.when('/about', {
-				templateUrl : 'views/about.html',
-				controller  : 'aboutController'
+			// route for the groups page
+			.when('/groups', {
+				templateUrl : 'views/groups.html',
+				controller  : 'groupsController'
+			})
+
+			// route for the userSettings page
+			.when('/userSettings', {
+				templateUrl : 'views/userSettings.html',
+				controller  : 'userSettingsController'
 			})
 
 			// route for the contact page
-			.when('/contact', {
-				templateUrl : 'views/contact.html',
-				controller  : 'contactController'
+			.when('/about', {
+				templateUrl : 'views/about.html',
+				controller  : 'aboutController'
 			});
 	});

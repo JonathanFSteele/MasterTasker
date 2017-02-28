@@ -1,5 +1,5 @@
 scotchApp.controller('contactController', function($scope, $http) {
-  $scope.message = 'Contact us! JK. This is just a demo.';
+  $scope.message = 'This is the groups Controller';
 
   $scope.contacts = [];
 
