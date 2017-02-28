@@ -1,10 +1,10 @@
-scotchApp.controller('contactController', function($scope, $http) {
+scotchApp.controller('groupsController', function($scope, $http) {
   $scope.message = 'This is the groups Controller';
 
   $scope.contacts = [];
 
   //Go to the server ang get the json array.
-  $http.get("/api/contacts/list")
+  $http.get("/api/users/list")
   .then(function(response) {
     console.log("response: ",response);
     $scope.contacts = response.data;
