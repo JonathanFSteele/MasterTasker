@@ -1,7 +1,25 @@
 // Nodejs Express Server Initialization
 var express = require('express'),
     authentication = require('express-authentication'),
-    app = express();
+    app = express(),
+    mysql = require("mysql"),
+    q = require('q');
+db_GetUserByToken = function(token)
+{
+  var deferred = q.defer(); // Use Q
+  var connection = mysql.createConnection(dbConfig);
+  var query_str = "SELECT * FROM tldb.Users WHERE AuthToken = ?";
+  var query_var = [token];
+  var query = connection.query(query_str, query_var, function (err, rows, fields) {
+      if (err) {
+        deferred.reject(err);
+      }
+      else {
+        deferred.resolve(rows);
+      }
+  });
+  return deferred.promise;
+}; //end db_getUserList()
 var bodyParser = require('body-parser')
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
@@ -15,19 +33,25 @@ app.use(function myauth(req, res, next) {
     // not set then no attempt to authenticate is registered.
     req.challenge = req.get('Authorization');
     console.log("challenge: ", req.challenge);
-    req.authenticated = req.challenge === 'secret';
-    console.log("authenticated: ", req.authentication);
-    // provide the result of the authentication; generally some kind of user
-    // object on success and some kind of error as to why authentication failed
-    // otherwise.
-    if (req.authenticated) {
-        req.authentication = { user: 'bob' };
-    } else {
-        req.authentication = { error: 'INVALID_API_KEY' };
-    }
+    db_GetUserByToken(req.challenge)
+    .then(function(rows){
+      if(rows.length > 0)
+      {
+        req.authenticated = true;
+        req.authentication = rows[0];
+      }
+      else {
+        req.authenticated = false;
+        req.authentication = { error: 'INVALID_AUTHORIZATION' };
+      }
+      console.log("authenticated: ", req.authentication);
 
-    // That's it! You're done!
-    next();
+      // Continue
+      next();
+    },function(error){
+     console.log(error);
+     res.status(500).send(error);
+    });
 });
 //Example of secure authentication page.
 app.get('/secret', authentication.required(), function(req, res) {

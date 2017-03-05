@@ -9,7 +9,7 @@ router.use(function timeLog (req, res, next) {
 })
 // define the home page route
 router.get('/', authentication.required(), function (req, res) {
-  res.send('user:' + req.authentication.user);
+  res.send('Email:' + req.authentication.Email);
   //res.send('Birds home page')
 })
 // define the about route
