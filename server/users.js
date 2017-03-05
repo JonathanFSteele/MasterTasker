@@ -1,7 +1,6 @@
 var express = require('express');
 var mysql = require("mysql");
 var q = require('q');
-
 var router = express.Router();
 
 //SQL Query functions:
@@ -45,6 +44,7 @@ router.get('/list', function (req, res) {
      res.send(rows);
     },function(error){
      console.log(error);
+     res.status(500).send(error);
    });
 })
 
