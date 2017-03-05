@@ -3,15 +3,21 @@
 		$routeProvider
 
 			// route for the main page
-			.when('/', {
-				templateUrl : 'views/main.html',
-				controller  : 'mainController'
-			})
+			// .when('/', {
+			// 	templateUrl : 'views/main.html',
+			// 	controller  : 'mainController'
+			// })
 
 			// route for the tasks page
 			.when('/', {
 				templateUrl : 'views/tasks.html',
 				controller  : 'tasksController'
+			})
+
+			// route for the tasks page
+			.when('/login', {
+				templateUrl : 'views/login.html',
+				controller  : 'loginController'
 			})
 
 			// route for the groups page

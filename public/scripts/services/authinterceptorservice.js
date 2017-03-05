@@ -12,6 +12,11 @@ console.log("Before authIntercepterServiceFactory");
     function($q, $location, localStorageService, $injector, $window) {
       console.log("authInterceptorServiceFactory Running...");
       var authInterceptorServiceFactory = {};
+//       localStorageService.set('authData', {
+//   "authToken": "e55b9ac0-68e5-518c-be53-18221f7f44a5",
+//   "authorizedTF": true,
+//   "message": ""
+// });
       var _request = function(config)
       {
         config.headers = config.headers || {};
