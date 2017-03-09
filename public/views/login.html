@@ -1,4 +1,4 @@
-<form class="container text-center" style="margin-top: 50px;">
+<form ng-app="loginController" class="container text-center" style="margin-top: 50px;">
 	<div class="row" style="padding: 30px;">
 		<img class="col-xs-12 col-sm-offset-2 col-sm-9" src="images/MasterTaskerLoginTitleImagexs.png"/>
 	</div>
@@ -9,18 +9,18 @@
 		<div>
 			<div class="row">
 				<div class="form-group col-xs-12 col-sm-offset-3 col-sm-6">
-				  <input placeholder="Email" type="text" class="form-control text-center">
+				  <input ng-model="email" placeholder="Email" type="text" class="form-control text-center">
 				</div>
 			</div>
 			<div class="row">
 				<div class="form-group col-xs-12 col-sm-offset-3 col-sm-6">
-				  <input placeholder="Password" type="password" class="form-control text-center">
+				  <input ng-model="password" placeholder="Password" type="password" class="form-control text-center">
 				</div>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-xs-12 col-sm-offset-4 col-sm-4">
-				<button type="button" class="btn btn-info btn-block" ng-click="login()">Login</button>
+				<button type="button" class="btn btn-info btn-block" ng-click="login(email,password)">Login</button>
 			</div>
 		</div>
 		<div class="row">

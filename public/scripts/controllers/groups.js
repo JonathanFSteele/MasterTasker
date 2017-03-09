@@ -1,4 +1,4 @@
-scotchApp.controller('groupsController', function($scope, $http) {
+app.controller('groupsController', function($scope, $http) {
   $scope.message = 'This is the groups Controller';
 
   $scope.contacts = [];

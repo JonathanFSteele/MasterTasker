@@ -1,5 +1,5 @@
 	// configure our routes
-	scotchApp.config(function($routeProvider) {
+	app.config(function($routeProvider) {
 		$routeProvider
 
 			// route for the main page
