@@ -7,7 +7,7 @@ console.log("Before authIntercepterServiceFactory");
  * # authInterceptorService
  * Factory in the tcgApp.
  */
- angular.module('scotchApp')
+ angular.module('app')
   .factory('authInterceptorService', ['$q', '$location', 'localStorageService', '$injector', '$window',
     function($q, $location, localStorageService, $injector, $window) {
       console.log("authInterceptorServiceFactory Running...");

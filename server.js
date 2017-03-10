@@ -4,6 +4,7 @@ var express = require('express'),
     app = express(),
     mysql = require("mysql"),
     q = require('q');
+
 db_GetUserByToken = function(token)
 {
   var deferred = q.defer(); // Use Q
@@ -20,6 +21,7 @@ db_GetUserByToken = function(token)
   });
   return deferred.promise;
 }; //end db_getUserList()
+
 var bodyParser = require('body-parser')
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
