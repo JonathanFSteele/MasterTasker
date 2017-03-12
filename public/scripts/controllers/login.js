@@ -1,4 +1,4 @@
-app.controller('loginController', function($scope, $http, localStorageService, $location) {
+app.controller('loginController', function($scope, $http, localStorageService, $location, $rootScope) {
 
   // create a message to display in our view
   console.log("loginController Running");
@@ -15,7 +15,8 @@ app.controller('loginController', function($scope, $http, localStorageService, $
       if(data.data.authorizedTF)
       {
         console.log("Good Login");
-        localStorageService.set('authToken',data.data.authToken);
+        localStorageService.set('authUser',data.data);
+        $rootScope.authUser = data.data;
         $location.path( "/tasks" );
       }
       else

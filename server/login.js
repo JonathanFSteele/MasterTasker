@@ -64,6 +64,9 @@ router.post('/', function (req, res) {
 
   var response = {
     authToken: guid(),
+    DisplayName: '',
+    Email: '',
+    ImageUrl: '',
     authorizedTF: true,
     message: ""
   }
@@ -78,10 +81,14 @@ router.post('/', function (req, res) {
      console.log('Login Post Received Looking up User: ',rows);
      if(rows.length > 0) {
       router.db_SetUserToken(req.body.Email, response.authToken)
-      .then(function(rows){
+      .then(function(setUserRows){
         console.log("New Token Generated For this user: ", response.authToken);
         console.log("Login Post Received. Setting New Token for User: ", req.body.Email);
         response.message = "Good User and Token Saved";
+        console.log("rows: ",rows);
+        response.DisplayName = rows[0].DisplayName;
+        response.Email = rows[0].Email;
+        response.ImageUrl = rows[0].ImageUrl;
         res.send(response);
       },function(error){
         console.log(error);

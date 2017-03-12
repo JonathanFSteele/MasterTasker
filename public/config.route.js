@@ -40,9 +40,10 @@
 	}).run(function ($rootScope, $location, localStorageService) { //Insert in the function definition the dependencies you need.
     //Do your $on in here, like this:
     $rootScope.$on("$routeChangeStart",function(event, next, current){
-			var authToken = localStorageService.get('authToken');
-			console.log("config.route.js: Checking Token");
-			if (!authToken) {
+			var authUser = localStorageService.get('authUser');
+			console.log("config.route.js: Checking Token", authUser);
+			if (!authUser || !authUser.authToken) {
+				console.log("Redirecting to login page, because authUser does not exist");
 				$location.path( "/login" );
 			}
     });

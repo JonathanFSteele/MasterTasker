@@ -4,7 +4,7 @@ var q = require('q');
 var router = express.Router();
 
 //SQL Query functions:
-router.db_getUserList = function()
+router.db_getUserList = function(req)
 {
   var deferred = q.defer(); // Use Q
   var connection = mysql.createConnection(router.dbConfig);
@@ -37,8 +37,8 @@ router.get('/', function (req, res) {
 // define the list route
 router.get('/list', function (req, res) {
   var result = [];
-
-  router.db_getUserList()
+  console.log("req user record: ",req.authentication); //req.authentication will tell you what user is currently logged in (req.authentication.Email - to get the current email for the logged in user.)
+  router.db_getUserList(req)
    .then(function(rows){
      console.log('rows result',rows);
      res.send(rows);
