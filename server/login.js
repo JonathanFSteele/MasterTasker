@@ -72,14 +72,16 @@ router.post('/', function (req, res) {
     authorizedTF: false,
     message: "Missing user or bad password"
   }
-  console.log("body: ",req.body);
+  console.log("loginPostReceived req.body: ",req.body);
   router.db_FindUser(req.body.Email, req.body.Password)
    .then(function(rows){
-     console.log('rows result',rows);
+     console.log('Login Post Received Looking up User: ',rows);
      if(rows.length > 0) {
       router.db_SetUserToken(req.body.Email, response.authToken)
       .then(function(rows){
-        console.log("Saved Token to User: ", req.body.Email);
+        console.log("New Token Generated For this user: ", response.authToken);
+        console.log("Login Post Received. Setting New Token for User: ", req.body.Email);
+        response.message = "Good User and Token Saved";
         res.send(response);
       },function(error){
         console.log(error);

@@ -37,4 +37,13 @@
 				templateUrl : 'views/about.html',
 				controller  : 'aboutController'
 			});
-	});
+	}).run(function ($rootScope, $location, localStorageService) { //Insert in the function definition the dependencies you need.
+    //Do your $on in here, like this:
+    $rootScope.$on("$routeChangeStart",function(event, next, current){
+			var authToken = localStorageService.get('authToken');
+			console.log("config.route.js: Checking Token");
+			if (!authToken) {
+				$location.path( "/login" );
+			}
+    });
+});

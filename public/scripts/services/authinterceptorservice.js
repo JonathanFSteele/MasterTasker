@@ -12,7 +12,7 @@ console.log("Before authIntercepterServiceFactory");
     function($q, $location, localStorageService, $injector, $window) {
       console.log("authInterceptorServiceFactory Running...");
       var authInterceptorServiceFactory = {};
-//       localStorageService.set('authData', {
+//       localStorageService.set('authToken', {
 //   "authToken": "e55b9ac0-68e5-518c-be53-18221f7f44a5",
 //   "authorizedTF": true,
 //   "message": ""
@@ -22,15 +22,19 @@ console.log("Before authIntercepterServiceFactory");
         config.headers = config.headers || {};
 
         //console.log('add auth header to api call..');
-        var authData = localStorageService.get('authData');
-        if (authData) {
-          config.headers.Authorization = authData.authToken;
+        var authToken = localStorageService.get('authToken');
+        if (authToken) {
+          config.headers.Authorization = authToken.authToken;
+        }
+        else {
+          $location.path( "/login" );
         }
         return config;
       }
 
       var _responseError = function(rejection) {
         if (rejection.status === 401) {
+          $location.path( "/login" );
         }
         return $q.reject(rejection);
       }
