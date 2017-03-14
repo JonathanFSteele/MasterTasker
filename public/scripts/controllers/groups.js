@@ -1,13 +1,13 @@
 app.controller('groupsController', function($scope, $http) {
   $scope.message = 'This is the groups Controller';
-
-  $scope.contacts = [];
+  console.log($scope.message);
+   $scope.Groups = [];
 
   //Go to the server ang get the json array.
-  $http.get("/api/users/list")
+  $http.get("/api/Groups/list")
   .then(function(response) {
-    console.log("response: ",response);
-    $scope.contacts = response.data;
+    console.log("Group response: ",response);
+    $scope.Groups = response.data;
   });
 
   //Local JSON array

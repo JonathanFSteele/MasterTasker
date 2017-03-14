@@ -4,11 +4,17 @@
 	<p>{{ message }}</p>
 
 </div>
-<div class="text-center">
-	<p>
-		contacts:
-	</p>
-	<div ng-repeat="contact in contacts">
-		{{contact.Name}} -- {{contact.Email}}
-	</div>
+<div class=" ZachTbl">
+	<table style="width:100%">
+  	<tr>
+    	<th>GroupName</th>
+    	<th>GroupLeader</th>
+    	<th></th>
+  	</tr>
+  	<tr ng-repeat="groups in Groups">
+    	<td>{{groups.DisplayName}}</td>
+    	<td>{{groups.OwnerID}}</td>
+    	<td><a>Delete</a></td>
+  	</tr>
+	</table>
 </div>

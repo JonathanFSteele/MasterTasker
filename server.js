@@ -75,6 +75,11 @@ app.use('/api/contacts', contacts); //This is the Url.
   login.dbConfig = dbConfig;
   app.use('/api/login', login); //This is the Url.
 
+  //Groups API
+  var Groups = require('./server/Groups'); //This is where the js file is.
+  Groups.dbConfig = dbConfig;
+  app.use('/api/Groups', Groups); //This is the Url.
+
   //users API for Users_tbl
   var users = require('./server/users'); //This is where the js file is.
   users.dbConfig = dbConfig;
