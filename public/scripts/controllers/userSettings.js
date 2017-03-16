@@ -1,4 +1,4 @@
-app.controller('usersController', function($scope) {
+app.controller('userSettingsController', function($scope) {
   // create a message to display in our view
   $scope.message = 'This is the User Settings Controller';
 });
