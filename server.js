@@ -80,6 +80,12 @@ app.use('/api/contacts', contacts); //This is the Url.
   Groups.dbConfig = dbConfig;
   app.use('/api/Groups', Groups); //This is the Url.
 
+  //Tasks API
+  var Tasks = require('./server/Tasks'); //This is where the js file is.
+  Tasks.dbConfig = dbConfig;
+  app.use('/api/Tasks', Tasks); //This is the Url.
+
+
   //users API for Users_tbl
   var users = require('./server/users'); //This is where the js file is.
   users.dbConfig = dbConfig;

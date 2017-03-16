@@ -51,65 +51,28 @@
 </div>
 
 <!--Table of Tasks-->
-<table class = "table table-striped table-bordered">
-   <caption>Basic Table Layout</caption>
-
-   <thead>
-      <tr>
-         <th>Task Name</th>
-         <th>Assigned to</th>
-				 <th>Tags</th>
-				 <th>Due date</th>
-				 <th>v</th>
-      </tr>
-   </thead>
-
-   <tbody>
-      <tr>
-         <td>Collect samples from moon</td>
-				 <td>John Smith</td>
-				 <td>APTLABS</td>
-				 <td>04/02/1017</td>
-				 <td>
-				 <div class="checkbox">
-				 <input type="checkbox" value="">
-				 </div>
-				 </td>
-      </tr>
-      <tr>
-         <td>Produce abestos</td>
-				 <td>Smith Johnson</td>
-				 <td>APTSCI</td>
-				 <td>03/10/1017</td>
-				 <td>
-				 <div class="checkbox">
-  			 <input type="checkbox" value="">
-			   </div>
-			   </td>
-      </tr>
-			<tr>
-				 <td>Make grenades out of lemons</td>
-				 <td>Jon Schmidt</td>
-				 <td>APTWEP</td>
-				 <td>06/21/1017</td>
-				 <td>
-				 <div class="checkbox">
-				 <input type="checkbox" value="">
-				 </div>
-				 </td>
-			</tr>
-			<tr>
-				 <td>Generate code for science</td>
-				 <td>Shmidy Johanson</td>
-				 <td>APTPRO</td>
-				 <td>04/11/1017</td>
-				 <td>
-				 <div class="checkbox">
-				 <input type="checkbox" value="">
-				 </div>
-				 </td>
-			</tr>
-   </tbody>
+	 <div>
+	 	<table class = "table table-striped table-bordered" style="width:100%">
+	   	<tr>
+	     	<th>Task Name</th>
+	     	<th>Assigned To</th>
+				<th>Tags</th>
+				<th>Due Date</th>
+				<th>v</th>
+	   	</tr>
+	   	<tr ng-repeat="tasks in Tasks">
+	     	<td>{{tasks.TasksName}}</td>
+	     	<td>{{tasks.DisplayName}}</td>
+				<td>{{tasks.TagID}}</td>
+				<td>{{tasks.DueDT}}</td>
+	     	<td>
+					<div class="checkbox">
+						<input type="checkbox" value="">
+					</div>
+				</td>
+	   	</tr>
+	 	</table>
+	 </div>
 
 </table>
 </div>
