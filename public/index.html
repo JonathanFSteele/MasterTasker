@@ -10,7 +10,9 @@
 
   <!-- Javascript Files -->
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="vendor/angular-local-storage.min.js"></script>
   <script src="app.main.js"></script>
   <script src="config.route.js"></script>
@@ -34,7 +36,7 @@
 <body ng-controller="mainController" style="background-color: #f7f6f6;">
 
   <!-- <nav class="navbar navbar-default" style="background-color:#00c8f8"> -->
-  <nav class="navbar navbar-default" style="background-color:#FF9900">
+  <nav ng-hide="LoginTF == 0 || LoginTF != unknown" ng-show="LoginTF == 1" class="navbar navbar-default" style="background-color:#FF9900">
     <div class="container">
       <div class="navbar-header">
         <a class="navbar-brand" href="/" ><img src="/images/MasterTaskerHeaderImage.png" style="width: 200px;"/></a>
@@ -43,8 +45,16 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#" style="color: white; padding-top: 19px;"><i class="fa fa-list-ul fa-1x"></i> Tasks</a></li>
         <li><a href="#groups" style="color: white; padding-top: 19px;"><i class="fa fa-users fa-1x"></i> Groups</a></li>
-        <li>
+        <!-- <li>
           <a href="#userSettings" style="color: white;"><span style="color: white; vertical-align: super">{{authUser.DisplayName}}</span> <span><i class="fa fa-user-circle-o fa-2x"></i></span></a>
+        </li> -->
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" style="color: white; background-color:#FF9900!important;"><span style="color: white; vertical-align: super;">{{authUser.DisplayName}}</span> <span><i class="fa fa-user-circle-o fa-2x"></i></span>
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu" style="background-color:#FF9900; border-color:#FF9900;">
+            <li><a href="#userSettings" style="color: white;">User Settings</a></li>
+            <li><a href="#" ng-click="Logout()" style="color: white;">Logout{{fname}}</a></li>
+          </ul>
         </li>
       </ul>
     </div>
