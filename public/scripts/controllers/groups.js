@@ -3,12 +3,18 @@ app.controller('groupsController', function($scope, $http) {
   console.log($scope.message);
    $scope.Groups = [];
 
+  //  $(document).ready(function()
+  //  {
+  //    $("tr:even").css("background-color","#aaaaaa");
+  //  });
+
   //Go to the server ang get the json array.
   $http.get("/api/Groups/list")
   .then(function(response) {
     console.log("Group response: ",response);
     $scope.Groups = response.data;
   });
+
 
   //Local JSON array
   // $scope.contacts = [

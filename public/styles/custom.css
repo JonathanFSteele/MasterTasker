@@ -1,8 +1,20 @@
-div.ZachTbl{
+.ZachTbl div{
   color: #444444;
   font-family: Helvetica;
 }
 
-table, tr, td.ZachTbl{
-    border: 1px solid #cccccc;
+.ZachTbl table,.ZachTbl tbody,.ZachTbl thead,.ZachTbl th,.ZachTbl tr,.ZachTbl td{
+    border: 1px solid #000000;
+}
+
+.ZachTbl thead {
+    border-bottom: 3px solid #000000;
+}
+
+.ZachTbl thead, .ZachTbl th{
+  background-color: #cccccc;
+}
+
+.ZachTbl tr:hover{
+ background-color: #bbbbbb;
 }

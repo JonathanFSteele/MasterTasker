@@ -4,7 +4,7 @@
 	<p>{{ message }}</p>
 
 </div>
-<div class=" ZachTbl">
+<!-- <div class=" ZachTbl">
 	<table style="width:100%">
   	<tr>
     	<th>GroupName</th>
@@ -17,4 +17,21 @@
     	<td><a>Delete</a></td>
   	</tr>
 	</table>
-</div>
+</div> -->
+
+<table class="table table-responsive ZachTbl" >
+  <thead>
+    <tr>
+			<th>GroupName </th>
+    	<th>GroupLeader</th>
+    	<th></th>
+    </tr>
+  </thead>
+  <tbody>
+		<tr ng-repeat="groups in Groups">
+    	<td>{{groups.DisplayName}}</td>
+    	<td>{{groups.UserDisplayName}}</td>
+    	<td><a>Delete</a></td>
+  	</tr>
+  </tbody>
+</table>
