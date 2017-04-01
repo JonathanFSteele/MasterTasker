@@ -1,19 +1,36 @@
-<form class="container text-center" style="margin-top: 50px;">
-	<div>
-		<h1>User Settings</h1>
-
-		<p>{{ message }}</p>
-		<p>
-			{{fname}}
-		</p>
-		<div class="input-group">
-			<input type="user" placeholder="Name" class="form-control" />
+<h1>User Settings</h1>
+<p>{{ message }}</p>
+<form class="form-horizontal">
+		<div class="form-group">
+			<label class="col-sm-2 col-form-label">User e-mail Address:</label>
+			<div class="col-sm-10">
+				<span class="form-label">{{ userEmail }}</span>
 			</div>
 		</div>
-		<br>
-		<div class="input-group">
-			<input type="birth" placeholder="MM/DD/YYYY" class="form-control" />
+		<div class="form-group">
+			<label class="col-sm-2 col-form-label" for="displayName">Display Name:</label>
+			<div class="col-sm-10">
+				<input type="displayName" class="form-control" id="displayName" aria-describedby="displayName" placeholder={{displayName}}>
 			</div>
 		</div>
-	</div>
+		<br/>
+		<div class="form-group">
+			<label class="col-sm-2 col-form-label" for="oldPass">Old Password</label>
+			<div class="col-sm-10">
+				<input type="oldPass" class="form-control" id="oldPass" aria-describedby="oldPass" placeholder="Enter current password">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 col-form-label" for="newPass">New Password</label>
+			<div class="col-sm-10">
+				<input type="newPass" class="form-control" id="newPass" aria-describedby="newPass" placeholder="Enter a new password">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 col-form-label" for="newPassComfirm">Confirm New Password</label>
+			<div class="col-sm-10">
+				<input type="newPassComfirm" class="form-control" id="newPassComfirm" aria-describedby="newPassComfirm" placeholder="Enter a new password">
+			</div>
+		</div>
+		<button type="button" class="btn btn-info">Delete Account</button>
 </form>
