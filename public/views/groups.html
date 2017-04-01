@@ -1,37 +1,38 @@
 <div>
 	<h1>Groups</h1>
-
-	<p>{{ message }}</p>
-
 </div>
-<!-- <div class=" ZachTbl">
-	<table style="width:100%">
-  	<tr>
-    	<th>GroupName</th>
-    	<th>GroupLeader</th>
-    	<th></th>
-  	</tr>
-  	<tr ng-repeat="groups in Groups">
-    	<td>{{groups.DisplayName}}</td>
-    	<td>{{groups.UserDisplayName}}</td>
-    	<td><a>Delete</a></td>
-  	</tr>
-	</table>
-</div> -->
 
-<table class="table table-responsive ZachTbl" >
-  <thead>
-    <tr>
-			<th>GroupName </th>
-    	<th>GroupLeader</th>
-    	<th></th>
-    </tr>
-  </thead>
-  <tbody>
-		<tr ng-repeat="groups in Groups">
-    	<td>{{groups.DisplayName}}</td>
-    	<td>{{groups.UserDisplayName}}</td>
-    	<td><a>Delete</a></td>
-  	</tr>
-  </tbody>
-</table>
+
+ <div class="row">
+	 <div class="col-xs-3">
+		 <button ng-click="" class="btn btn-info" ><span style="font-weight: bold!important">Add New Group</span></button>
+	 </div>
+	 <div class="col-xs-6"> </div>
+	 <div class="col-xs-3">
+		 <div class="input-group">
+		  <span class="input-group-addon" id="basic-addon1"> <i class="fa fa-search" aria-hidden="true"></i></span>
+		  <input type="text" class="form-control" placeholder="Search" aria-describedby="basic-addon1"/>
+      <span class="input-group-addon" id="basic-addon1"><i class="fa fa-refresh" aria-hidden="true"></i></span>
+	  </div>
+	 </div>
+ </div>
+
+
+ <div class="row">
+ <table class="table table-responsive ZachTbl" >
+   <thead>
+     <tr>
+			 <th>GroupName </th>
+    	 <th>GroupLeader</th>
+    	 <th></th>
+     </tr>
+   </thead>
+   <tbody>
+		 <tr ng-repeat="groups in Groups">
+    	 <td>{{groups.DisplayName}}</td>
+    	 <td>{{groups.UserDisplayName}}</td>
+    	 <td><a>Delete</a></td>
+  	 </tr>
+   </tbody>
+ </table>
+ </div>

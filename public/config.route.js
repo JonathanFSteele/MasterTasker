@@ -32,6 +32,12 @@
 				controller  : 'groupsController'
 			})
 
+			// route for the groupDetails page
+			.when('/groups/groupDetails/', {
+				templateUrl : 'views/groupDetails.html',
+				controller  : 'groupDetailsController'
+			})
+
 			// route for the userSettings page
 			.when('/userSettings', {
 				templateUrl : 'views/userSettings.html',
