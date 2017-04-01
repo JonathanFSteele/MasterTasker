@@ -3,13 +3,7 @@ app.controller('groupsController', function($scope, $http) {
   console.log($scope.message);
    $scope.Groups = [];
 
-// var addNewGroup = function(){
-//   window.navigate(#groupDetails)
-// };
-  //  $(document).ready(function()
-  //  {
-  //    $("tr:even").css("background-color","#aaaaaa");
-  //  });
+
 
   //Go to the server ang get the json array.
   $http.get("/api/Groups/list")
@@ -19,25 +13,7 @@ app.controller('groupsController', function($scope, $http) {
   });
 
 
-  //Local JSON array
-  // $scope.contacts = [
-  //   {
-  //     Name: "Jonathan",
-  //     Email: "jonathan@steeleconsult.com",
-  //   },
-  //   {
-  //     Name: "Charles",
-  //     Email: "Charles@nmsu.edu",
-  //   },
-  //   {
-  //     Name: "Zach",
-  //     Email: "Zach@nmsu.edu",
-  //   },
-  //   {
-  //     Name: "Loya",
-  //     Email: "Loya@nmsu.edu",
-  //   }
-  // ]
+
 
 
 
