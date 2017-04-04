@@ -18,7 +18,7 @@ app.controller('loginController', function($scope, $http, localStorageService, $
         $rootScope.authUser = data.data;
         $rootScope.LoginTF = 1;
         console.log("LoginTF: ", $rootScope.LoginTF);
-        $location.path( "/" );
+        $location.path( "/tasks" );
       }
       else
       {

@@ -1,21 +1,14 @@
 	// configure our routes
 	app.config(function($routeProvider) {
 		$routeProvider
-
-			// route for the main page
-			// .when('/', {
-			// 	templateUrl : 'views/main.html',
-			// 	controller  : 'mainController'
-			// })
-
 			// route for the tasks page
-			.when('/', {
+			.when('/tasks', {
 				templateUrl : 'views/tasks.html',
 				controller  : 'tasksController'
 			})
 
 			// route for the tasksDetails page
-			.when('/tasksDetails', {
+			.when('/tasks/tasksDetails', {
 				templateUrl : 'views/tasksDetails.html',
 				controller  : 'tasksDetailsController'
 			})
