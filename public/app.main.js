@@ -28,8 +28,7 @@
         	console.log('This was logged in the callback: ' + result);
 					if(result == true)
 					{
-						localStorage.clear();
-						//localStorage.removeItem(0); //TODO: Get this to Work ~ JFS
+						localStorageService.remove('authUser');
 						$rootScope.LoginTF = 0;
 						console.log("LoginTF: ", $rootScope.LoginTF);
 						$location.path( "/login" );
