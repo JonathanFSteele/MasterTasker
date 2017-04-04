@@ -1,8 +1,8 @@
-app.controller('loginController', function($scope, $http, localStorageService, $location, $rootScope) {
+app.controller('signUpController', function($scope, $http, localStorageService, $location, $rootScope) {
   // create a message to display in our view
   $rootScope.LoginTF = 0;
   $scope.rememberTF = false;
-  console.log("loginController Running");
+  console.log("signUpController Running");
   $scope.login = function(Email, Password){
     console.log("login function called", Email, Password);
     var data = {"Email": Email, "Password": Password};

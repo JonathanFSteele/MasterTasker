@@ -19,6 +19,18 @@
 				controller  : 'loginController'
 			})
 
+			// route for the logins sign up page
+			.when('/login/signUp', {
+				templateUrl : 'views/signUp.html',
+				controller  : 'signUpController'
+			})
+
+			// route for the logins forgot password page
+			.when('/login/forgotPassword', {
+				templateUrl : 'views/forgotPassword.html',
+				controller  : 'forgotPasswordController'
+			})
+
 			// route for the groups page
 			.when('/groups', {
 				templateUrl : 'views/groups.html',
@@ -47,9 +59,28 @@
     $rootScope.$on("$routeChangeStart",function(event, next, current){
 			var authUser = localStorageService.get('authUser');
 			console.log("config.route.js: Checking Token", authUser);
-			if (!authUser || !authUser.authToken) {
+			console.log("next: ",next);
+			console.log("current: ", current);
+			if(!next)
+			{
+				console.log("Exiting Route Change because next is undefined");
+				return;
+			}
+			var originalPath = next.$$route.originalPath;
+			console.log("Going to: ", originalPath);
+			if (originalPath == '/login/forgotPassword' || originalPath == '/login/signUp')
+			{
+				console.log("Going to forgotPassword page or Sign Up Page");
+			}
+			else if (!authUser || !authUser.authToken)
+			{
 				console.log("Redirecting to login page, because authUser does not exist");
 				$location.path( "/login" );
 			}
+			// if(!authUser || !authUser.authToken)
+			// {
+			// 	console.log("Redirecting to login page, because authUser does not exist");
+			// 	$location.path( "/login" );
+			// }
     });
 });

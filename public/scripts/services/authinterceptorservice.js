@@ -20,16 +20,22 @@ console.log("Before authIntercepterServiceFactory");
       {
         //console.log("authInterceptorServiceFactory Intercepted. Config: ", config);
         config.headers = config.headers || {};
-
+        console.log("AuthInterceptor config: ",config);
         //console.log('add auth header to api call..');
         var authUser = localStorageService.get('authUser');
         //console.log("authToken: ", authUser.authToken);
-        if (authUser && authUser.authToken) {
+        if (config.url.startsWith("views/"))
+        {
+          console.log("Canceling intercept because url is for client page ", config.url);
+          return config;
+        }
+        else if (authUser && authUser.authToken) {
           //console.log("Before Config Headers Authorization: ", config.headers.Authorization);
           config.headers.Authorization = authUser.authToken;
           //console.log("After Config Headers Authorization: ", config.headers.Authorization);
         }
-        else {
+        else
+        {
           $location.path( "/login" );
         }
         console.log("authInterceptorServiceFactory Intercepted & Adjusted. Config: ", config);
