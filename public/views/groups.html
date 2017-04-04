@@ -28,7 +28,7 @@
      </tr>
    </thead>
    <tbody>
-		 <tr ng-repeat="groups in Groups">
+		 <tr ng-repeat="groups in Groups" ng-click="GoToGroupsDetails(groups)">
     	 <td>{{groups.DisplayName}}</td>
     	 <td>{{groups.UserDisplayName}}</td>
     	 <td><a>Delete</a></td>

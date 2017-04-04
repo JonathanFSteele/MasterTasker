@@ -33,7 +33,7 @@
 			})
 
 			// route for the groupDetails page
-			.when('/groups/groupDetails/', {
+			.when('/groups/groupDetails', {
 				templateUrl : 'views/groupDetails.html',
 				controller  : 'groupDetailsController'
 			})

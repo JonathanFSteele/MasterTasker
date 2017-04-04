@@ -22,7 +22,7 @@
 		</div>
   </div>
 	<div class="col-xs-12 col-sm-3">
-			<a href="#tasksDetails" style="color: white; padding-top: 19px;">
+			<a href="#tasksDetails?id=0" style="color: white; padding-top: 19px;">
 				<button type="button" class="btn btn-info btn-block">Add New Task</button>
 			</a>
   </div>
@@ -64,16 +64,16 @@
 		<th>Due Date</th>
 		<th>v</th>
  	</tr>
- 	<tr ng-repeat="tasks in Tasks">
-   	<td>{{tasks.TasksName}}</td>
-   	<td>{{tasks.DisplayName}}</td>
-		<td>{{tasks.TagID}}</td>
-		<td>{{tasks.DueDT}}</td>
-   	<td>
-			<div class="checkbox">
-				<input type="checkbox" value="">
-			</div>
-		</td>
- 	</tr>
+	 	<tr ng-repeat="tasks in Tasks" ng-click="GoToTaskDetails(tasks)">
+	   	<td>{{tasks.TasksName}}</td>
+	   	<td>{{tasks.DisplayName}}</td>
+			<td>{{tasks.TagID}}</td>
+			<td>{{tasks.DueDT}}</td>
+	   	<td>
+				<div class="checkbox">
+					<input type="checkbox" value="">
+				</div>
+			</td>
+	 	</tr>
 	</table>
 </div>
