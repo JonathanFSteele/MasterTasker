@@ -32,7 +32,8 @@
 						//localStorage.removeItem(0); //TODO: Get this to Work ~ JFS
 						$rootScope.LoginTF = 0;
 						console.log("LoginTF: ", $rootScope.LoginTF);
-						$location.path( "#login" );
+						$location.path( "/login" );
+						if(!$scope.$$phase) $scope.$apply()
 					}
     		}
 			});
