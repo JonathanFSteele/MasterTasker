@@ -16,10 +16,7 @@
 	  <div class="form-group">
 	    <label class="col-sm-2 col-form-label">Group Name:</label>
 			<div class="col-sm-10">
-		    <input type="text" class="form-control" aria-describedby="basic-addon1" style="border: solid 1px #000000"/>
-		    <small class="text-muted">
-		      KOol kids klub, the dragonborn, etc.
-		    </small>
+		    <input type="text" class="form-control" aria-describedby="basic-addon1" style="border: solid 1px #000000" ng-model="DisplayName"/>
 			</div>
 	  </div>
 
@@ -27,7 +24,7 @@
 		<div class="form-group">
 	    <label class="col-sm-2 col-form-label">Group Description:</label>
 			<div class="col-sm-10">
-				<textarea  style="border: solid 1px #000000"  class="form-control"></textarea>
+				<textarea  style="border: solid 1px #000000"  ng-model="Description" class="form-control"></textarea>
 				<br />
 			</div>
 	  </div>
@@ -58,9 +55,9 @@
 				</thead>
 
 				<tbody>
-					<tr ng-repeat="groups in Groups">
-						<td>{{groups.DisplayName}}</td>
-						<td>{{groups.UserDisplayName}}</td>
+					<tr ng-repeat="groupMembers in GroupMembers">
+						<td>{{groupMembers.UserDisplayName}}</td>
+						<td>{{groupMembers.Email}}</td>
 						<td><a>Delete</a></td>
 					</tr>
 				</tbody>
