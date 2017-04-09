@@ -1,0 +1,55 @@
+<form ng-app="loginController" class="container text-center" style="margin-top: 50px;">
+	<div class="row" ng-show="MessageType == 1">
+		<div class="alert alert-danger fade in">
+			{{Message}}
+		</div>
+	</div>
+	<div class="row" ng-show="MessageType == 2">
+		<div class="alert alert-info fade in">
+			{{Message}}
+		</div>
+	</div>
+	<div class="row" style="padding: 30px;">
+		<img class="col-xs-12 col-sm-offset-2 col-sm-9" src="images/MasterTaskerLoginTitleImagexs.png"/>
+	</div>
+	<div>
+		<div style="padding: 10px;">
+			<span style="font-size: 24px;">Sign In</span>
+		</div>
+		<div>
+			<div class="row">
+				<div class="form-group col-xs-12 col-sm-offset-3 col-sm-6">
+				  <input ng-model="Email" placeholder="Email" type="text" class="form-control text-center">
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-xs-12 col-sm-offset-3 col-sm-6">
+				  <input ng-model="Password" placeholder="Password" type="password" class="form-control text-center">
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-offset-4 col-sm-4">
+				<button type="submit" class="btn btn-info btn-block" ng-click="login(Email,Password)">Login</button>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-5 col-sm-3 col-md-2 col-sm-offset-5">
+				<div class="checkbox">
+					<label><input ng-model="rememberTF" type="checkbox"/><span>Remember Me</span></label>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+				<a href="#/login/forgotPassword">Forgot Password</a>
+		</div>
+		<div style="padding-top:10px; padding-bottom:10px;">
+			<span style="font-size:20px;">or</span>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-offset-5 col-sm-2">
+				<button ng-click="SignUp()" type="button" class="btn btn-info btn-block" ng-click="SignUp()">Sign Up</button>
+			</div>
+		</div>
+	</div>
+</form>

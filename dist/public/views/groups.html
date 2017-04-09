@@ -1,0 +1,38 @@
+<div>
+	<h1>Groups</h1>
+</div>
+
+
+ <div class="row">
+	 <div class="col-xs-3">
+		 <button ng-click="GoToGroupsDetails(0)" class="btn btn-info" ><span style="font-weight: bold!important">Add New Group</span></button>
+	 </div>
+	 <div class="col-xs-6"> </div>
+	 <div class="col-xs-3">
+		 <div class="input-group">
+		  <span class="input-group-addon" id="basic-addon1"> <i class="fa fa-search" aria-hidden="true"></i></span>
+		  <input type="text" class="form-control" aria-describedby="basic-addon1"/>
+      <span class="input-group-addon" id="basic-addon1"><i class="fa fa-refresh" aria-hidden="true"></i></span>
+	  </div>
+	 </div>
+ </div>
+
+
+ <div class="row">
+ <table class="table table-responsive ZachTbl" >
+   <thead>
+     <tr>
+			 <th>GroupName </th>
+    	 <th>GroupLeader</th>
+    	 <th></th>
+     </tr>
+   </thead>
+   <tbody>
+		 <tr ng-repeat="groups in Groups" ng-click="GoToGroupsDetails(groups)">
+    	 <td>{{groups.DisplayName}}</td>
+    	 <td>{{groups.UserDisplayName}}</td>
+    	 <td><a>Delete</a></td>
+  	 </tr>
+   </tbody>
+ </table>
+ </div>

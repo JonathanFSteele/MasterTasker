@@ -1,0 +1,120 @@
+<div>
+	<h1>GroupDetails</h1>
+
+<div> <h3> {{DisplayName}} </h3> </div>
+
+<br/>
+
+<!-- </div>
+<div>
+	<div class="col-xs-3">
+		<div class="input-group">
+		 <body> Group Name: </body>
+		 <input type="text" class="form-control" aria-describedby="basic-addon1" style="border: solid 1px #000000"/>
+	 </div>
+</div> -->
+
+	<form class="form-horizontal">
+	  <div class="form-group">
+	    <label class="col-sm-2 col-form-label">Group Name:</label>
+			<div class="col-sm-10">
+		    <input type="text" class="form-control" aria-describedby="basic-addon1" style="border: solid 1px #000000" ng-model="DisplayName"/>
+			</div>
+	  </div>
+
+
+		<div class="form-group">
+	    <label class="col-sm-2 col-form-label">Group Description:</label>
+			<div class="col-sm-10">
+				<textarea  style="border: solid 1px #000000"  ng-model="Description" class="form-control"></textarea>
+				<br />
+			</div>
+	  </div>
+
+
+		<div class="form-group">
+			<label class="col-sm-2 col-form-label">Assigned Users:</label>
+			<div class="col-sm-9">
+				<input type="text" class="form-control" aria-describedby="basic-addon1" style="border: solid 1px #000000"/>
+			</div>
+			<div class="col-sm-1">
+				<button type="button" class="btn btn-info">+</button>
+			</div>
+		</div>
+	 <br />
+
+
+    <div class="form-group">
+			<div class="row">
+				<div class="col-sm-12">
+			<table class="table table-responsive ZachTbl" >
+				<thead>
+					<tr>
+						<th>Display Name </th>
+						<th>Email</th>
+						<th></th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr ng-repeat="groupMembers in GroupMembers">
+						<td>{{groupMembers.UserDisplayName}}</td>
+						<td>{{groupMembers.Email}}</td>
+						<td><a>Delete</a></td>
+					</tr>
+				</tbody>
+			</table>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="form-group">
+		<label class="col-sm-2 col-form-label">Tags:</label>
+		<div class="row">
+			<div class="col-sm-12">
+		<table class="table table-responsive ZachTbl" >
+			<thead>
+				<tr>
+					<th>Tag Name </th>
+					<th>Color</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="groups in Groups">
+					<td>{{groups.DisplayName}}</td>
+					<td>{{groups.UserDisplayName}}</td>
+					<td><a>Delete</a></td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+	</div>
+</div>
+
+
+
+	<div class="form-group">
+		<label class="col-sm-2 col-form-label">Attachment</label>
+		<div class="row">
+			<div class="col-sm-12">
+			 <button type="button" class="btn btn-info">Upload</button>
+		 </div>
+	 </div>
+ </div>
+
+  <img src="images/DefaultPicture.jpeg" class="img-rounded" width="200" height="200">
+
+  <div class="col-sm-12">
+		<div class="col-sm-3">
+    <button type="button" class="btn btn-success">Save Changes</button>
+	</div>
+	<div class="col-sm-6">
+	</div>
+	<div>
+    <button type="button" class="btn btn-danger">Delete</button>
+		</div
+
+	</form>
+</div>
