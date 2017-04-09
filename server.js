@@ -60,20 +60,20 @@ app.get('/secret', authentication.required(), function(req, res) {
     res.status(200).send('Hello!');
 });
 
-//Start Example Routes for API ~~~ NOTE: Make sure to Comment out birds/contacts as they are from the demo site - JFS
-var birds = require('./server/birds'); //This is where the js file is.
-app.use('/api/birds', birds); //This is the Url.
+//Start Example Routes for API ~~~ NOTE: Make sure to Comment out birds/Contacts as they are from the demo site - JFS
+var Birds = require('./server/Birds'); //This is where the js file is.
+app.use('/api/Birds', Birds); //This is the Url.
 
-var contacts = require('./server/contacts'); //This is where the js file is.
-app.use('/api/contacts', contacts); //This is the Url.
+var Contacts = require('./server/Contacts'); //This is where the js file is.
+app.use('/api/Contacts', Contacts); //This is the Url.
 //End Example Routes for API
 
 //Start Routes for API
 
   //Login API
-  var login = require('./server/login'); //This is where the js file is.
-  login.dbConfig = dbConfig;
-  app.use('/api/login', login); //This is the Url.
+  var Login = require('./server/Login'); //This is where the js file is.
+  Login.dbConfig = dbConfig;
+  app.use('/api/Login', Login); //This is the Url.
 
   //Groups API
   var Groups = require('./server/Groups'); //This is where the js file is.
@@ -81,7 +81,7 @@ app.use('/api/contacts', contacts); //This is the Url.
   app.use('/api/Groups', Groups); //This is the Url.
 
   //GroupDetails API
-  var GroupDetails = require('./server/groupDetails'); //This is where the js file is.
+  var GroupDetails = require('./server/GroupDetails'); //This is where the js file is.
   GroupDetails.dbConfig = dbConfig;
   app.use('/api/GroupDetails', GroupDetails); //This is the Url.
 
@@ -91,9 +91,9 @@ app.use('/api/contacts', contacts); //This is the Url.
   app.use('/api/Tasks', Tasks); //This is the Url.
 
   //users API for Users_tbl
-  var users = require('./server/users'); //This is where the js file is.
-  users.dbConfig = dbConfig;
-  app.use('/api/users', users); //This is the Url.
+  var Users = require('./server/Users'); //This is where the js file is.
+  Users.dbConfig = dbConfig;
+  app.use('/api/Users', Users); //This is the Url.
 
 //End Routes for API
 

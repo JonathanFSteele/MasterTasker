@@ -22,7 +22,7 @@ app.controller('tasksController', function($scope, $http, $location) {
   }
 
   //Go to the server ang get the json array.
-  $http.get("/api/Tasks/list")
+  $http.get("/api/Tasks/List")
   .then(function(response) {
     console.log("Task response: ",response);
     $scope.Tasks = response.data;

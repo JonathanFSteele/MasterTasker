@@ -29,13 +29,13 @@ router.use(function timeLog (req, res, next) {
   next()
 })
 
-// define the users default route
+// define the Users default route
 router.get('/', function (req, res) {
   res.send('Groups')
 })
 
-// define the list route
-router.get('/list', function (req, res) {
+// define the List route
+router.get('/List', function (req, res) {
   var result = [];
   console.log("req user record: ",req.authentication); //req.authentication will tell you what user is currently logged in (req.authentication.Email - to get the current email for the logged in user.)
   router.db_getGroupsList(req)

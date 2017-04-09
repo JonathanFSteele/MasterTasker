@@ -40,7 +40,7 @@ router.db_SetUserToken = function(email, token)
 
 // middleware that is specific to this router
 router.use(function timeLog (req, res, next) {
-  console.log('login module started: ', Date.now())
+  console.log('Login module started: ', Date.now())
   next()
 })
 
@@ -75,7 +75,7 @@ router.post('/', function (req, res) {
     authorizedTF: false,
     message: "Missing user or bad password"
   }
-  console.log("loginPostReceived req.body: ",req.body);
+  console.log("LoginPostReceived req.body: ",req.body);
   router.db_FindUser(req.body.Email, req.body.Password)
    .then(function(rows){
      console.log('Login Post Received Looking up User: ',rows);
@@ -87,6 +87,7 @@ router.post('/', function (req, res) {
         response.message = "Good User and Token Saved";
         console.log("rows: ",rows);
         response.DisplayName = rows[0].DisplayName;
+        response.Password = rows[0].Password;
         response.Email = rows[0].Email;
         response.ImageUrl = rows[0].ImageUrl;
         res.send(response);

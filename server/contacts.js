@@ -8,11 +8,11 @@ router.use(function timeLog (req, res, next) {
 })
 // define the home page route
 router.get('/', function (req, res) {
-  res.send('contacts')
+  res.send('Contacts')
 })
 // define the about route
-router.get('/list', function (req, res) {
-  var contacts = [
+router.get('/List', function (req, res) {
+  var Contacts = [
     {
       Name: "Jonathan",
       Email: "jonathan@steeleconsult.com",
@@ -30,7 +30,7 @@ router.get('/list', function (req, res) {
       Email: "Loya@nmsu.edu",
     }
   ];
-  res.send(contacts);
+  res.send(Contacts);
 })
 
 module.exports = router

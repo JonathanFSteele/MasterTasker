@@ -9,7 +9,7 @@ app.controller('signUpController', function($scope, $http, localStorageService, 
     console.log("remember ", $scope.rememberTF);
     console.log(data);
     var message="";
-    $http.post("/api/login/", data)
+    $http.post("/api/Login/", data)
     .then(function(data, response) {
       console.log("data: ", data);
       if(data.data.authorizedTF)
@@ -27,8 +27,10 @@ app.controller('signUpController', function($scope, $http, localStorageService, 
         $scope.message = "Your Username or password was incorrect. Please Try Again";
       }
     });
-
   };
 
+  $scope.cancel = function(){
+    $location.path( "/login" );
+  }
 
 });

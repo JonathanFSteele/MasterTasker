@@ -3,6 +3,13 @@ app.controller('forgotPasswordController', function($scope, $http, localStorageS
   //$rootScope.LoginTF = 0;
   //$scope.rememberTF = false;
   console.log("forgotPasswordController Running");
+
+  $scope.cancel = function(){
+    $location.path( "/login" );
+  }
+
+
+
   // $scope.login = function(Email, Password){
   //   console.log("login function called", Email, Password);
   //   var data = {"Email": Email, "Password": Password};

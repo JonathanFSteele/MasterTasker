@@ -47,12 +47,12 @@ router.use(function timeLog (req, res, next) {
   next()
 })
 
-// define the users default route
+// define the Users default route
 router.get('/', function (req, res) {
   res.send('GroupMembers')
 })
 
-// define the list route
+// define the List route
 router.get('/ByID', function (req, res) {
   var result = [];
   console.log("req Group Details req.query.id: ",req.query.id); //req.authentication will tell you what user is currently logged in (req.authentication.Email - to get the current email for the logged in user.)
@@ -68,7 +68,7 @@ router.get('/ByID', function (req, res) {
      res.status(500).send(error);
    });
 })
-// define the list route
+// define the List route
 router.get('/GroupMembers', function (req, res) {
   var result = [];
   console.log("req Group members req.query.id: ",req.query.id); //req.authentication will tell you what user is currently logged in (req.authentication.Email - to get the current email for the logged in user.)
