@@ -9,7 +9,7 @@ db_GetUserByToken = function(token)
 {
   var deferred = q.defer(); // Use Q
   var connection = mysql.createConnection(dbConfig);
-  var query_str = "SELECT * FROM tldb.Users WHERE AuthToken = ?";
+  var query_str = "SELECT * FROM tldb.Users_tbl WHERE AuthToken = ?";
   var query_var = [token];
   var query = connection.query(query_str, query_var, function (err, rows, fields) {
       if (err) {
@@ -74,6 +74,11 @@ app.use('/api/Contacts', Contacts); //This is the Url.
   var Login = require('./server/Login'); //This is where the js file is.
   Login.dbConfig = dbConfig;
   app.use('/api/Login', Login); //This is the Url.
+
+  //users API for SignUp
+  var SignUp = require('./server/SignUp'); //This is where the js file is.
+  SignUp.dbConfig = dbConfig;
+  app.use('/api/SignUp', SignUp); //This is the Url.
 
   //Groups API
   var Groups = require('./server/Groups'); //This is where the js file is.

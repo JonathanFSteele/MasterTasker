@@ -8,7 +8,7 @@ router.db_getUserList = function(req)
 {
   var deferred = q.defer(); // Use Q
   var connection = mysql.createConnection(router.dbConfig);
-  var query_str = "SELECT * FROM tldb.Users";
+  var query_str = "SELECT * FROM tldb.Users_tbl";
   // var query_var = [name];
   var query_var; //null
   var query = connection.query(query_str, query_var, function (err, rows, fields) {
