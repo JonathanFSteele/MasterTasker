@@ -81,7 +81,6 @@ router.use(function timeLog (req, res, next) {
 router.post('/', function (req, res) {
 
   var response = {
-    //authToken: guid(),
     DisplayName: '',
     Email: '',
     Password: '',
@@ -108,11 +107,6 @@ router.post('/', function (req, res) {
        .then(function(setUserRows){
          console.log("Signup Post Received. Setting New Token for User: ", req.body.Email);
          response.message = "Good User and Token Saved";
-        // console.log("rows: ",rows);
-        //  response.DisplayName = rows[0].DisplayName;
-        //  response.Password = rows[0].Password;
-        //  response.Email = rows[0].Email;
-        //  response.ImageUrl = rows[0].ImageUrl;
          res.send(response);
        },function(error){
          console.log(error);
