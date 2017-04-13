@@ -1,4 +1,14 @@
 <form ng-app="loginController" class="container text-center" style="margin-top: 50px;">
+	<div class="row" ng-show="MessageType == 1">
+		<div class="alert alert-danger fade in">
+			{{Message}}
+		</div>
+	</div>
+	<div class="row" ng-show="MessageType == 2">
+		<div class="alert alert-info fade in">
+			{{Message}}
+		</div>
+	</div>
 	<div class="row" style="padding: 30px;">
 		<img class="col-xs-12 col-sm-offset-2 col-sm-9" src="images/MasterTaskerLoginTitleImagexs.png"/>
 	</div>
