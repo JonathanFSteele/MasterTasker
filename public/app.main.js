@@ -1,5 +1,5 @@
 	// create the module and name it app
-	var app = angular.module('app', ['ngRoute', 'LocalStorageModule'])
+	var app = angular.module('app', ['ngRoute', 'LocalStorageModule', 'ngMaterial'])
 	.config(['$httpProvider', function($httpProvider) {
      $httpProvider.interceptors.push('authInterceptorService');
   }]);
