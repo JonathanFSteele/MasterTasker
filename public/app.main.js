@@ -8,7 +8,7 @@
 		// Root Variables
 		$rootScope.authUser = localStorageService.get('authUser');
   $scope.Email = $rootScope.authUser.Email;
-  
+
 		// Logout Function
 		$scope.Logout = function(){
 			console.log("Logging out");

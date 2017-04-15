@@ -40,7 +40,14 @@ app.controller('tasksController', function($scope, $http, $location) {
 //Go to the groups server
   $http.get("/api/Groups/List")
   .then(function(response) {
-    console.log("Group response: ",response);
+    console.log("1111: Group response: ",response);
+    var defaultGroup = {
+      "ID":0,
+      "DisplayName":"ALL",
+      }
+    response.data.unshift(defaultGroup);
+    console.log("1111: Group response: ",response);
+
     $scope.Groups = response.data;
     $scope.currentGroupID = 0;
   });
