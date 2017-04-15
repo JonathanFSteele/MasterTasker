@@ -11,7 +11,7 @@ app.controller('groupDetailsController', function($scope, $http, $location) {
 
   $http.get("/api/GroupDetails/GroupMembers?id="+$location.search().id)
   .then(function(response) {
-    console.log("GroupMembers response: ",response);
+    console.log("GroupMembers response: ", response);
     $scope.GroupMembers = response.data;
   });
 
