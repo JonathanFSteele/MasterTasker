@@ -99,6 +99,11 @@ app.use('/api/Contacts', Contacts); //This is the Url.
   var Users = require('./server/Users'); //This is where the js file is.
   Users.dbConfig = dbConfig;
   app.use('/api/Users', Users); //This is the Url.
+  
+  //UserSettings
+  var UserSettings = require('./server/UserSettings'); //This is where the js file is.
+  UserSettings.dbConfig = dbConfig;
+  app.use('/api/UserSettings', UserSettings); //This is the Url.
 
 //End Routes for API
 

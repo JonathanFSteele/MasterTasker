@@ -1,16 +1,22 @@
 <h1>User Settings</h1>
 <p>{{ message }}</p>
-<form class="form-horizontal">
+<br />
+<div>
+ <h2>Display Settings</h2><br />
+ Change your user name and your icon.
+</div>
+<br />
+<form ng-app="userSettingsController" class="form-horizontal">
 		<div class="form-group">
 			<label class="col-sm-2 col-form-label">e-mail Address:</label>
 			<div class="col-sm-10">
-				<span class="form-label">{{ userEmail }}</span>
+				<span class="form-label">{{ Email }}</span>
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-2 col-form-label" for="displayName">Display Name:</label>
 			<div class="col-sm-10">
-				<input type="displayName" class="form-control" id="displayName" aria-describedby="displayName" placeholder={{displayName}}>
+				<input type="text" class="form-control" id="DisplayName" aria-describedby="DisplayName" placeholder={{DisplayName}}>
 			</div>
 		</div>
 		<div class="form-group">
@@ -22,32 +28,43 @@
 				<img src="images/user-default.png" class="img-circle" alt="default icon" width="200" height="200">
 			</div>
 		</div>
+		<div class="form-group">
+   <label class="col-sm-2 col-form-label"></label>
+   <div class="col-sm-10">
+    <button type="button" class="btn btn-info">Save Changes</button>
+			</div>
+  </div>
 			
-		<div>
-			<button type="button" class="btn btn-info">Save Changes</button>
-		</div>
 		<br /><br /><br />
+		<div><h2>Password</h2><br/>
+		 Update your password here.
+  </div>
+		<br />
 		<div class="form-group">
 			<label class="col-sm-2 col-form-label" for="oldPass">Old Password:</label>
 			<div class="col-sm-10">
-				<input type="oldPass" class="form-control" id="oldPass" aria-describedby="oldPass" placeholder="Enter current password">
+				<input type="text" class="form-control" id="oldPass" aria-describedby="oldPass" placeholder="Enter current password">
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-2 col-form-label" for="newPass">New Password:</label>
 			<div class="col-sm-10">
-				<input type="newPass" class="form-control" id="newPass" aria-describedby="newPass" placeholder="Enter a new password">
+				<input type="text" class="form-control" id="newPass" aria-describedby="newPass" placeholder="Enter a new password">
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-2 col-form-label" for="newPassComfirm">Confirm New Password:</label>
 			<div class="col-sm-10">
-				<input type="newPassComfirm" class="form-control" id="newPassComfirm" aria-describedby="newPassComfirm" placeholder="Confirm new password">
+				<input type="text" class="form-control" id="newPassComfirm" aria-describedby="newPassComfirm" placeholder="Confirm new password">
 			</div>
 		</div>
-		<div>
-			<button type="button" class="btn btn-info">Update Password</button>
-		</div>
+		<div class="form-group">
+   <label class="col-sm-2 col-form-label"></label>
+   <div class="col-sm-10">
+    <button type="button" class="btn btn-info">Update Password</button>
+			</div>
+  </div>
+  
 		<br /><br /><br /><br /><br />
 		<button type="button" class="btn btn-danger">Delete Account</button>
 		<br /><br /><br /><br /><br />
