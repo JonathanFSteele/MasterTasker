@@ -8,32 +8,27 @@
 <br />
 <form ng-app="userSettingsController" class="form-horizontal">
 		<div class="form-group">
-			<label class="col-sm-2 col-form-label">e-mail Address:</label>
+			<label class="col-sm-2 col-form-label">E-mail Address:</label>
 			<div class="col-sm-10">
 				<span class="form-label">{{ Email }}</span>
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-2 col-form-label" for="displayName">Display Name:</label>
-			<div class="col-sm-10">
+			<div class="col-sm-8">
 				<input type="text" class="form-control" id="DisplayName" aria-describedby="DisplayName" placeholder={{DisplayName}}>
+			</div>
+			<div class="col-sm-2">
+    <button type="button" class="btn btn-info">Change Name</button>
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-2 col-form-label" for="displayIcon">Profile Image:</label>
-			<div class="col-sm-1">
-				<button type="button" class="btn btn-info">+</button>
-			</div>
-			<div class="col-sm-9">
-				<img src="images/user-default.png" class="img-circle" alt="default icon" width="200" height="200">
+			<div class="col-sm-10">
+				<img ng-hide="Email==Null" gravatar-src="'{{ Email }}'" gravatar-size="200" class="img-circle">
+				<!-- <img ng-hide="Email!=Null" alt="user-default" src="/images/user-default.png" style="width:200px;height:200px;" class="img-circle" > -->
 			</div>
 		</div>
-		<div class="form-group">
-   <label class="col-sm-2 col-form-label"></label>
-   <div class="col-sm-10">
-    <button type="button" class="btn btn-info">Save Changes</button>
-			</div>
-  </div>
 			
 		<br /><br /><br />
 		<div><h2>Password</h2><br/>

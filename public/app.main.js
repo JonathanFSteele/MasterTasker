@@ -1,5 +1,5 @@
 	// create the module and name it app
-	var app = angular.module('app', ['ngRoute', 'LocalStorageModule', 'ngMaterial'])
+	var app = angular.module('app', ['ngRoute', 'LocalStorageModule', 'ngMaterial', 'ui.gravatar'])
 	.config(['$httpProvider', function($httpProvider) {
      $httpProvider.interceptors.push('authInterceptorService');
   }]);
@@ -7,7 +7,8 @@
 	app.controller('mainController', function($scope, $rootScope, $http, localStorageService, $location) {
 		// Root Variables
 		$rootScope.authUser = localStorageService.get('authUser');
-
+  $scope.Email = $rootScope.authUser.Email;
+  
 		// Logout Function
 		$scope.Logout = function(){
 			console.log("Logging out");

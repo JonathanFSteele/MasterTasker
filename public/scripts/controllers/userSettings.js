@@ -11,6 +11,24 @@ app.controller('userSettingsController', function($scope, $rootScope, $http, loc
   $scope.Password = $scope.object.Password;
   
   /*
+app.directive('gravatar', function() {
+  return {
+    restrict: 'AE',
+    replace: true,
+      scope: {
+        name: '@',
+        height: '200px',
+        width: '200px',
+        emailHash: '@'
+      },
+    link: function(scope, el, attr) {
+      scope.defaultImage = '/public/images/user-default.png';
+    },
+   template: '<img alt="{{ name }}" height="{{ height }}"  width="{{ width }}" src="https://secure.gravatar.com/avatar/{{ emailHash }}.jpg?s={{ width }}&d={{ defaultImage }}">'
+  };
+});
+*/
+  /*
   $http.get("/api/UserSettings/Account")
   .then(function(response) {
     console.log("Users response: ",response);
