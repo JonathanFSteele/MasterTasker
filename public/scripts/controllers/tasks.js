@@ -3,6 +3,7 @@ app.controller('tasksController', function($scope, $http, $location) {
   $scope.message = 'This is the tasks Controller';
   console.log($scope.message);
    $scope.Tasks = [];
+   $scope.currentGroupID = 0;
 
   $scope.GoToTaskDetails = function(object){
     console.log("Going to Current Task Details", object.ID);
@@ -16,15 +17,31 @@ app.controller('tasksController', function($scope, $http, $location) {
     }
   }
 
+  $scope.CurrentSelectedGroup = function(ID){
+    console.log("Current Group by ID: ", $scope.currentGroupID);
+    $scope.getTasks();
+  }
+
   $scope.GoToGroupsDetails = function(object){
     console.log("Going to Current Task Details", object.ID);
     $location.path( "/groups/groupDetails").search('id=0');
   }
 
   //Go to the server ang get the json array.
-  $http.get("/api/Tasks/List")
+  $scope.getTasks = function(){
+    $http.get("/api/Tasks/List?GroupID="+$scope.currentGroupID)
+    .then(function(response) {
+      console.log("Task response: ",response);
+      $scope.Tasks = response.data;
+    });
+  };
+  $scope.getTasks();
+
+//Go to the groups server
+  $http.get("/api/Groups/List")
   .then(function(response) {
-    console.log("Task response: ",response);
-    $scope.Tasks = response.data;
+    console.log("Group response: ",response);
+    $scope.Groups = response.data;
+    $scope.currentGroupID = 0;
   });
 });

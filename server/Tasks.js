@@ -1,16 +1,24 @@
 var express = require('express');
+var authentication = require('express-authentication')
 var mysql = require("mysql");
 var q = require('q');
 var router = express.Router();
 
 //SQL Query functions:
-router.db_getTasksList = function(req)
+router.db_getTasksList = function(GroupID, UserID)
 {
   var deferred = q.defer(); // Use Q
   var connection = mysql.createConnection(router.dbConfig);
-  var query_str = "SELECT * FROM tldb.Tasks_vw";
-  // var query_var = [name];
-  var query_var; //null
+  if(GroupID == 0)
+  {
+    var query_str = "SELECT * FROM tldb.Tasks_vw WHERE GroupUser = ?";
+    var query_var = [UserID];
+  }
+  else
+  {
+    var query_str = "SELECT * FROM tldb.Tasks_vw WHERE GroupID = ? AND GroupUser = ?";
+    var query_var = [GroupID, UserID];
+  }
   var query = connection.query(query_str, query_var, function (err, rows, fields) {
       if (err) {
         deferred.reject(err);
@@ -37,8 +45,9 @@ router.get('/', function (req, res) {
 // define the List route
 router.get('/List', function (req, res) {
   var result = [];
-  console.log("req user record: ",req.authentication); //req.authentication will tell you what user is currently logged in (req.authentication.Email - to get the current email for the logged in user.)
-  router.db_getTasksList(req)
+  console.log("req user record: ",req.authentication);
+  var GroupID = req.query.GroupID;
+  router.db_getTasksList(GroupID, req.authentication.ID)
    .then(function(rows){
      console.log('rows result',rows);
      res.send(rows);
