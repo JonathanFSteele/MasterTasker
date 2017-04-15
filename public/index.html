@@ -56,11 +56,11 @@
         <a class="navbar-brand" href="#tasks" ><img src="/images/MasterTaskerHeaderImage.png" style="width: 200px;"/></a>
       </div>
 
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#!/tasks" style="color: white; padding-top: 19px;"><i class="fa fa-list-ul fa-1x"></i> Tasks</a></li>
-        <li><a href="#!/groups" style="color: white; padding-top: 19px;"><i class="fa fa-users fa-1x"></i> Groups</a></li>
+      <ul class="nav navbar-nav navbar-right vertical-center">
+        <li><a href="#!/tasks"  style="color: white; padding-top: 20px;"><i class="fa fa-list-ul fa-1x"></i> Tasks</a></li>
+        <li><a href="#!/groups" style="color: white; padding-top: 20px;"><i class="fa fa-users fa-1x"></i> Groups</a></li>
         <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" style="color: white; background-color:#FF9900!important;"><span style="color: white; vertical-align: super;">{{authUser.DisplayName}}</span> <span><img ng-hide="Email==Null" gravatar-src="'{{ Email }}'" gravatar-size="32" class="img-circle"><!-- <img ng-hide="Email!=Null" alt="user-default" src="/images/user-default.png" style="width:200px;height:200px;" class="img-circle" > --></span>
+          <a class="dropdown-toggle" data-toggle="dropdown" style="color: white; background-color:#FF9900!important;"><span style="color: white; padding-top: 19px;;">{{authUser.DisplayName}} </span> <span><img ng-hide="Email==Null" gravatar-src="'{{ Email }}'" gravatar-size="32" class="img-circle"><!-- <img ng-hide="Email!=Null" alt="user-default" src="/images/user-default.png" style="width:200px;height:200px;" class="img-circle" > --></span>
           <span class="caret"></span></a>
           <ul class="dropdown-menu" style="background-color:#FF9900; border-color:#FF9900;">
             <li><a href="#!/userSettings" style="color: white;">User Settings</a></li>
