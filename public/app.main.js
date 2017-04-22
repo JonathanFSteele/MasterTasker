@@ -25,7 +25,7 @@
 		console.log("authUser: ", $rootScope.authUser);
 		if($rootScope.authUser == null)
 		{
-			$scope.Email = "Not Set";
+			$scope.Email = "";
 		}
 		else
 		{
