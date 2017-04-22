@@ -41,6 +41,26 @@ router.db_getGroupMembersByID = function(GroupID)
 }; //end db_getGroupsList()
 
 
+router.db_getTags = function(GroupID)
+{
+  var deferred = q.defer(); // Use Q
+  var connection = mysql.createConnection(router.dbConfig);
+  var query_str = "SELECT * FROM tldb.Tags_tbl WHERE GroupID=?";
+  var query_var = [GroupID];
+  //var query_var; //null
+  var query = connection.query(query_str, query_var, function (err, rows, fields) {
+      if (err) {
+        deferred.reject(err);
+      }
+      else {
+        deferred.resolve(rows);
+      }
+  });
+  return deferred.promise;
+}; //end db_getGroupsList()
+
+
+
 //Routes for this module:
 router.use(function timeLog (req, res, next) {
   console.log('Groups Module Started: ', Date.now())
@@ -85,6 +105,21 @@ router.get('/GroupMembers', function (req, res) {
    });
 })
 
+router.get('/Tags', function (req, res) {
+  var result = [];
+  console.log("req Tags req.query.id: ",req.query.id); //req.authentication will tell you what user is currently logged in (req.authentication.Email - to get the current email for the logged in user.)
+
+  var GroupID = req.query.id;
+
+  router.db_getTags(GroupID)
+   .then(function(rows){
+     console.log('rows result',rows);
+     res.send(rows);
+    },function(error){
+     console.log(error);
+     res.status(500).send(error);
+   });
+})
 
 
 

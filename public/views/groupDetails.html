@@ -85,9 +85,9 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="groups in Groups">
-					<td>{{groups.DisplayName}}</td>
-					<td>{{groups.UserDisplayName}}</td>
+				<tr ng-repeat="tags in Tags">
+					<td>{{tags.Name}}</td>
+					<td style="background-color:{{tags.Color}}">{{tags.Color}}</td>
 					<td><a>Delete</a></td>
 				</tr>
 			</tbody>
@@ -113,7 +113,7 @@
 
   <div class="col-sm-12">
 		<div class="col-sm-3">
-    <button type="button" class="btn btn-success">Save Changes</button>
+    <button type="button" class="btn btn-success" ng-click"submitND">Save Changes</button>
 	</div>
 	<div class="col-sm-6">
 	</div>

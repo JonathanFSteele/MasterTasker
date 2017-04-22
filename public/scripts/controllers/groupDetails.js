@@ -16,6 +16,13 @@ app.controller('groupDetailsController', function($scope, $http, $location) {
   });
 
 
+  $http.get("/api/GroupDetails/Tags?id="+$location.search().id)
+  .then(function(response) {
+    console.log("Tags response: ", response);
+    $scope.Tags = response.data;
+  });
+
+
   // $scope.Groups = [];
 
 
