@@ -1,3 +1,15 @@
+/**
+ * @name userSettings.js
+ * @author Jonathan Steele - Created: 4/22/17 | LastModified: 4/22/17 - JFS
+ * @summary Is the userSettings controller that allows functionality to be added to the userSettings html.
+ * ---------------------------------------------------------------------------
+ * @module app.controller 'userSettingsController'
+ * @function ~none~
+ * ---------------------------------------------------------------------------
+ * @description Is the userSettings controller allows functionality to be added to the userSettings html. It
+ * also allows $scope variables to created which will then allowed to be used in the html.
+ **/
+
 app.controller('userSettingsController', function($scope, $rootScope, $http, localStorageService, $location) {
   console.log("Running UserSettings Controller");
 		// Root Variables
@@ -9,7 +21,7 @@ app.controller('userSettingsController', function($scope, $rootScope, $http, loc
   $scope.Email = $scope.object.Email;
   $scope.DisplayName = $scope.object.DisplayName;
   $scope.Password = $scope.object.Password;
-  
+
   /*
 app.directive('gravatar', function() {
   return {

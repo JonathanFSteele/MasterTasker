@@ -1,3 +1,14 @@
+<!--
+   - NAME: userSettings.html
+   - CONTROLLER: userSettings.js
+   - PARENT: index.html
+   - DESCRIPTION: The header and footer for this page are in the index.html and everything in this html is
+   - in the body. This page is suppose to allow the user to update their user information by calling the
+   - userSettings.js which then calls the UserSettings.js <- ServerSide.
+   -->
+
+<!--START HTML Body-->
+<!--START Div Header-->
 <h1>User Settings</h1>
 <p>{{ message }}</p>
 <br />
@@ -6,13 +17,18 @@
  Change your user name and your icon.
 </div>
 <br />
+<!--END Div Header-->
+<!--START Div Body-->
 <form ng-app="userSettingsController" class="form-horizontal">
+    <!--START Form Email Address-->
 		<div class="form-group">
 			<label class="col-sm-2 col-form-label">E-mail Address:</label>
 			<div class="col-sm-4">
 				<span class="form-label">{{ Email }}</span>
 			</div>
 		</div>
+    <!--END Form Email Address-->
+    <!--START Form Display Name-->
 		<div class="form-group">
 			<label class="col-sm-2 col-form-label" for="displayName">Display Name:</label>
 			<div class="col-sm-4">
@@ -22,49 +38,71 @@
     <button type="button" class="btn btn-info">Change Name</button>
 			</div>
 		</div>
+    <!--END Form Display Name-->
+    <!--START Gravitar-->
 		<div class="form-group">
 			<label class="col-sm-2 col-form-label" for="displayIcon">Profile Image:</label>
 			<div class="col-sm-4">
 				<img ng-hide="Email==Null" gravatar-src="'{{ Email }}'" gravatar-size="200" class="img-circle">
-				<!-- <img ng-hide="Email!=Null" alt="user-default" src="/images/user-default.png" style="width:200px;height:200px;" class="img-circle" > -->
 			</div>
 		</div>
-			
+    <!--END Gravitar-->
 		<br /><br /><br />
-		<div><h2>Password</h2><br/>
-		 Update your password here.
+    <!-- START Form Password Section -->
+    <div>
+  		<div>
+        <h2>Password</h2>
+        <br/> Update your password here.
+      </div>
+  		<br />
+      <!-- START Form Old Password Input -->
+  		<div class="form-group">
+  			<label class="col-sm-2 col-form-label" for="oldPass">Old Password:</label>
+  			<div class="col-sm-4">
+  				<input type="text" class="form-control" id="oldPass" aria-describedby="oldPass" placeholder="Enter current password">
+  			</div>
+  		</div>
+      <!-- END Form Old Password Input -->
+      <!-- START Form New Password Input -->
+  		<div class="form-group">
+  			<label class="col-sm-2 col-form-label" for="newPass">New Password:</label>
+  			<div class="col-sm-4">
+  				<input type="text" class="form-control" id="newPass" aria-describedby="newPass" placeholder="Enter a new password">
+  			</div>
+  		</div>
+      <!-- END Form Old Password Input -->
+      <!-- START Form Confirm New Password Input -->
+  		<div class="form-group">
+  			<label class="col-sm-2 col-form-label" for="newPassComfirm">Confirm New Password:</label>
+  			<div class="col-sm-4">
+  				<input type="text" class="form-control" id="newPassComfirm" aria-describedby="newPassComfirm" placeholder="Confirm new password">
+  			</div>
+  		</div>
+      <!-- END Form Confirm New Password Input -->
+      <!-- START Form Update Password Button -->
+  		<div class="form-group">
+        <label class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+          <button type="button" class="btn btn-info">Update Password</button>
+  			</div>
+      </div>
+      <!-- END Form Update Password Button -->
   </div>
-		<br />
-		<div class="form-group">
-			<label class="col-sm-2 col-form-label" for="oldPass">Old Password:</label>
-			<div class="col-sm-4">
-				<input type="text" class="form-control" id="oldPass" aria-describedby="oldPass" placeholder="Enter current password">
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-2 col-form-label" for="newPass">New Password:</label>
-			<div class="col-sm-4">
-				<input type="text" class="form-control" id="newPass" aria-describedby="newPass" placeholder="Enter a new password">
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-2 col-form-label" for="newPassComfirm">Confirm New Password:</label>
-			<div class="col-sm-4">
-				<input type="text" class="form-control" id="newPassComfirm" aria-describedby="newPassComfirm" placeholder="Confirm new password">
-			</div>
-		</div>
-		<div class="form-group">
-   <label class="col-sm-2 col-form-label"></label>
-   <div class="col-sm-10">
-    <button type="button" class="btn btn-info">Update Password</button>
-			</div>
+  <!-- END Form Password Section-->
+	<br /><br /><br /><br /><br /> <!--WhiteSpace-->
+  <!-- START Form Delete Account Button -->
+  <div>
+    <div>
+     <h2>Delete Account</h2><br/>
+      <label class="col-sm-6 col-form-label">WARNING! All tasks, groups and other user information will be lost forever.</label>
+    </div>
+    <br /><br /> <!--WhiteSpace-->
+    <div>
+      <button type="button" class="btn btn-danger">Delete Account</button>
+    </div>
   </div>
-  
-		<br /><br /><br /><br /><br />
-		<div><h2>Delete Account</h2><br/>
-		 <label class="col-sm-6 col-form-label">WARNING! All tasks, groups and other user information will be lost forever.</label>
-  </div>
-		<br /><br />
-		<button type="button" class="btn btn-danger">Delete Account</button>
-		<br /><br /><br /><br /><br />
+  <!-- END Form Delete Account Button -->
+	<br /><br /><br /><br /><br /> <!--WhiteSpace-->
 </form>
+<!--END Div Body-->
+<!--END HTML Body-->
