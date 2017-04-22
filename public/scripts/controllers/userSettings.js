@@ -7,7 +7,8 @@
  * @function ChangeName(DisplayName)
  *  | @function post("/api/SignUp/", data).then(data, response)
  * @function ChangePassword(OldPassword, NewPassword, ConfirmNewPassword)
- *  | @function post("/api/SignUp/UpdateDisplayName", data).then(data, response)
+ *  | @function post("/api/UserSettings/UpdatePassword", $scope.NewauthUserPass).then(data, response)
+ * @function DeleteUser()
  * ---------------------------------------------------------------------------
  * @description Is the userSettings controller allows functionality to be added to the userSettings html. It
  * also allows $scope variables to created which will then allowed to be used in the html.
@@ -42,7 +43,7 @@ app.controller('userSettingsController', function($scope, $rootScope, $http, loc
     //console.log("userSettings: NewauthUser, ", $scope.NewauthUser); //For Debug
     $http.post("/api/UserSettings/UpdateDisplayName", $scope.NewauthUser)
     .then(function(data, response) {
-      console.log("userSettings: .then return data ", data.data);
+      console.log("userSettings: Change Name Post .then return data ", data.data);
       localStorageService.set('authUser', data.data);
       location.reload();
     });
@@ -50,24 +51,40 @@ app.controller('userSettingsController', function($scope, $rootScope, $http, loc
 
   $scope.ChangePassword = function(OldPassword, NewPassword, ConfirmNewPassword) {
     console.log("userSettings: ChangePassword Called", OldPassword, NewPassword, ConfirmNewPassword);
-    //console.log("userSettings: ChangeName function hit passing in (" + DisplayName + ") - If value is undefined then use current Name (" + $scope.DisplayName + ")"); //Only for Debug
-    //$scope.NewauthUser = localStorageService.get('authUser');
+    $scope.NewauthUserPass = localStorageService.get('authUser');
+    if(OldPassword != $scope.NewauthUserPass.Password)
+    {
+      console.log("userSettings: Wrong Old Password!");
+      //TODO: Have an alert to tell the user that they typed in the wrong Old Password.
+    }
+    else if(NewPassword == null || ConfirmNewPassword == null)
+    {
+      console.log("userSettings: Please enter a New Password");
+      //TODO: Have an alert to tell the user that They Put a new Password of NULL.
+    }
+    else if(NewPassword != ConfirmNewPassword)
+    {
+      console.log("userSettings: New Password does not match up with Confirm New Password!");
+      //TODO: Have an alert to tell the user that they Their New Passwords do not match.
+    }
+    else {
+      console.log("userSettings: Looks Good Changing your Password Now");
+      $scope.NewauthUserPass.Password = NewPassword;
+      //console.log("userSettings: NewauthUser, ", $scope.NewauthUserPass); //For Debug
+      //TODO: Set up a PopUp to tell the User that its changing their password (Loading...)
+      $http.post("/api/UserSettings/UpdatePassword", $scope.NewauthUserPass)
+      .then(function(data, response) {
+        console.log("userSettings: ChangePassword Post .then return data ", data.data);
+        //TODO: Set up a PopUp to tell the User That the Password has been changed, Make sure to put a wait time so their is plenty of time to see the message
+        localStorageService.remove('authUser');
+        $location.path("/login");
+      });
+    }
+  }
 
-    // if(DisplayName == null)
-    // {
-    //     $scope.NewauthUser.DisplayName = $scope.DisplayName;
-    // }
-    // else
-    // {
-    //     $scope.NewauthUser.DisplayName = DisplayName;
-    // }
-    // //console.log("userSettings: NewauthUser, ", $scope.NewauthUser); //For Debug
-    // $http.post("/api/UserSettings/UpdateDisplayName", $scope.NewauthUser)
-    // .then(function(data, response) {
-    //   console.log("userSettings: .then return data ", data.data);
-    //   localStorageService.set('authUser', data.data);
-    //   location.reload();
-    // });
+  $scope.DeleteUser = function(){
+    console.log("Delete User Function Called...");
+    //TODO: Set up Functionality for a PermaDelete for a Users Account..
   }
 
 });
