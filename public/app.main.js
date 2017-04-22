@@ -1,3 +1,16 @@
+/**
+ * @name app.main.js
+ * @author Jonathan Frank Steele - Created: 3/12/17 | LastModified: 4/22/17 - JFS
+ * @summary Main controller for index.html which holds most of the global variables.
+ * ---------------------------------------------------------------------------
+ * @module app app.controller 'mainController'
+ * @function Logout()
+ * 	| @function callback(result)
+ * ---------------------------------------------------------------------------
+ * @description Main controller for index.html that is connected with index.html and can be used to store
+ * $scoped variables and global functions.
+ **/
+
 	// create the module and name it app
 	var app = angular.module('app', ['ngRoute', 'LocalStorageModule', 'ngMaterial', 'ui.gravatar'])
 	.config(['$httpProvider', function($httpProvider) {
@@ -5,9 +18,20 @@
   }]);
 
 	app.controller('mainController', function($scope, $rootScope, $http, localStorageService, $location) {
+		console.log("Starting mainController");
+
 		// Root Variables
 		$rootScope.authUser = localStorageService.get('authUser');
-  $scope.Email = $rootScope.authUser.Email;
+		console.log("authUser: ", $rootScope.authUser);
+		if($rootScope.authUser == null)
+		{
+			$scope.Email = "Not Set";
+		}
+		else
+		{
+			$scope.Email = $rootScope.authUser.Email;
+		}
+
 
 		// Logout Function
 		$scope.Logout = function(){

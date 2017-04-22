@@ -1,20 +1,20 @@
 app.controller('loginController', function($scope, $http, localStorageService, $location, $rootScope) {
   // create a message to display in our view
+  console.log("loginController Running");
   $rootScope.LoginTF = 0;
   $scope.MessageType = 0;
   $scope.rememberTF = false;
   $scope.localLoginauthUser = localStorageService.get('LoginauthUser');
    if($scope.localLoginauthUser != null){
-     //console.log("Fill in Email and Password");
+     console.log("Fill in Email and Password");
      $scope.object = localStorageService.get('LoginauthUser');
      $scope.Email = $scope.object.Email;
      $scope.Password = $scope.object.Password;
-     //console.log("Email: ", $scope.Email);
-     //console.log("Password: ", $scope.Password);
+     console.log("Email: ", $scope.Email);
+     console.log("Password: ", $scope.Password);
      $scope.rememberTF = true;
    }
 
-  console.log("loginController Running");
   $scope.login = function(Email, Password){
     console.log("login function called", Email, Password);
     var data = {"Email": Email, "Password": Password};

@@ -1,3 +1,18 @@
+/**
+ * @name config.route.js
+ * @author Jonathan Frank Steele - Created: 4/3/17 | LastModified: 4/22/17 - JFS
+ * @summary Configuration for the routes of the Master Tasker.
+ * ---------------------------------------------------------------------------
+ * @module ~none~
+ * @function app.config($routeProvider)
+ * 	| @function .run($rootScope, $location, localStorageService)
+ 			| @function $on(event, next, current)
+ * ---------------------------------------------------------------------------
+ * @description config.route has the organization of all the routes of each html with its corresponding
+ * controller. If the route is unknown it will redirect to the tasks page. It will also call the
+ * authinterceptorservice to check and see if the current user has the corresponding credentials.
+ **/
+
 	// configure our routes
 	app.config(function($routeProvider) {
 		$routeProvider
@@ -53,6 +68,9 @@
 			.when('/about', {
 				templateUrl : 'views/about.html',
 				controller  : 'aboutController'
+			})
+			.otherwise({
+				redirectTo : '/tasks'
 			});
 	}).run(function ($rootScope, $location, localStorageService) { //Insert in the function definition the dependencies you need.
     //Do your $on in here, like this:
@@ -77,10 +95,5 @@
 				console.log("Redirecting to login page, because authUser does not exist");
 				$location.path( "/login" );
 			}
-			// if(!authUser || !authUser.authToken)
-			// {
-			// 	console.log("Redirecting to login page, because authUser does not exist");
-			// 	$location.path( "/login" );
-			// }
     });
 });
