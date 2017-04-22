@@ -1,3 +1,19 @@
+/**
+ * @name server.js
+ * @author Jonathan Steele - Created: 2/12/17 | LastModified: 4/22/17 - JFS
+ * @summary Is the organization file of the server controllers for the gets, posts, deletes, and updates.
+ * ---------------------------------------------------------------------------
+ * @module ~none~
+ * @function db_GetUserByToken(token)
+ * @function router.use(timeLog(req, res, next))
+ * @function app.use(myauth(req, res, next))
+ * @function app.get('/secret', authentication.required() ,req, res)
+ * @function app.listen()
+ * ---------------------------------------------------------------------------
+ * @description Is the organization file of the server controllers for the gets, posts, deletes, and
+ * updates. It needs a user authentication to access with a secret code. It has what is required of the
+ * server controllers while linking them all together.
+ **/
 // Nodejs Express Server Initialization
 var express = require('express'),
     authentication = require('express-authentication'),
@@ -99,7 +115,7 @@ app.use('/api/Contacts', Contacts); //This is the Url.
   var Users = require('./server/Users'); //This is where the js file is.
   Users.dbConfig = dbConfig;
   app.use('/api/Users', Users); //This is the Url.
-  
+
   //UserSettings
   var UserSettings = require('./server/UserSettings'); //This is where the js file is.
   UserSettings.dbConfig = dbConfig;

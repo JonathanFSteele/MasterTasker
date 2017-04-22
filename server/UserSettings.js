@@ -20,13 +20,13 @@ var q = require('q');
 var router = express.Router();
 
 //SQL Query functions:
-router.db_getUserAccount = function(req)
+router.db_UpdateUserDisplayName = function(displayName, email)
 {
+  console.log("UserSettings: Updating User Display Name, ", displayName);
   var deferred = q.defer();
   var connection = mysql.createConnection(router.dbConfig);
-  var query_str = "SELECT * FROM tldb.Users_tbl";
-  // var query_var = [name]; //Use if there are variables in the Query String -Replace- name with an array of needed variables in proper order (seperated by commas).
-  var query_var; //null //Use if there are no variables in Query String
+  var query_str = "UPDATE tldb.Users_tbl SET DisplayName=? WHERE Email=?;";
+  var query_var = [displayName, email];
   var query = connection.query(query_str, query_var, function (err, rows, fields) {
       if (err) {
         deferred.reject(err);
@@ -36,7 +36,7 @@ router.db_getUserAccount = function(req)
       }
   });
   return deferred.promise;
-}; //end db_getUserAccount()
+}; //end db_SetUserToken()
 
 //Routes for this module:
 router.use(function timeLog (req, res, next) {
@@ -44,24 +44,36 @@ router.use(function timeLog (req, res, next) {
   next()
 })
 
-//Define the Users default route
-router.get('/', function (req, res) {
-  res.send('UserSettings')
+//Define the Users Update Display Name route
+router.post('/UpdateDisplayName', function (req, res) {
+  var response = {
+    UserID: '',
+    authToken: '',
+    DisplayName: '',
+    Email: '',
+    Password: '',
+    authorizedTF: true,
+    message: ''
+  }
+  var badResponse = {
+    authorizedTF: false,
+    message: "Incorrect User Parameters"
+  }
+  console.log("UserSettings: req.body items ",req.body);
+       router.db_UpdateUserDisplayName(req.body.DisplayName, req.body.ID)
+       .then(function(setUserRows){
+         console.log("UserSettings: DisplayName Return, ", req.body.DisplayName);
+         response.message = "Good User and Token Saved";
+         response.UserID = req.body.UserID;
+         response.authToken = req.body.authToken;
+         response.Email = req.body.Email;
+         response.Password = req.body.Password;
+         response.DisplayName = req.body.DisplayName;
+         res.send(response);
+       },function(error){
+         console.log(error);
+         res.status(500).send(error);
+       });
 })
-
-//Define the Account get route
-router.get('/Account', function (req, res) {
-  var result = [];
-  console.log("req user record: ",req.authentication); //req.authentication will tell you what user is currently logged in (req.authentication.Email - to get the current email for the logged in user.)
-  router.db_getUserAccount(req)
-   .then(function(rows){
-     console.log('rows result',rows);
-     res.send(rows);
-    },function(error){
-     console.log(error);
-     res.status(500).send(error);
-   });
-})
-
 
 module.exports = router;
