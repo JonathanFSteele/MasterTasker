@@ -60,6 +60,25 @@ router.db_getTags = function(GroupID)
 }; //end db_getGroupsList()
 
 
+router.db_submitND = function(displayName, description, id)
+{
+  console.log("updating info in groupDetails: ", displayName, description);
+  var deferred = q.defer(); // Use Q
+  var connection = mysql.createConnection(router.dbConfig);
+  var query_str = "UPDATE tldb.Groups_tbl SET DisplayName = ?, Description = ? WHERE ID=?;";
+  var query_var = [displayName, description, id];
+  var query = connection.query(query_str, query_var, function (err, rows, fields) {
+      if (err) {
+        deferred.reject(err);
+      }
+      else {
+        deferred.resolve(rows);
+      }
+  });
+  return deferred.promise;
+}; //end db_SetUserToken()
+
+
 
 //Routes for this module:
 router.use(function timeLog (req, res, next) {
@@ -119,6 +138,20 @@ router.get('/Tags', function (req, res) {
      console.log(error);
      res.status(500).send(error);
    });
+})
+
+router.post('/submitND', function (req, res) {
+  var response = {
+    DisplayName: '',
+    Description: '',
+    id: '',
+  }
+  var badResponse = {
+    authorizedTF: false,
+    message: "Incorrect User Parameters"
+  }
+  console.log("UserSettings: req.body items ",req.body);
+       router.db_submitND(req.body.DisplayName, req.body.Description, req.body.ID);
 })
 
 

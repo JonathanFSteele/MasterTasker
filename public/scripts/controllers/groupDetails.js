@@ -26,7 +26,17 @@ app.controller('groupDetailsController', function($scope, $http, $location) {
   // $scope.Groups = [];
 
 
-
+  $scope.submitND = function(DisplayName, Description){
+    console.log("submitND function called", DisplayName, Description);
+    $scope.data = {"DisplayName": DisplayName, "Description": Description, "ID":$location.search().id };
+    console.log("data: ", $scope.data);
+    var message="";
+    $http.post("/api/GroupDetails/submitND", $scope.data)
+    .then(function(response) {
+      console.log("SubmitND response: ", response);
+      $scope.Tags = response.data;
+    });
+  };
 
 
 
