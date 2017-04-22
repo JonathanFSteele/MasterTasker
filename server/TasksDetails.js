@@ -18,6 +18,7 @@ router.db_getTaskByID = function(TaskID)
       else {
         deferred.resolve(rows);
       }
+      connection.end();
   });
   return deferred.promise;
 }; //end db_getGroupsList()
@@ -36,6 +37,7 @@ router.db_getGroupMembersByID = function(GroupID)
       else {
         deferred.resolve(rows);
       }
+      connection.end();
   });
   return deferred.promise;
 }; //end db_getGroupsList()

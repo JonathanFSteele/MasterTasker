@@ -18,6 +18,7 @@ router.db_getUserList = function(req)
       else {
         deferred.resolve(rows);
       }
+      connection.end();
   });
   return deferred.promise;
 }; //end db_getUserList()

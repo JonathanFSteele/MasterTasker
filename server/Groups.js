@@ -18,6 +18,7 @@ router.db_getGroupsList = function(UserID)
       else {
         deferred.resolve(rows);
       }
+      connection.end();
   });
   return deferred.promise;
 }; //end db_getGroupsList()

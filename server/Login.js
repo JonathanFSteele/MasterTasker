@@ -17,6 +17,7 @@ router.db_FindUser = function(email, password)
       else {
         deferred.resolve(rows);
       }
+      connection.end();
   });
   return deferred.promise;
 }; //end db_FindUser()
@@ -34,6 +35,7 @@ router.db_SetUserToken = function(email, token)
       else {
         deferred.resolve(rows);
       }
+      connection.end();
   });
   return deferred.promise;
 }; //end db_SetUserToken()

@@ -26,6 +26,7 @@ router.db_getTasksList = function(GroupID, UserID)
       else {
         deferred.resolve(rows);
       }
+      connection.end();
   });
   return deferred.promise;
 }; //end db_getTasksList()

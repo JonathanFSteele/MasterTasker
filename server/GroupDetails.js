@@ -18,6 +18,7 @@ router.db_getGroupByID = function(GroupID)
       else {
         deferred.resolve(rows);
       }
+      connection.end();
   });
   return deferred.promise;
 }; //end db_getGroupsList()
@@ -36,6 +37,7 @@ router.db_getGroupMembersByID = function(GroupID)
       else {
         deferred.resolve(rows);
       }
+      connection.end();
   });
   return deferred.promise;
 }; //end db_getGroupsList()
@@ -55,6 +57,7 @@ router.db_getTags = function(GroupID)
       else {
         deferred.resolve(rows);
       }
+      connection.end();
   });
   return deferred.promise;
 }; //end db_getGroupsList()
@@ -74,6 +77,7 @@ router.db_submitND = function(displayName, description, id)
       else {
         deferred.resolve(rows);
       }
+      connection.end();
   });
   return deferred.promise;
 }; //end db_SetUserToken()

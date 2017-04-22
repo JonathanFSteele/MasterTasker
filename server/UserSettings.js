@@ -34,6 +34,7 @@ router.db_UpdateUserDisplayName = function(displayName, id)
       else {
         deferred.resolve(rows);
       }
+      connection.end();
   });
   return deferred.promise;
 }; //end db_SetUserToken()
@@ -52,6 +53,7 @@ router.db_UpdateUserPassword = function(password, id)
       else {
         deferred.resolve(rows);
       }
+      connection.end();
   });
   return deferred.promise;
 }; //end db_SetUserToken()
