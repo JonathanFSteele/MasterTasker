@@ -68,7 +68,9 @@ app.controller('groupDetailsController', function($scope, $http, $location, $roo
        }
   };
 
-
+$scope.back = function(){
+  $location.path("/groups");
+}
 
 
 });
