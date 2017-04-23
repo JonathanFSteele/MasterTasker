@@ -105,6 +105,26 @@ router.db_createND = function(displayName, description, Ownerid)
 }; //end db_SetUserToken()
 
 
+router.db_deleteGP = function(id)
+{
+   console.log("DELETING GROUP!!!!!: ", id);
+  var deferred = q.defer(); // Use Q
+  var date = new Date();
+  var connection = mysql.createConnection(router.dbConfig);
+  var query_str = "UPDATE tldb.Groups_tbl SET DeleteDT= ? WHERE ID=?;";
+  var query_var = [date, id];
+  var query = connection.query(query_str, query_var, function (err, rows, fields) {
+  if (err) {
+        deferred.reject(err);
+      }
+      else {
+        deferred.resolve(rows);
+      }
+  });
+  return deferred.promise;
+}; //end db_SetUserToken()
+
+
 
 //Routes for this module:
 router.use(function timeLog (req, res, next) {
@@ -202,6 +222,24 @@ router.post('/submitND', function (req, res) {
     response.id = req.body.CurrUser;
     res.send(response);
      }
+})
+
+
+router.post('/deleteGP', function (req, res) {
+  var response = {
+    GroupID: '',
+    message: ''
+  }
+  var badResponse = {
+    authorizedTF: false,
+    message: "Incorrect Parameters"
+  }
+
+    router.db_deleteGP(req.body.ID);
+    console.log("UserSettings, submiting: req.body items ",req.body);
+    response.message = "Group is gone FOREVER!";
+    response.GroupID = req.body.ID;
+    res.send(response);
 })
 
 
