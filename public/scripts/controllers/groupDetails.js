@@ -34,12 +34,12 @@ app.controller('groupDetailsController', function($scope, $http, $location, $roo
       var message="";
 
 
-        $http.post("/api/GroupDetails/submitND", $scope.data)
-       .then(function(response) {
-        console.log("SubmitND response: ", response);
-        $location.path("/groups");
-        //$scope.Tags = response.data
-      });
+      $http.post("/api/GroupDetails/submitND", $scope.data)
+       .then(function(data, response) {
+       console.log("groupDetails: SubmitND response, ", data);
+       $location.url($location.path())
+       $location.path("/groups");
+});
     };
 
 

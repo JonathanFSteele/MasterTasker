@@ -196,6 +196,11 @@ router.post('/submitND', function (req, res) {
   else {
     router.db_submitND(req.body.DisplayName, req.body.Description, req.body.ID, req.body.CurrUser);
     console.log("UserSettings, submiting: req.body items ",req.body);
+    response.message = "Good User and Token Saved";
+    response.DisplayName = req.body.DisplayName;
+    response.Description = req.body.Description;
+    response.id = req.body.CurrUser;
+    res.send(response);
      }
 })
 
