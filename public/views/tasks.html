@@ -1,79 +1,116 @@
+<!--
+   - NAME: tasks.html
+   - CONTROLLER: tasks.js
+   - PARENT: index.html
+   - Created: Jonathan F. Steele
+   - Last Modified: 4/23/17 <- JFS
+   - DESCRIPTION: This page is suppose to display all of the tasks that the current logged on user is
+	 - connected with. The user should be able to add Groups and Tasks while able to edit the Tasks as well.
+   -->
+
+<!--START HTML Body-->
+<!-- START Div Header -->
+<div class="row">
+	<div class="col-xs-12">
+		<h1>Tasks</h1>
+	</div>
+</div>
+<!-- END Div Header -->
+<!--START Table-->
 <div>
-	<h1>Tasks</h1>
-</div>
-<!--Top Row of Buttons-->
-<div class="row">
-	<div class="col-xs-10 col-sm-3">
-		<div class="row">
-			<div class="col-xs-2 col-sm-1">
-				<button type="button" value="0" class="btn btn-info">+</button>
-			</div>
-			<div class="col-xs-8 col-sm-10">
-				<select class="form-control" ng-options="group.ID as group.DisplayName for group in Groups" ng-model="currentGroupID" ng-change="CurrentSelectedGroup()">
-				</select>
-				<!-- <select class="form-control" ng-model="currentGroupID" ng-change="CurrentSelectedGroup()" placeholder="All">
-					<option value="">ALL</option>
-					<option ng-repeat="group in Groups" value="{{group.ID}}">{{group.DisplayName}}</option>
-				</select> -->
-			</div>
-			<div class="visible-xs col-xs-2 col-sm-1" style="text-align: right;">
-					<i class="fa fa-refresh fa-2x fa-spin"></i>
-			</div>
-		</div>
-  </div>
-	<div class="col-xs-12 col-sm-3">
-			<a style="color: white; padding-top: 19px;">
-				<button type="button" ng-click="GoToTaskDetails(0)" class="btn btn-info btn-block">Add New Task</button>
-			</a>
-  </div>
-	<div class="col-xs-12 col-sm-2">
-		<div class="row">
-			<div class="col-xs-6">
-				<label>Show completed?</label>
-			</div>
-			<div class="col-xs-6">
-				 <input type="checkbox" value="">
-			</div>
-		</div>
-	</div>
-	<div class="col-xs-12 col-sm-3 col-xs-push-10">
-		 <div class="row">
-			<form class="navbar-right">
-					<div class="input-group">
-   					<input type="Search" placeholder="Search..." class="form-control" />
-   				  <div class="input-group-btn">
-       			  <button class="btn btn-info">
-       				<span class="glyphicon glyphicon-search"></span>
-       			  </button>
-   				 </div>
-					</div>
-			</form>
-		</div>
-	</div>
-	<div class="hidden-xs col-sm-1" style="text-align: right;">
-			<i class="fa fa-refresh fa-spin" style="font-size:32px"></i>
-	</div>
-</div>
-<!--Table of Tasks-->
-<div class="row">
-	<table class="table table-responsive ZachTbl">
- 	<tr>
-   	<th>Task Name</th>
-   	<th>Assigned To</th>
-		<th>Tags</th>
-		<th>Due Date</th>
-		<th>v</th>
- 	</tr>
-	 	<tr ng-repeat="tasks in Tasks" ng-click="GoToTaskDetails(tasks)">
-	   	<td>{{tasks.TasksName}}</td>
-	   	<td>{{tasks.DisplayName}}</td>
-			<td>{{tasks.TagID}}</td>
-			<td>{{tasks.DueDT}}</td>
-	   	<td>
-				<div class="checkbox">
-					<input type="checkbox" value="">
+	<!--START Table Header-->
+	<div class="row">
+		<!--START Groups Left Side-->
+		<div class="col-xs-12 col-sm-3">
+			<div class="row" style="margin-top: 8px;">
+				<!-- START Groups Dropdown w/ + Button -->
+				<div class="input-group col-xs-10 col-sm-12">
+					<span class="input-group-btn">
+						<button class="btn btn-info" type="button" value="0" ng-click="">+</button>
+					</span>
+					<select class="form-control" ng-options="group.ID as group.DisplayName for group in Groups" ng-model="currentGroupID" ng-change="CurrentSelectedGroup()">
+					</select>
 				</div>
-			</td>
+				<!-- END Groups Dropdown w/ + Button -->
+				<!--START Refresh--><!--Will Only Show up when the screen is extremely small-->
+				<div class="visible-xs col-xs-2 col-sm-1" style="text-align: right;">
+					<div style="width: 100%">
+						<!-- <i class="fa fa-refresh fa-spin" style="font-size:32px; color: rgb(91,192,222);"></i> -->
+						<i class="fa fa-check" style="font-size:32px; color: rgb(91,192,222);"></i>
+					</div>
+				</div>
+				<!--END Refresh-->
+			</div>
+	  </div>
+		<!--END Groups Left Side-->
+		<!--START Add New Task Button-->
+		<div class="col-xs-6 col-sm-2 col-md-2" style="margin-top: 8px;">
+			<button type="button" ng-click="GoToTaskDetails(0)" style="color: white;" class="btn btn-info btn-block">Add New Task</button>
+	  </div>
+		<!--END Add New Task Button-->
+		<!--START Show Completed CheckBox-->
+		<div class="col-xs-6 col-sm-2 col-md-2" style="max-width: 150px; min-width: 150px; margin-top: 8px;">
+			<div class="row" style="padding-right: 0px;">
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" value=""> Show Completed
+					</label>
+				</div>
+			</div>
+		</div>
+		<!--END Show Completed CheckBox-->
+		<!--START Search Input-->
+		<div class="col-xs-12 col-sm-4 col-md-3 col-lg-4" style="float: right;">
+			<div class="row">
+				<div class="col-xs-12 col-sm-11">
+					<form class="navbar-form" role="search" style="padding: 0px;">
+						<div class="input-group add-on" style="margin-left: 15px; margin-right: 15px;">
+							<input class="form-control" placeholder="Search" type="text">
+							<div class="input-group-btn">
+								<button class="btn btn-warning" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<!--START Refresh--><!--Will Only Show up when the screen is greater than extremely small-->
+				<div>
+					<div class="hidden-xs col-sm-1" style="text-align: right; padding-right: 0px; padding-left: 0px; padding-top: 8px;">
+						<div style="width: 100%">
+							<!-- <i class="fa fa-refresh fa-spin" style="font-size:32px; color: rgb(91,192,222);"></i> -->
+							<i class="fa fa-check" style="font-size:32px; color: rgb(91,192,222);"></i>
+						</div>
+					</div>
+				</div>
+				<!--END Refresh-->
+			</div>
+		</div>
+		<!--END Search Input-->
+	</div>
+	<!--END Table Header-->
+	<!--START Table Body-->
+	<div class="row">
+		<table class="table table-responsive ZachTbl">
+	 	<tr>
+	   	<th>Task Name</th>
+	   	<th>Assigned To</th>
+			<th>Tags</th>
+			<th>Due Date</th>
+			<th>v</th>
 	 	</tr>
-	</table>
+		 	<tr ng-repeat="tasks in Tasks" ng-click="GoToTaskDetails(tasks)">
+		   	<td>{{tasks.TasksName}}</td>
+		   	<td>{{tasks.DisplayName}}</td>
+				<td>{{tasks.TagID}}</td>
+				<td>{{tasks.DueDT}}</td>
+		   	<td>
+					<div class="checkbox">
+						<input type="checkbox" value="">
+					</div>
+				</td>
+		 	</tr>
+		</table>
+	</div>
+	<!--END Table Body-->
 </div>
+<!--END Table-->
+<!--END HTML Body-->
