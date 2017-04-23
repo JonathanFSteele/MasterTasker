@@ -11,12 +11,12 @@ router.db_getTasksList = function(GroupID, UserID)
   var connection = mysql.createConnection(router.dbConfig);
   if(GroupID == 0)
   {
-    var query_str = "SELECT * FROM tldb.Tasks_vw WHERE GroupUser = ?";
+    var query_str = "SELECT * FROM tldb.Tasks_vw WHERE GroupUserID = ?";
     var query_var = [UserID];
   }
   else
   {
-    var query_str = "SELECT * FROM tldb.Tasks_vw WHERE GroupID = ? AND GroupUser = ?";
+    var query_str = "SELECT * FROM tldb.Tasks_vw WHERE GroupID = ? AND GroupUserID = ?";
     var query_var = [GroupID, UserID];
   }
   var query = connection.query(query_str, query_var, function (err, rows, fields) {

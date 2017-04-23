@@ -26,7 +26,7 @@
 				<!-- START Groups Dropdown w/ + Button -->
 				<div class="input-group col-xs-10 col-sm-12">
 					<span class="input-group-btn">
-						<button class="btn btn-info" type="button" value="0" ng-click="">+</button>
+						<button class="btn btn-info" type="button" value="0" ng-click="GoToGroupsDetails()">+</button>
 					</span>
 					<select class="form-control" ng-options="group.ID as group.DisplayName for group in Groups" ng-model="currentGroupID" ng-change="CurrentSelectedGroup()">
 					</select>
@@ -97,8 +97,8 @@
 			<th>Due Date</th>
 			<th>v</th>
 	 	</tr>
-		 	<tr ng-repeat="tasks in Tasks" ng-click="GoToTaskDetails(tasks)">
-		   	<td>{{tasks.TasksName}}</td>
+		 	<tr ng-repeat="tasks in Tasks" ng-click="GoToTaskDetails(tasks.TasksID)">
+		   	<td>{{tasks.TaskID}}{{tasks.TaskName}}</td>
 		   	<td>{{tasks.DisplayName}}</td>
 				<td>{{tasks.TagID}}</td>
 				<td>{{tasks.DueDT}}</td>

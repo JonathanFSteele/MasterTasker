@@ -1,12 +1,31 @@
+/**
+ * @name tasks.js
+ * @author Charles Choi - Created: 3/22/17 | LastModified: 4/23/17 - JFS
+ * @summary This is the controller for the tasks.js page to allow users to edit and create task/groups.
+ * ---------------------------------------------------------------------------
+ * @module app.controller tasksController($scope, $http, $location)
+ * @function GoToTaskDetails(object)
+ * @function CurrentSelectedGroup(ID)
+ * @function GoToGroupsDetails()
+ * @function getTasks()
+ * @function $http.get("/api/Groups/List")
+ *  | @function .then(response)
+ * ---------------------------------------------------------------------------
+ * @description This is the controller for the tasks.js page to allow users to edit and create task/groups.
+ * It allows a search functionality and the user to mark off tasks with a checkbox. Users organize their
+ * tasks through a group dropdown or they can just display ALL.
+ **/
 app.controller('tasksController', function($scope, $http, $location) {
-  // create a message to display in our view
   $scope.message = 'This is the tasks Controller';
   console.log($scope.message);
+
+  //Scope Variables
    $scope.Tasks = [];
    $scope.currentGroupID = 0;
 
+  //Initialization of GoToTaskDetails function passing in an object
   $scope.GoToTaskDetails = function(object){
-    console.log("Going to Current Task Details", object.ID);
+    console.log("tasksController: Going to Current Task Details, ", object);
     if(object == 0)
     {
       $location.path( "/tasks/tasksDetails").search('id=0');
@@ -17,36 +36,39 @@ app.controller('tasksController', function($scope, $http, $location) {
     }
   }
 
+  //Initialization of CurrentSelectedGroup function passing in an ID
   $scope.CurrentSelectedGroup = function(ID){
-    console.log("Current Group by ID: ", $scope.currentGroupID);
+    console.log("tasksController: Current Group by ID, ", $scope.currentGroupID);
     $scope.getTasks();
   }
 
-  $scope.GoToGroupsDetails = function(object){
-    console.log("Going to Current Task Details", object.ID);
+  //Initialization of GoToGroupDetails function
+  $scope.GoToGroupsDetails = function(){
+    console.log("tasksController: Going to Current Task Details");
     $location.path( "/groups/groupDetails").search('id=0');
   }
 
-  //Go to the server ang get the json array.
+  //Initialization of getTasks function //Go to the server ang get the json array.
   $scope.getTasks = function(){
+    console.log("tasksController: getTasks function");
     $http.get("/api/Tasks/List?GroupID="+$scope.currentGroupID)
     .then(function(response) {
-      console.log("Task response: ",response);
+      console.log("tasksController: Task response, ",response);
       $scope.Tasks = response.data;
     });
   };
   $scope.getTasks();
 
-//Go to the groups server
+  //$http.get function passing going to the groups server
   $http.get("/api/Groups/List")
   .then(function(response) {
-    console.log("1111: Group response: ",response);
+    console.log("tasksController: Group response, ",response);
     var defaultGroup = {
       "ID":0,
       "DisplayName":"ALL",
       }
     response.data.unshift(defaultGroup);
-    console.log("1111: Group response: ",response);
+    console.log("tasksController: Group response, ",response);
 
     $scope.Groups = response.data;
     $scope.currentGroupID = 0;
