@@ -21,24 +21,24 @@ app.controller('tasksController', function($scope, $http, $location) {
 
   //Scope Variables
    $scope.Tasks = [];
-   $scope.currentGroupID = 0;
+   $scope.currentTaskID = 0;
 
   //Initialization of GoToTaskDetails function passing in an object
-  $scope.GoToTaskDetails = function(object){
-    console.log("tasksController: Going to Current Task Details, ", object);
-    if(object == 0)
+  $scope.GoToTaskDetails = function(ID){
+    console.log("tasksController: Going to Current Task Details, ", ID);
+    if(ID == 0)
     {
       $location.path( "/tasks/tasksDetails").search('id=0');
     }
     else
     {
-      $location.path( "/tasks/tasksDetails").search('id=' + object.ID);
+      $location.path( "/tasks/tasksDetails").search('id=' + ID);
     }
   }
 
   //Initialization of CurrentSelectedGroup function passing in an ID
   $scope.CurrentSelectedGroup = function(ID){
-    console.log("tasksController: Current Group by ID, ", $scope.currentGroupID);
+    console.log("tasksController: Current Group by ID, ", $scope.currentTaskID);
     $scope.getTasks();
   }
 
@@ -51,7 +51,7 @@ app.controller('tasksController', function($scope, $http, $location) {
   //Initialization of getTasks function //Go to the server ang get the json array.
   $scope.getTasks = function(){
     console.log("tasksController: getTasks function");
-    $http.get("/api/Tasks/List?GroupID="+$scope.currentGroupID)
+    $http.get("/api/Tasks/List?GroupID="+$scope.currentTaskID)
     .then(function(response) {
       console.log("tasksController: Task response, ",response);
       $scope.Tasks = response.data;
