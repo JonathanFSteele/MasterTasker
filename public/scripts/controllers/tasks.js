@@ -28,11 +28,11 @@ app.controller('tasksController', function($scope, $http, $location) {
     console.log("tasksController: Going to Current Task Details, ", ID);
     if(ID == 0)
     {
-      $location.path( "/tasks/tasksDetails").search('id=0');
+      $location.path( "/tasks/taskDetails").search('id=0');
     }
     else
     {
-      $location.path( "/tasks/tasksDetails").search('id=' + ID);
+      $location.path( "/tasks/taskDetails").search('id=' + ID);
     }
   }
 

@@ -1,6 +1,6 @@
-app.controller('tasksDetailsController', function($scope, $location, $sce) {
+app.controller('taskDetailsController', function($scope, $location, $sce, $http) {
   // create a message to display in our view
-  $scope.message = 'This is the tasksDetails Controller';
+  $scope.message = 'This is the taskDetails Controller';
   $scope.myDate = new Date();
   $scope.googleAddress ='2775 North Roadrunner, Las Cruces, NM 88011';
   $scope.getGoogleMapHTML = function(){
@@ -29,4 +29,17 @@ app.controller('tasksDetailsController', function($scope, $location, $sce) {
   }
 
   console.log($location.search().id);
-});
+
+
+  //Working on this
+  $scope.load = function(){
+    console.log("Loading load function");
+    $http.get("/api/TaskDetails/GroupMembers?id="+$location.search().id)
+    .then(function(response) {
+      console.log("GroupMembers response: ",response);
+      $scope.GroupMembers = response.data;
+    });
+  }
+
+  $scope.load();
+});//end of the controller

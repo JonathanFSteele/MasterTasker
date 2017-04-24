@@ -4,12 +4,12 @@ var q = require('q');
 var router = express.Router();
 
 //SQL Query functions:
-router.db_getTaskByID = function(TaskID)
+router.db_getTasksByID = function(TaskID)
 {
   var deferred = q.defer(); // Use Q
   var connection = mysql.createConnection(router.dbConfig);
   var query_str = "SELECT * FROM tldb.Tasks_vw WHERE ID=?";
-  var query_var = [GroupID];
+  var query_var = [TaskID];
   //var query_var; //null
   var query = connection.query(query_str, query_var, function (err, rows, fields) {
       if (err) {
@@ -21,14 +21,14 @@ router.db_getTaskByID = function(TaskID)
       connection.end();
   });
   return deferred.promise;
-}; //end db_getGroupsList()
+}; //end db_getTasksList()
 
-router.db_getGroupMembersByID = function(GroupID)
+router.db_getTasksDescriptionByID = function(TaskID)
 {
   var deferred = q.defer(); // Use Q
   var connection = mysql.createConnection(router.dbConfig);
-  var query_str = "SELECT * FROM tldb.GroupMembers_vw WHERE GroupID=?";
-  var query_var = [GroupID];
+  var query_str = "SELECT * FROM tldb.Tasks_tbl WHERE TaskID=?";
+  var query_var = [TaskID];
   //var query_var; //null
   var query = connection.query(query_str, query_var, function (err, rows, fields) {
       if (err) {
@@ -41,7 +41,6 @@ router.db_getGroupMembersByID = function(GroupID)
   });
   return deferred.promise;
 }; //end db_getGroupsList()
-
 
 //Routes for this module:
 router.use(function timeLog (req, res, next) {
@@ -57,7 +56,7 @@ router.get('/', function (req, res) {
 // define the List route
 router.get('/ByID', function (req, res) {
   var result = [];
-  console.log("req Group Details req.query.id: ",req.query.id); //req.authentication will tell you what user is currently logged in (req.authentication.Email - to get the current email for the logged in user.)
+  console.log("req Tasks Details req.query.id: ",req.query.id); //req.authentication will tell you what user is currently logged in (req.authentication.Email - to get the current email for the logged in user.)
 
   var GroupID = req.query.id;
 

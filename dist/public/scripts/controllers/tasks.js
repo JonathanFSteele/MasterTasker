@@ -8,11 +8,11 @@ app.controller('tasksController', function($scope, $http, $location) {
     console.log("Going to Current Task Details", object.ID);
     if(object == 0)
     {
-      $location.path( "/tasks/tasksDetails").search('id=0');
+      $location.path( "/tasks/taskDetails").search('id=0');
     }
     else
     {
-      $location.path( "/tasks/tasksDetails").search('id=' + object.ID);
+      $location.path( "/tasks/taskDetails").search('id=' + object.ID);
     }
   }
 

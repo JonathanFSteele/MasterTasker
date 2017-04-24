@@ -112,6 +112,11 @@ app.use('/api/Contacts', Contacts); //This is the Url.
   Tasks.dbConfig = dbConfig;
   app.use('/api/Tasks', Tasks); //This is the Url.
 
+  //Tasks API
+  var TaskDetails = require('./server/TaskDetails'); //This is where the js file is.
+  TaskDetails.dbConfig = dbConfig;
+  app.use('/api/TaskDetails', TaskDetails); //This is the Url.
+
   //users API for Users_tbl
   var Users = require('./server/Users'); //This is where the js file is.
   Users.dbConfig = dbConfig;

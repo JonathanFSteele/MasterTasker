@@ -22,10 +22,10 @@
 				controller  : 'tasksController'
 			})
 
-			// route for the tasksDetails page
-			.when('/tasks/tasksDetails', {
-				templateUrl : 'views/tasksDetails.html',
-				controller  : 'tasksDetailsController'
+			// route for the taskDetails page
+			.when('/tasks/taskDetails', {
+				templateUrl : 'views/taskDetails.html',
+				controller  : 'taskDetailsController'
 			})
 
 			// route for the login page
