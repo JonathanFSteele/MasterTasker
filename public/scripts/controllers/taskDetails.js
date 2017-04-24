@@ -34,10 +34,11 @@ app.controller('taskDetailsController', function($scope, $location, $sce, $http)
   //Working on this
   $scope.load = function(){
     console.log("Loading load function");
-    $http.get("/api/TaskDetails/GroupMembers?id="+$location.search().id)
+    $http.get("/api/TaskDetails/Task?id="+$location.search().id)
     .then(function(response) {
-      console.log("GroupMembers response: ",response);
-      $scope.GroupMembers = response.data;
+      console.log("Task response: ",response.data[0]);
+      var TaskDetails = response.data[0];
+      $scope.TaskName = TaskDetails.TaskName;
     });
   }
 

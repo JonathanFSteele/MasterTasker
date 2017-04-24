@@ -4,11 +4,11 @@ var q = require('q');
 var router = express.Router();
 
 //SQL Query functions:
-router.db_getTasksByID = function(TaskID)
+router.db_getTaskDetailsByID = function(TaskID)
 {
   var deferred = q.defer(); // Use Q
   var connection = mysql.createConnection(router.dbConfig);
-  var query_str = "SELECT * FROM tldb.Tasks_vw WHERE ID=?";
+  var query_str = "SELECT * FROM tldb.Tasks_tbl WHERE ID=?";
   var query_var = [TaskID];
   //var query_var; //null
   var query = connection.query(query_str, query_var, function (err, rows, fields) {
@@ -70,16 +70,16 @@ router.get('/ByID', function (req, res) {
    });
 })
 // define the List route
-router.get('/GroupMembers', function (req, res) {
+router.get('/Task', function (req, res) {
   var result = [];
-  console.log("req Group members req.query.id: ",req.query.id); //req.authentication will tell you what user is currently logged in (req.authentication.Email - to get the current email for the logged in user.)
+  console.log("req Task req.query.id: ",req.query.id); //req.authentication will tell you what user is currently logged in (req.authentication.Email - to get the current email for the logged in user.)
 
-  var GroupID = req.query.id;
+  var TaskID = req.query.id;
 
-  router.db_getGroupMembersByID(GroupID)
-   .then(function(rows){
-     console.log('rows result',rows);
-     res.send(rows);
+  router.db_getTaskDetailsByID(TaskID)
+   .then(function(data){
+     console.log('data result',data);
+     res.send(data);
     },function(error){
      console.log(error);
      res.status(500).send(error);
