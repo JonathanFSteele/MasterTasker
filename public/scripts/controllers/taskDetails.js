@@ -54,7 +54,9 @@ app.controller('taskDetailsController', function($scope, $location, $sce, $http,
   $scope.submitND = function(TaskName, Description, TagID, DueDT, Street, City, State, ZipCode){
       console.log("submitND function called", TaskName, Description, TagID, DueDT, Street, City, State, ZipCode);
       var user = $rootScope.authUser.UserID;
-      $scope.data = {"TaskName": TaskName, "Description": Description, "TagID": TagID, "DueDT": DueDT, "Street": Street, "City": City, "State": State, "ZipCode": ZipCode };
+      var id = $location.search().id;
+      var date = new Date();
+      $scope.data = {"TaskName": TaskName, "Description": Description, "LastUpdateUser": user, "LastUpdateDT": date, "TagID": TagID, "DueDT": DueDT, "Street": Street, "City": City, "State": State, "ZipCode": ZipCode, 'ID': id };
       console.log("data: ", $scope.data);
       //console.log("data: ", data);
       var message="";

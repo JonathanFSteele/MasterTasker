@@ -86,14 +86,14 @@ router.get('/Task', function (req, res) {
    });
 })
 
-router.db_submitND = function(TaskName, Description, LastUpdateUser, LastUpdateDT, TagID, DueDT, Street, City, State, ZipCode, UserID)
+router.db_submitND = function(TaskName, Description, LastUpdateUser, LastUpdateDT, TagID, DueDT, Street, City, State, ZipCode, UserID, id)
 {
   console.log("updating info in taskDetails: ", TaskName, Description);
   var deferred = q.defer(); // Use Q
   var date = new Date();
   var connection = mysql.createConnection(router.dbConfig);
   var query_str = "UPDATE tldb.Tasks_tbl SET TaskName=?, Description=?, LastUpdateUser=?, LastUpdateDT=?, TagID=?, DueDT=?, Street=?, City=?, State=?, ZipCode=?  WHERE ID=?;";
-  var query_var = [TaskName, Description];
+  var query_var = [TaskName, Description, LastUpdateUser, LastUpdateDT, TagID, DueDT, Street, City, State, ZipCode, id ];
   var query = connection.query(query_str, query_var, function (err, rows, fields) {
       if (err) {
         deferred.reject(err);
@@ -145,7 +145,7 @@ router.db_deleteGP = function(id)
 }; //end db_SetUserToken()
 
 
-router.post('/submitND', function (req, res) {
+router.post('/SubmitND', function (req, res) {
   var response = {
     TaskName: '',
     Description: '',
@@ -167,7 +167,7 @@ router.post('/submitND', function (req, res) {
       console.log("TaskDetails, creating: req.body items ",req.body);
       console.log("created new task", req.body.Email);
       response.message = "Good User and Token Saved";
-      response.DisplayName = req.body.TaskName;
+      response.TaskName = req.body.TaskName;
       response.Description = req.body.Description;
       response.id = req.body.CurrUser;
       res.send(response);
@@ -177,10 +177,10 @@ router.post('/submitND', function (req, res) {
     });
   }
   else {
-    router.db_submitND(req.body.TaskName, req.body.Description, req.body.TagID, req.body.Street, req.body.City, req.body.State, req.body.ZipCode, req.body.CurrUser);
+    router.db_submitND(req.body.TaskName, req.body.Description, req.body.LastUpdateUser, req.body.LastUpdateDT, req.body.TagID, req.body.DueDT, req.body.Street, req.body.City, req.body.State, req.body.ZipCode, req.body.CurrUser, req.body.ID);
     console.log("TaskDetails, submiting: req.body items ",req.body);
     response.message = "Good User and Token Saved";
-    response.DisplayName = req.body.TaskName;
+    response.TaskName = req.body.TaskName;
     response.Description = req.body.Description;
     response.id = req.body.CurrUser;
     res.send(response);
