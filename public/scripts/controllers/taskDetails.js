@@ -79,7 +79,7 @@ app.controller('taskDetailsController', function($scope, $location, $sce, $http,
         var message="";
 
         if (user == Owner) {
-        $http.post("/api/taskDetails/", $scope.data)
+        $http.post("/api/taskDetails/deleteGP", $scope.data)
          .then(function(data, response) {
          console.log("taskDetails: deleteGP response, ", data);
          $location.url($location.path())

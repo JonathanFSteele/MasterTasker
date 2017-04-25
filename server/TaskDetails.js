@@ -86,29 +86,124 @@ router.get('/Task', function (req, res) {
    });
 })
 
-// router.post('/', function (req, res) {
-//   var response = {
-//     TaskName: '',
-//     Description: '',
-//     TagID: '',
-//     Street: '',
-//     City: '',
-//     State: '',
-//     ZipCode: '',
-//     ImageUrl: '',
-//     message: ""
-//   }
-//   var badResponse = {
-//     authToken: null,
-//     message: "Incorrect User Parameters"
-//   }
-//   console.log("TaskDetailsPostReceived req.TaskName: ",req.TaskName);
-//   router.db_CreateTask(req.body.TaskName, req.body.Description, req.body.TagID, req.body.Street, req.body.City, req.body.State, req.body.ZipCode, req.body.ImageUrl)
-//   .then(function(setUserRows){
-//     //console.log("CreateTask Post Received. Setting New Token for User: ", req.body.Email);
-//     //response.message = "Good User and Token Saved";
-//     res.send(response);
-// });
+router.db_submitND = function(TaskName, Description, LastUpdateUser, LastUpdateDT, TagID, DueDT, Street, City, State, ZipCode, UserID)
+{
+  console.log("updating info in taskDetails: ", TaskName, Description);
+  var deferred = q.defer(); // Use Q
+  var date = new Date();
+  var connection = mysql.createConnection(router.dbConfig);
+  var query_str = "UPDATE tldb.Tasks_tbl SET TaskName=?, Description=?, LastUpdateUser=?, LastUpdateDT=?, TagID=?, DueDT=?, Street=?, City=?, State=?, ZipCode=?  WHERE ID=?;";
+  var query_var = [TaskName, Description];
+  var query = connection.query(query_str, query_var, function (err, rows, fields) {
+      if (err) {
+        deferred.reject(err);
+      }
+      else {
+        deferred.resolve(rows);
+      }
+      connection.end();
+  });
+  return deferred.promise;
+}; //end db_SetUserToken()
+
+router.db_createND = function(TaskName, Description, LastUpdateUser, LastUpdateDT, TagID, DueDT, Street, City, State, ZipCode, UserID)
+{
+  console.log("creating info in taskDetails: ", TaskName, Description);
+  var deferred = q.defer(); // Use Q
+  var date = new Date();
+  var connection = mysql.createConnection(router.dbConfig);
+  var query_str = "INSERT INTO tldb.Tasks_tbl (TaskName, Description, LastUpdateUser, LastUpdateDT, TagID, Street, City, State, ZipCode) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+  var query_var = [TaskName, Description, LastUpdateUser, LastUpdateDT, TagID, DueDT, Street, City, State, ZipCode];
+  var query = connection.query(query_str, query_var, function (err, rows, fields) {
+      if (err) {
+        deferred.reject(err);
+      }
+      else {
+        deferred.resolve(rows);
+      }
+  });
+  return deferred.promise;
+}; //end db_SetUserToken()
+
+router.db_deleteGP = function(id)
+{
+   console.log("DELETING TASK!!!!!: ", id);
+  var deferred = q.defer(); // Use Q
+  var date = new Date();
+  var connection = mysql.createConnection(router.dbConfig);
+  var query_str = "UPDATE tldb.Tasks_tbl SET DeleteDT= ? WHERE ID=?;";
+  var query_var = [date, id];
+  var query = connection.query(query_str, query_var, function (err, rows, fields) {
+  if (err) {
+        deferred.reject(err);
+      }
+      else {
+        deferred.resolve(rows);
+      }
+  });
+  return deferred.promise;
+}; //end db_SetUserToken()
+
+
+router.post('/submitND', function (req, res) {
+  var response = {
+    TaskName: '',
+    Description: '',
+    TagID: '',
+    Street: '',
+    City: '',
+    State: '',
+    ZipCode: '',
+    message: ''
+  }
+  var badResponse = {
+    authorizedTF: false,
+    message: "Incorrect User Parameters"
+  }
+
+  if (req.body.ID == 0){
+    router.db_createND(req.body.TaskName, req.body.Description, req.body.TagID, req.body.Street, req.body.City, req.body.State, req.body.ZipCode, req.body.CurrUser)
+    .then(function(setgrouprows){
+      console.log("TaskDetails, creating: req.body items ",req.body);
+      console.log("created new task", req.body.Email);
+      response.message = "Good User and Token Saved";
+      response.DisplayName = req.body.TaskName;
+      response.Description = req.body.Description;
+      response.id = req.body.CurrUser;
+      res.send(response);
+    },function(error){
+      console.log(error);
+      res.status(500).send(error);
+    });
+  }
+  else {
+    router.db_submitND(req.body.TaskName, req.body.Description, req.body.TagID, req.body.Street, req.body.City, req.body.State, req.body.ZipCode, req.body.CurrUser);
+    console.log("TaskDetails, submiting: req.body items ",req.body);
+    response.message = "Good User and Token Saved";
+    response.DisplayName = req.body.TaskName;
+    response.Description = req.body.Description;
+    response.id = req.body.CurrUser;
+    res.send(response);
+     }
+})
+
+
+router.post('/deleteGP', function (req, res) {
+  var response = {
+    GroupID: '',
+    message: ''
+  }
+  var badResponse = {
+    authorizedTF: false,
+    message: "Incorrect Parameters"
+  }
+
+    router.db_deleteGP(req.body.ID);
+    console.log("TaskDetails, submiting: req.body items ",req.body);
+    response.message = "Task is deleted";
+    response.GroupID = req.body.ID;
+    res.send(response);
+})
 
 
 module.exports = router
