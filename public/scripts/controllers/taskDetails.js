@@ -39,6 +39,13 @@ app.controller('taskDetailsController', function($scope, $location, $sce, $http)
       console.log("Task response: ",response.data[0]);
       var TaskDetails = response.data[0];
       $scope.TaskName = TaskDetails.TaskName;
+      $scope.Description = TaskDetails.Description;
+      $scope.TagID = TaskDetails.TagID;
+      $scope.DueDT = TaskDetails.DueDT;
+      $scope.Street = TaskDetails.Street;
+      $scope.City = TaskDetails.City;
+      $scope.State = TaskDetails.State;
+      $scope.ZipCode = TaskDetails.ZipCode;
     });
   }
 
