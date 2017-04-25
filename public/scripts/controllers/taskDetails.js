@@ -34,7 +34,7 @@ app.controller('taskDetailsController', function($scope, $location, $sce, $http,
   //Working on this
   $scope.load = function(){
     console.log("Loading load function");
-    $http.get("/api/TaskDetails/Task?id="+$location.search().id)
+    $http.get("/api/taskDetails/Task?id="+$location.search().id)
     .then(function(response) {
       console.log("Task response: ",response.data[0]);
       var TaskDetails = response.data[0];
@@ -51,15 +51,15 @@ app.controller('taskDetailsController', function($scope, $location, $sce, $http,
 
   $scope.load();
 
-  $scope.submitND = function(DisplayName, Description){
-      console.log("submitND function called", DisplayName, Description);
+  $scope.submitND = function(TaskName, Description, TagID, DueDT, Street, City, State, ZipCode){
+      console.log("submitND function called", TaskName, Description, TagID, DueDT, Street, City, State, ZipCode);
       var user = $rootScope.authUser.UserID;
-      $scope.data = {"DisplayName": DisplayName, "Description": Description, "ID":$location.search().id, "CurrUser": user  };
+      $scope.data = {"TaskName": TaskName, "Description": Description, "TagID": TagID, "DueDT": DueDT, "Street": Street, "City": City, "State": State, "ZipCode": ZipCode };
       console.log("data: ", $scope.data);
+      //console.log("data: ", data);
       var message="";
 
-
-      $http.post("/api/TaskDetails/submitND", $scope.data)
+      $http.post("/api/taskDetails/SubmitND", $scope.data)
        .then(function(data, response) {
        console.log("taskDetails: SubmitND response, ", data);
        $("#map2").html($scope.getGoogleMapHTMLRaw());
@@ -79,7 +79,7 @@ app.controller('taskDetailsController', function($scope, $location, $sce, $http,
         var message="";
 
         if (user == Owner) {
-        $http.post("/api/TaskDetails/deleteGP", $scope.data)
+        $http.post("/api/taskDetails/", $scope.data)
          .then(function(data, response) {
          console.log("taskDetails: deleteGP response, ", data);
          $location.url($location.path())

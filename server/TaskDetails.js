@@ -86,7 +86,29 @@ router.get('/Task', function (req, res) {
    });
 })
 
-
+// router.post('/', function (req, res) {
+//   var response = {
+//     TaskName: '',
+//     Description: '',
+//     TagID: '',
+//     Street: '',
+//     City: '',
+//     State: '',
+//     ZipCode: '',
+//     ImageUrl: '',
+//     message: ""
+//   }
+//   var badResponse = {
+//     authToken: null,
+//     message: "Incorrect User Parameters"
+//   }
+//   console.log("TaskDetailsPostReceived req.TaskName: ",req.TaskName);
+//   router.db_CreateTask(req.body.TaskName, req.body.Description, req.body.TagID, req.body.Street, req.body.City, req.body.State, req.body.ZipCode, req.body.ImageUrl)
+//   .then(function(setUserRows){
+//     //console.log("CreateTask Post Received. Setting New Token for User: ", req.body.Email);
+//     //response.message = "Good User and Token Saved";
+//     res.send(response);
+// });
 
 
 module.exports = router
