@@ -111,18 +111,17 @@
 			<!-- Cancel Save-->
 	    <div class="form-group">
 	      <div class="col-sm-12 text-center">
-	          		<button type="submit" class="btn btn-default">Cancel</button>
-	          		<button type="submit" ng-click="save()" class="btn  btn-info">Save</button>
+	          		<button type="button" class="btn btn-success" ng-click="submitND(DisplayName, Description)">Save Changes</button>
 	      </div>
 	    </div>
 	    <br>
 			<div class="form-group">
 	      <div class="col-sm-12 text-center">
  						<div class="col-sm-6">
-	          	<button type="submit" class="btn btn-danger">Delete Task</button>
+	          	<button type="button" class="btn btn-danger" ng-click="deleteGP()">Delete</button>
 						</div>
  						<div class="col-sm-6">
-	          	<button type="submit" class="btn  btn-info">Return to Tasks</button>
+	          	<button type="submit" class="btn  btn-info" ng-click="back()">Return to Tasks</button>
 						</div>
 	      </div>
 	    </div>

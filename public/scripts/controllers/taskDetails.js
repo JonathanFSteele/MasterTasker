@@ -1,4 +1,4 @@
-app.controller('taskDetailsController', function($scope, $location, $sce, $http) {
+app.controller('taskDetailsController', function($scope, $location, $sce, $http, $rootScope) {
   // create a message to display in our view
   $scope.message = 'This is the taskDetails Controller';
   $scope.myDate = new Date();
@@ -50,4 +50,51 @@ app.controller('taskDetailsController', function($scope, $location, $sce, $http)
   }
 
   $scope.load();
+
+  $scope.submitND = function(DisplayName, Description){
+      console.log("submitND function called", DisplayName, Description);
+      var user = $rootScope.authUser.UserID;
+      $scope.data = {"DisplayName": DisplayName, "Description": Description, "ID":$location.search().id, "CurrUser": user  };
+      console.log("data: ", $scope.data);
+      var message="";
+
+
+      $http.post("/api/TaskDetails/submitND", $scope.data)
+       .then(function(data, response) {
+       console.log("taskDetails: SubmitND response, ", data);
+       $("#map2").html($scope.getGoogleMapHTMLRaw());
+       $location.url($location.path())
+       $location.path("/task");
+        });
+    };
+
+    $scope.deleteGP = function(){
+        console.log("deleteGP function called");
+        var user = $rootScope.authUser.UserID;
+        var Owner =$scope.OwnerID;
+        var id = $location.search().id;
+        console.log("taskDetails: OwnerID within deleteGP, ", $scope.OwnerID);
+        $scope.data = {"ID": id };
+        console.log("data: ", $scope.data);
+        var message="";
+
+        if (user == Owner) {
+        $http.post("/api/TaskDetails/deleteGP", $scope.data)
+         .then(function(data, response) {
+         console.log("taskDetails: deleteGP response, ", data);
+         $location.url($location.path())
+         $location.path("/task");
+         })
+      }
+       else {
+         //TODO:  add prompt to say "you cannot delete a group if you are not the leader"
+           console.log("You cannot delete a group if you are not the leader");
+       }
+  };
+
+$scope.back = function(){
+  $location.path("/task");
+}
+
+
 });//end of the controller
