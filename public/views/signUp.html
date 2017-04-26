@@ -1,58 +1,78 @@
-<form ng-app="loginController" class="container text-center" style="margin-top: 50px;">
-	<div class="row" ng-show="MessageType == 1">
-		<div class="alert alert-danger fade in">
-			{{Message}}
-		</div>
-	</div>
-	<div class="row" ng-show="MessageType == 2">
-		<div class="alert alert-info fade in">
-			{{Message}}
-		</div>
-	</div>
+<!--
+   - NAME: signUp.html
+   - CONTROLLER: signUp.js
+   - PARENT: index.html <- Header of this file is blocked out on this page
+   - Created: Jonathan F. Steele 2/26/17
+   - Last Modified: 4/26/17 <- JFS
+   - DESCRIPTION: This page allows the user to signup for the Master Tasker Website.
+   -->
+<!-- START Form -->
+<form ng-app="loginController" class="container text-center form-horizontal-center" style="margin-top: 50px;" data-toggle="validator">
+	<!-- START Form Header Image -->
 	<div class="row" style="padding: 30px;">
 		<img class="col-xs-12 col-sm-offset-2 col-sm-9" src="images/MasterTaskerLoginTitleImagexs.png"/>
 	</div>
+	<!-- END Form Header Image -->
+	<!-- START Form Body -->
 	<div>
+		<!-- START Sign Up Title -->
 		<div style="padding: 10px;">
 			<span style="font-size: 24px;">Sign Up</span>
 		</div>
+		<!-- END Sign Up Title -->
+		<!-- START Input List -->
 		<div>
+			<!-- START Email Input -->
 			<div class="row">
-				<div class="form-group col-xs-12 col-sm-offset-3 col-sm-6">
-				  <input ng-model="email" placeholder="Email" type="text" class="form-control text-center">
+				<div ng-class="{ 'has-error': Email == null && LoginClicked == true }" class="form-group col-xs-12 col-sm-offset-3 col-sm-6">
+				  <input ng-model="email" placeholder="Email" type="email" class="form-control text-center" required>
 				</div>
 			</div>
+			<!-- END Email Input -->
+			<!-- START Password Input -->
 			<div class="row">
-				<div class="form-group col-xs-12 col-sm-offset-3 col-sm-6">
-					<input ng-model="password" placeholder="Password" type="password" class="form-control text-center">
+				<div ng-show="password != ConfirmPassword && LoginClicked == true">
+					<p style="color:rgb(250,0,0);">
+						Password and Confirm Password do Not Match!
+					</p>
+				</div>
+				<div ng-class="{ 'has-error': password == null && LoginClicked == true || password != ConfirmPassword && LoginClicked == true }" class="form-group col-xs-12 col-sm-offset-3 col-sm-6">
+					<input ng-model="password" placeholder="Password" type="password" class="form-control text-center" required>
 				</div>
 			</div>
+			<!-- END Password Input -->
+			<!-- START Confirm Password Input -->
 			<div class="row">
-				<div class="form-group col-xs-12 col-sm-offset-3 col-sm-6">
-					<input ng-model="Confirmpassword" placeholder="Confirm Password" type="password" class="form-control text-center">
+				<div ng-class="{ 'has-error': ConfirmPassword == null && LoginClicked == true || password != ConfirmPassword && LoginClicked == true }" class="form-group col-xs-12 col-sm-offset-3 col-sm-6">
+					<input ng-model="ConfirmPassword" placeholder="Confirm Password" type="password" class="form-control text-center" required>
 				</div>
 			</div>
+			<!-- END Confirm Password Input -->
+			<!-- START Display Name Input -->
 			<div class="row">
-				<div class="form-group col-xs-12 col-sm-offset-3 col-sm-6">
-					<input ng-model="displayName" placeholder="Display Name" type="text" class="form-control text-center">
+				<div ng-class="{ 'has-error': displayName == null && LoginClicked == true }" class="form-group col-xs-12 col-sm-offset-3 col-sm-6">
+					<input ng-model="displayName" placeholder="Display Name" type="text" class="form-control text-center" required>
 				</div>
 			</div>
-			<div class="row">
-				<div class="form-group col-xs-12 col-sm-offset-3 col-sm-6">
-					<img />
-				</div>
-			</div>
+			<!-- END Display Name Input -->
 		</div>
+		<!-- END Input List -->
+		<!-- START Sign Up Button -->
 		<div class="row">
 			<div class="col-xs-12 col-sm-offset-4 col-sm-4">
-				<button type="submit" class="btn btn-info btn-block" ng-click="signUp(displayName, email, password)">Sign Up</button>
+				<button type="submit" class="btn btn-info btn-block" ng-click="signUp(displayName, email, password, ConfirmPassword)">Sign Up</button>
 			</div>
 		</div>
+		<!-- END Sign Up Button -->
 		<br />
+		<!-- START Cancel Button -->
 		<div class="row">
 			<div class="col-xs-12 col-sm-offset-4 col-sm-4">
 				<button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
 			</div>
 		</div>
+		<!-- END Cancel Button -->
 	</div>
+	<!-- END Form Body -->
 </form>
+<!-- END Form -->
