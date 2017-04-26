@@ -1,7 +1,26 @@
+/**
+ * @name login.js
+ * @author Jonathan F. Steele - Created: 2/20/17 | LastModified: 4/26/17 - JFS
+ * @summary This is the controller for logging in to the website, it will check and see if the user exists...
+ * ---------------------------------------------------------------------------
+ * @module app.controller('loginController')
+ * @function login(Email, Password)
+ *  | @function $http.post("/api/Login/", data)
+ *    | @function .then(function(data, response))
+ * @function SignUp()
+ * ---------------------------------------------------------------------------
+ * @description This is the controller for logging in to the website, it will check and see if the user exists
+ * by checking the database. It will give any users logged in a authentication token. The user also has the
+ * choice to allow the browser to remember the users information.
+ **/
 app.controller('loginController', function($scope, $http, localStorageService, $location, $rootScope) {
-  // create a message to display in our view
+  console.log("loginController Running");
+
+  //root Scope Variables
   $rootScope.LoginTF = 0;
-  $scope.MessageType = 0;
+
+  //Scope Variables
+  $scope.LoginClicked = false;
   $scope.rememberTF = false;
   $scope.localLoginauthUser = localStorageService.get('LoginauthUser');
    if($scope.localLoginauthUser != null){
@@ -14,13 +33,13 @@ app.controller('loginController', function($scope, $http, localStorageService, $
      $scope.rememberTF = true;
    }
 
-  console.log("loginController Running");
+  //login Function
   $scope.login = function(Email, Password){
     console.log("login function called", Email, Password);
     var data = {"Email": Email, "Password": Password};
-    //console.log("remember ", $scope.rememberTF);
-    //console.log("data Email: ", data.Email);
+    $scope.LoginClicked = true;
     var message="";
+    //Login Post
     $http.post("/api/Login/", data)
     .then(function(data, response) {
       console.log("data: ", data);
@@ -37,8 +56,8 @@ app.controller('loginController', function($scope, $http, localStorageService, $
           //console.log("Clear Login authUser");
           localStorageService.remove('LoginauthUser');
         }
-        $scope.MessageType = 2;
-        $scope.Message = "Logging In...";
+        $scope.IncorrectInputTF = 1;
+        console.log("Logging In...");
         localStorageService.set('authUser',data.data);
         $rootScope.authUser = data.data;
         $rootScope.LoginTF = 1;
@@ -48,12 +67,12 @@ app.controller('loginController', function($scope, $http, localStorageService, $
       else
       {
         console.log("Bad Login, AuthToken Cannot be Set");
-        $scope.MessageType = 1;
-        $scope.Message = "Your Username or password was incorrect. Please Try Again";
+        console.log("Your Username or password was incorrect. Please Try Again");
       }
     });
   };
 
+  //SignUp Function
   $scope.SignUp = function(){
     $location.path( "/login/signUp" );
   }

@@ -1,38 +1,51 @@
-<form ng-app="loginController" class="container text-center" style="margin-top: 50px;">
-	<div class="row" ng-show="MessageType == 1">
-		<div class="alert alert-danger fade in">
-			{{Message}}
-		</div>
-	</div>
-	<div class="row" ng-show="MessageType == 2">
-		<div class="alert alert-info fade in">
-			{{Message}}
-		</div>
-	</div>
+<!--
+   - NAME: login.html
+   - CONTROLLER: login.js
+   - PARENT: index.html <- Header of this file is blocked out on this page
+   - Created: Jonathan F. Steele 2/26/17
+   - Last Modified: 4/26/17 <- JFS
+   - DESCRIPTION: This page allows the user to login, signup, and reset password if they forgot their password.
+   -->
+<!-- START of Form -->
+<form ng-app="loginController" id="loginForm" class="container text-center form-horizontal-center" style="margin-top: 50px;">
+	<!-- START Master Taskser Header Image -->
 	<div class="row" style="padding: 30px;">
 		<img class="col-xs-12 col-sm-offset-2 col-sm-9" src="images/MasterTaskerLoginTitleImagexs.png"/>
 	</div>
+	<!-- END Master Taskser Header Image -->
+	<!-- START Login Body -->
 	<div>
+		<!-- START Sign In Header -->
 		<div style="padding: 10px;">
 			<span style="font-size: 24px;">Sign In</span>
 		</div>
+		<!-- END Sign In Header -->
+		<!-- START Input Area -->
 		<div>
+			<!-- START Email Input -->
 			<div class="row">
-				<div class="form-group col-xs-12 col-sm-offset-3 col-sm-6">
-				  <input ng-model="Email" placeholder="Email" type="text" class="form-control text-center">
+				<div ng-class="{ 'has-error': Email == null && LoginClicked == true }" class="form-group col-xs-12 col-sm-offset-3 col-sm-6">
+					<input type="email" ng-model="Email" class="form-control text-center" placeholder="Email" required>
 				</div>
 			</div>
+			<!-- END Email Input -->
+			<!-- START Password Input -->
 			<div class="row">
-				<div class="form-group col-xs-12 col-sm-offset-3 col-sm-6">
-				  <input ng-model="Password" placeholder="Password" type="password" class="form-control text-center">
+				<div ng-class="{ 'has-error': Password == null && LoginClicked == true }" class="form-group col-xs-12 col-sm-offset-3 col-sm-6">
+				  <input type="password" ng-model="Password" class="form-control text-center" placeholder="Password" required>
 				</div>
 			</div>
+			<!-- END Password Input -->
 		</div>
+		<!-- END Input Area -->
+		<!-- START Login Button -->
 		<div class="row">
 			<div class="col-xs-12 col-sm-offset-4 col-sm-4">
 				<button type="submit" class="btn btn-info btn-block" ng-click="login(Email,Password)">Login</button>
 			</div>
 		</div>
+		<!-- END Login Button -->
+		<!-- START Remember Me Checkbox -->
 		<div class="row">
 			<div class="col-xs-5 col-sm-3 col-md-2 col-sm-offset-5">
 				<div class="checkbox">
@@ -40,16 +53,25 @@
 				</div>
 			</div>
 		</div>
+		<!-- END Remember Me Checkbox -->
+		<!-- START Forgot Password -->
 		<div class="row">
-				<a href="#/login/forgotPassword">Forgot Password</a>
+				<a href="/#!/login/forgotPassword">Forgot Password</a>
 		</div>
+		<!-- END Forgot Password -->
+		<!-- START or -->
 		<div style="padding-top:10px; padding-bottom:10px;">
 			<span style="font-size:20px;">or</span>
 		</div>
+		<!-- END or -->
+		<!-- START SignUp button -->
 		<div class="row">
 			<div class="col-xs-12 col-sm-offset-5 col-sm-2">
 				<button ng-click="SignUp()" type="button" class="btn btn-info btn-block" ng-click="SignUp()">Sign Up</button>
 			</div>
 		</div>
+		<!-- END SignUp button -->
 	</div>
+	<!-- END Login Body -->
 </form>
+<!-- END of Form -->
