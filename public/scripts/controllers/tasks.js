@@ -33,16 +33,20 @@ app.controller('tasksController', function($scope, $http, $location, $rootScope)
          title: "Enter the Name of your Task",
          inputType: 'text',
          callback: function (result) {
-             console.log("tasksController: CreateNewTask callback result - ", result);
-             $scope.newTask = {'TaskName': result, 'GroupID': $scope.currentGroupID, 'OwnerID': $rootScope.authUser.UserID};
-             console.log("tasksController: CreateNewTask callback result - ", $scope.newTask);
-             //Post for Creating a new Task
-             $http.post("/api/Tasks/CreateNewTask", $scope.newTask)
-              .then(function(data, response) {
-                console.log("tasksController: .then response data, ", data.data, response);
-                $location.path( "/tasks/taskDetails").search('id=' + data.data.RowID);
-               });
-         }
+           if(result == null)
+           {
+             return; //Return when Cancel was clicked so it doesnt create just random empty Tasks
+           }
+           console.log("tasksController: CreateNewTask callback result - ", result);
+           $scope.newTask = {'TaskName': result, 'GroupID': $scope.currentGroupID, 'OwnerID': $rootScope.authUser.UserID};
+           console.log("tasksController: CreateNewTask callback result - ", $scope.newTask);
+           //Post for Creating a new Task
+           $http.post("/api/Tasks/CreateNewTask", $scope.newTask)
+            .then(function(data, response) {
+              console.log("tasksController: .then response data, ", data.data, response);
+              $location.path( "/tasks/taskDetails").search('id=' + data.data.RowID);
+             });
+         },
      });
    }
 
