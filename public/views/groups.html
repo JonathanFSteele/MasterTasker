@@ -1,23 +1,54 @@
+<!--
+   - NAME: groups.html
+   - CONTROLLER: groups.js
+   - PARENT: index.html
+   - Created: Jonathan F. Steele
+   - Last Modified: 4/27/17 <- JFS
+   - DESCRIPTION: This page allows the users to view, edit, and create groups to which they can invite other
+	 - users to join to then create tasks within the groups.
+   -->
+<!-- START Groups Title -->
 <div>
 	<h1>Groups</h1>
 </div>
-
-
+<!-- END Groups Title -->
+<!-- START Group Table Body -->
  <div class="row">
-	 <div class="col-xs-3">
+	 <!-- START New Group Button -->
+	 <div class="col-xs-3" style="margin-top: 9px;">
 		 <button ng-click="GoToGroupsDetails(0)" class="btn btn-info" ><span style="font-weight: bold!important">Add New Group</span></button>
 	 </div>
+	 <!-- END New Group Button -->
 	 <div class="col-xs-6"> </div>
+	 <!-- START Search -->
 	 <div class="col-xs-3">
-		 <div class="input-group">
-		  <span class="input-group-addon" id="basic-addon1"> <i class="fa fa-search" aria-hidden="true"></i></span>
-		  <input type="text" class="form-control" aria-describedby="basic-addon1"/>
-      <span class="input-group-addon" id="basic-addon1"><i class="fa fa-refresh" aria-hidden="true"></i></span>
-	  </div>
+		 <div class="row">
+			 <div class="col-xs-12 col-sm-11">
+				 <form class="navbar-form" role="search" style="padding: 0px;">
+					 <div class="input-group add-on" style="margin-left: 15px; margin-right: 15px;">
+						 <input class="form-control" placeholder="Search" type="text">
+						 <div class="input-group-btn">
+							 <button class="btn btn-warning" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+						 </div>
+					 </div>
+				 </form>
+			 </div>
+			 <!--START Refresh--><!--Will Only Show up when the screen is greater than extremely small-->
+			 <div>
+				 <div class="hidden-xs col-sm-1" style="text-align: right; padding-right: 0px; padding-left: 0px; padding-top: 8px;">
+					 <div style="width: 100%">
+						 <!-- <i class="fa fa-refresh fa-spin" style="font-size:32px; color: rgb(91,192,222);"></i> -->
+						 <i class="fa fa-check" style="font-size:32px; color: rgb(91,192,222);"></i>
+					 </div>
+				 </div>
+			 </div>
+			 <!--END Refresh-->
+		 </div>
 	 </div>
+	 <!-- END Search -->
  </div>
-
-
+<!-- END Group Table Header -->
+<!-- START Groups Table -->
  <div class="row">
  <table class="table table-responsive ZachTbl" >
    <thead>
@@ -34,3 +65,4 @@
    </tbody>
  </table>
  </div>
+ <!-- END Groups Table -->

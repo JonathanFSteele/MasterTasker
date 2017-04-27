@@ -1,6 +1,6 @@
 /**
  * @name tasks.js
- * @author Charles Choi - Created: 3/22/17 | LastModified: 4/23/17 - JFS
+ * @author Charles Choi - Created: 3/22/17 | LastModified: 4/26/17 - JFS
  * @summary This is the controller for the tasks.js page to allow users to edit and create task/groups.
  * ---------------------------------------------------------------------------
  * @module app.controller tasksController($scope, $http, $location)
@@ -22,6 +22,7 @@ app.controller('tasksController', function($scope, $http, $location) {
   //Scope Variables
    $scope.Tasks = [];
    $scope.currentTaskID = 0;
+   $scope.ShowCompletedTF = false;
 
   //Initialization of GoToTaskDetails function passing in an object
   $scope.GoToTaskDetails = function(ID){
@@ -42,6 +43,10 @@ app.controller('tasksController', function($scope, $http, $location) {
     $scope.getTasks();
   }
 
+  $scope.CompleteTask = function() {
+    
+  }
+
   //Initialization of GoToGroupDetails function
   $scope.GoToGroupsDetails = function(){
     console.log("tasksController: Going to Current Task Details");
@@ -50,6 +55,7 @@ app.controller('tasksController', function($scope, $http, $location) {
 
   //Initialization of getTasks function //Go to the server ang get the json array.
   $scope.getTasks = function(){
+    console.log("tasksController: ShowCompletedTF, ", $scope.ShowCompletedTF);
     console.log("tasksController: getTasks function");
     $http.get("/api/Tasks/List?GroupID="+$scope.currentTaskID)
     .then(function(response) {
@@ -59,7 +65,7 @@ app.controller('tasksController', function($scope, $http, $location) {
   };
   $scope.getTasks();
 
-  //$http.get function passing going to the groups server
+  //$http.get function which generates the Group Dropdown
   $http.get("/api/Groups/List")
   .then(function(response) {
     console.log("tasksController: Group response, ",response);
