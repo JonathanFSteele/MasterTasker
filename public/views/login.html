@@ -7,7 +7,7 @@
    - DESCRIPTION: This page allows the user to login, signup, and reset password if they forgot their password.
    -->
 <!-- START of Form -->
-<form ng-app="loginController" id="loginForm" class="container text-center form-horizontal-center" style="margin-top: 50px;" data-toggle="validator">
+<form name="LoginForm" ng-app="loginController" id="loginForm" class="container text-center form-horizontal-center" style="margin-top: 50px;" data-toggle="validator">
 	<!-- START Master Taskser Header Image -->
 	<div class="row" style="padding: 30px;">
 		<img class="col-xs-12 col-sm-offset-2 col-sm-9" src="images/MasterTaskerLoginTitleImagexs.png"/>
@@ -24,15 +24,15 @@
 		<div>
 			<!-- START Email Input -->
 			<div class="row">
-				<div ng-class="{ 'has-error': Email == null && LoginClicked == true }" class="form-group col-xs-12 col-sm-offset-3 col-sm-6">
-					<input type="email" ng-model="Email" class="form-control text-center" placeholder="Email" required>
+				<div ng-class="{ 'has-error': BadLogin == true && LoginForm.Email.$invalid }" class="form-group col-xs-12 col-sm-offset-3 col-sm-6">
+					<input type="email" name="Email" ng-model="Email" class="form-control text-center" placeholder="Email" required>
 				</div>
 			</div>
 			<!-- END Email Input -->
 			<!-- START Password Input -->
 			<div class="row">
-				<div ng-class="{ 'has-error': Password == null && LoginClicked == true }" class="form-group col-xs-12 col-sm-offset-3 col-sm-6">
-				  <input type="password" ng-model="Password" class="form-control text-center" placeholder="Password" required>
+				<div ng-class="{ 'has-error': BadLogin == true && LoginForm.Password.$invalid}" class="form-group col-xs-12 col-sm-offset-3 col-sm-6">
+				  <input type="password" name="Password" ng-model="Password" class="form-control text-center" placeholder="Password" required>
 				</div>
 			</div>
 			<!-- END Password Input -->
@@ -40,6 +40,13 @@
 		<!-- END Input Area -->
 		<!-- START Login Button -->
 		<div class="row">
+			<!-- START Input Error-->
+			<div ng-show="BadLogin == true">
+				<p style="color:rgb(250,0,0);">
+					{{ErrorMessage}}
+				</p>
+			</div>
+			<!-- END Input Error-->
 			<div class="col-xs-12 col-sm-offset-4 col-sm-4">
 				<button type="submit" class="btn btn-info btn-block" ng-click="login(Email,Password)">Login</button>
 			</div>

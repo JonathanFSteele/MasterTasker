@@ -7,7 +7,7 @@
    - DESCRIPTION: This page allows the user to signup for the Master Tasker Website.
    -->
 <!-- START Form -->
-<form ng-app="loginController" class="container text-center form-horizontal-center" style="margin-top: 50px;" data-toggle="validator">
+<form name="SignUpForm" ng-app="loginController" class="container text-center form-horizontal-center" style="margin-top: 50px;" data-toggle="validator">
 	<!-- START Form Header Image -->
 	<div class="row" style="padding: 30px;">
 		<img class="col-xs-12 col-sm-offset-2 col-sm-9" src="images/MasterTaskerLoginTitleImagexs.png"/>
@@ -24,34 +24,29 @@
 		<div>
 			<!-- START Email Input -->
 			<div class="row">
-				<div ng-class="{ 'has-error': Email == null && LoginClicked == true }" class="form-group col-xs-12 col-sm-offset-3 col-sm-6">
-				  <input ng-model="email" placeholder="Email" type="email" class="form-control text-center" required>
+				<div ng-class="{ 'has-error': BadSignUp == true && SignUpForm.Email.$invalid }" class="form-group col-xs-12 col-sm-offset-3 col-sm-6">
+				  <input name="Email" ng-model="Email" placeholder="Email" type="email" class="form-control text-center" required>
 				</div>
 			</div>
 			<!-- END Email Input -->
 			<!-- START Password Input -->
 			<div class="row">
-				<div ng-show="password != ConfirmPassword && LoginClicked == true">
-					<p style="color:rgb(250,0,0);">
-						Password and Confirm Password do Not Match!
-					</p>
-				</div>
-				<div ng-class="{ 'has-error': password == null && LoginClicked == true || password != ConfirmPassword && LoginClicked == true }" class="form-group col-xs-12 col-sm-offset-3 col-sm-6">
-					<input ng-model="password" placeholder="Password" type="password" class="form-control text-center" required>
+				<div ng-class="{ 'has-error': BadSignUp == true && SignUpForm.Password.$invalid }" class="form-group col-xs-12 col-sm-offset-3 col-sm-6">
+					<input name="Password" ng-model="Password" placeholder="Password" type="password" class="form-control text-center" required>
 				</div>
 			</div>
 			<!-- END Password Input -->
 			<!-- START Confirm Password Input -->
 			<div class="row">
-				<div ng-class="{ 'has-error': ConfirmPassword == null && LoginClicked == true || password != ConfirmPassword && LoginClicked == true }" class="form-group col-xs-12 col-sm-offset-3 col-sm-6">
-					<input ng-model="ConfirmPassword" placeholder="Confirm Password" type="password" class="form-control text-center" required>
+				<div ng-class="{ 'has-error': (BadSignUp == true && SignUpForm.ConfirmPassword.$invalid) || (Password != ConfirmPassword && BadSignUp == true) }" class="form-group col-xs-12 col-sm-offset-3 col-sm-6">
+					<input name="ConfirmPassword" ng-model="ConfirmPassword" placeholder="Confirm Password" type="password" class="form-control text-center" required>
 				</div>
 			</div>
 			<!-- END Confirm Password Input -->
 			<!-- START Display Name Input -->
 			<div class="row">
-				<div ng-class="{ 'has-error': displayName == null && LoginClicked == true }" class="form-group col-xs-12 col-sm-offset-3 col-sm-6">
-					<input ng-model="displayName" placeholder="Display Name" type="text" class="form-control text-center" required>
+				<div ng-class="{ 'has-error': BadSignUp == true && SignUpForm.DisplayName.$invalid }" class="form-group col-xs-12 col-sm-offset-3 col-sm-6">
+					<input name="DisplayName" ng-model="DisplayName" placeholder="Display Name" type="text" class="form-control text-center" required>
 				</div>
 			</div>
 			<!-- END Display Name Input -->
@@ -59,8 +54,15 @@
 		<!-- END Input List -->
 		<!-- START Sign Up Button -->
 		<div class="row">
+			<!-- START Input Error-->
+			<div ng-show="BadSignUp == true">
+				<p style="color:rgb(250,0,0);">
+					{{ErrorMessage}}
+				</p>
+			</div>
+			<!-- END Input Error-->
 			<div class="col-xs-12 col-sm-offset-4 col-sm-4">
-				<button type="submit" class="btn btn-info btn-block" ng-click="signUp(displayName, email, password, ConfirmPassword)">Sign Up</button>
+				<button type="submit" class="btn btn-info btn-block" ng-click="signUp(DisplayName, Email, Password, ConfirmPassword)">Sign Up</button>
 			</div>
 		</div>
 		<!-- END Sign Up Button -->

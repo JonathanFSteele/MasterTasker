@@ -22,6 +22,8 @@
 
 		// Root Variables
 		$rootScope.authUser = localStorageService.get('authUser');
+		$rootScope.currentPath = $location.path();
+		console.log("mainController: currentPath, ", $rootScope.currentPath);
 		console.log("authUser: ", $rootScope.authUser);
 		if($rootScope.authUser == null)
 		{

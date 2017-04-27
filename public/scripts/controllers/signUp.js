@@ -16,8 +16,12 @@
 app.controller('signUpController', function($scope, $http, localStorageService, $location, $rootScope) {
   console.log("signUpController Running");
 
+  //root Scope Variables
+  $rootScope.LoginTF = 0; //Used within Index to Hide the Header
+
   //Scope Variables
-  $scope.LoginClicked = false;
+  $scope.BadSignUp = false; //Used for Errors on Html Side
+  $scope.ErrorMessage = "";
 
   //signUp Function
   $scope.signUp = function(DisplayName, Email, Password, ConfirmPassword){
@@ -26,16 +30,19 @@ app.controller('signUpController', function($scope, $http, localStorageService, 
     if(DisplayName == null || Email == null || Password == null || ConfirmPassword == null)
     {
       console.log("signUpController: Nothing was filled in so stay on the Page");
+      $scope.ErrorMessage = "All input fields needs to be filled out properly.";
+      $scope.BadSignUp = true;
       return;
     }
     if(ConfirmPassword != Password)
     {
       console.log("signUpController: Passwords do not match!");
+      $scope.ErrorMessage = "Passwords do not match. Please try again.";
+      $scope.BadSignUp = true;
       return;
     }
     var data = {"DisplayName": DisplayName, "Email": Email, "Password": Password};
     console.log("data: ", data);
-    var message="";
     //Create a New User Post
     $http.post("/api/SignUp/", data)
     .then(function(data, response) {
@@ -43,15 +50,14 @@ app.controller('signUpController', function($scope, $http, localStorageService, 
       if(data.data.authorizedTF == true)
       {
         console.log("Signing up...");
-        $scope.MessageType = 2;
-        $scope.Message = "Signing up...";
         $location.path( "/login" );
       }
-      if(data.data.authorizedTF == false)
+      else
       {
         console.log("Error, Stay on Page!");
-        $scope.Message = "That Email already exists. Please Try Again";
-        $scope.MessageType = 1;
+        $scope.ErrorMessage = "That Email already exists.";
+        $scope.BadSignUp = true;
+        return;
       }
     });
   };
