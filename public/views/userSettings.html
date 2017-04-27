@@ -34,7 +34,7 @@
 		<div class="form-group">
 			<label class="col-sm-2 col-form-label" for="displayName">Display Name:</label>
 			<div class="col-sm-4">
-				<input type="text" class="form-control" id="DisplayName" ng-model="DisplayNameValue" aria-describedby="DisplayName" placeholder={{DisplayName}}>
+				<input type="text" autocomplete="name" class="form-control" id="DisplayName" ng-model="DisplayNameValue" aria-describedby="DisplayName" placeholder={{DisplayName}}>
 			</div>
 			<div class="col-sm-2">
     <button type="button" class="btn btn-info" ng-click="ChangeName(DisplayNameValue)">Change Name</button>
@@ -44,8 +44,11 @@
     <!--START Gravitar-->
 		<div class="form-group">
 			<label class="col-sm-2 col-form-label" for="displayIcon">Profile Image:</label>
-			<div class="col-sm-4">
+			<div class="col-sm-3">
 				<img ng-hide="Email==Null" gravatar-src="'{{ Email }}'" gravatar-size="200" class="img-circle">
+			</div>
+			<div class="col-sm-7" style=" text-align:left;">
+    <span class="DESCRIPTION">Your avatar is shown by using your gravatar set up for your email.</label>
 			</div>
 		</div>
     <!--END Gravitar-->
@@ -61,7 +64,7 @@
   		<div class="form-group">
   			<label class="col-sm-2 col-form-label" for="oldPass">Old Password:</label>
   			<div class="col-sm-4">
-  				<input type="password" class="form-control" ng-model="OldPassword" placeholder="Enter current password">
+  				<input type="password" autocomplete="password" class="form-control" ng-model="OldPassword" placeholder="Enter current password">
   			</div>
   		</div>
       <!-- END Form Old Password Input -->
