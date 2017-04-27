@@ -1,3 +1,20 @@
+/**
+ * @name Tasks.js
+ * @author Charles Choi - Created: 3/10/17 | LastModified: 4/27/17 - JFS
+ * @summary This is the server controller for tasks.js which sends posts, gets, and deletes to the server.
+ * ---------------------------------------------------------------------------
+ * @module ~None~
+ * @function router.db_getTasksList(GroupID, UserID)
+ * @function router.db_CreateNewTask(TaskName, GroupID, OwnerID)
+ * @function router.use(function timeLog(req, res, next))
+ * @function router.get('/', function(req, res))
+ * @function router.get('/List', function(req, res))
+ *  | @function .then(function(rows)), function(error)
+ * @function router.post('/CreateNewTask', function(req, res))
+ *  | @function .then(function(rows)), function(error)
+ * ---------------------------------------------------------------------------
+ * @description This is the server controller for tasks.js which sends posts, gets, and deletes to the server.
+ **/
 var express = require('express');
 var authentication = require('express-authentication')
 var mysql = require("mysql");
@@ -31,6 +48,24 @@ router.db_getTasksList = function(GroupID, UserID)
   return deferred.promise;
 }; //end db_getTasksList()
 
+router.db_CreateNewTask = function(TaskName, GroupID, OwnerID)
+{
+  console.log("Tasks: Creating A New Task ", TaskName, GroupID, OwnerID);
+  var deferred = q.defer();
+  var connection = mysql.createConnection(router.dbConfig);
+  var query_str = "INSERT INTO tldb.Tasks_tbl (TaskName, GroupID, OwnerID) VALUES ( ?, ?, ?);";
+  var query_var = [TaskName, GroupID, OwnerID];
+  var query = connection.query(query_str, query_var, function (err, rows, fields) {
+      if (err) {
+        deferred.reject(err);
+      }
+      else {
+        deferred.resolve(rows);
+      }
+      connection.end();
+  });
+  return deferred.promise;
+}; //end db_SetUserToken()
 
 //Routes for this module:
 router.use(function timeLog (req, res, next) {
@@ -56,6 +91,36 @@ router.get('/List', function (req, res) {
      console.log(error);
      res.status(500).send(error);
    });
+})
+
+router.post('/CreateNewTask', function (req, res) {
+  var response = {
+    RowID: '',
+    TaskName: '',
+    GroupID: '',
+    UserID: '',
+    message: ''
+  }
+  var badResponse = {
+    authorizedTF: false,
+    message: "Incorrect User Parameters"
+  }
+    router.db_CreateNewTask(req.body.TaskName, req.body.GroupID, req.body.OwnerID)
+    .then(function(data){
+      console.log("Tasks: creating: req.body items ",req.body);
+      console.log("Tasks: created new task", req.body.TaskName);
+      console.log("\n\nTasks: Created Task response - ", data);
+      console.log("\nTasks: Created Task response insertID - ", data.insertId);
+      response.RowID = data.insertId;
+      response.TaskName = req.body.TaskName;
+      response.message = "Task Created";
+      response.GroupID = req.body.GroupID;
+      response.UserID = req.body.OwnerID;
+      res.send(response);
+    },function(error){
+      console.log(error);
+      res.status(500).send(error);
+    });
 })
 
 

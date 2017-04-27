@@ -1,11 +1,13 @@
 /**
  * @name tasks.js
- * @author Charles Choi - Created: 3/22/17 | LastModified: 4/26/17 - JFS
+ * @author Charles Choi - Created: 3/22/17 | LastModified: 4/27/17 - JFS
  * @summary This is the controller for the tasks.js page to allow users to edit and create task/groups.
  * ---------------------------------------------------------------------------
  * @module app.controller tasksController($scope, $http, $location)
+ * @function CreateNewTask()
  * @function GoToTaskDetails(object)
  * @function CurrentSelectedGroup(ID)
+ * @function CompleteTask()
  * @function GoToGroupsDetails()
  * @function getTasks()
  * @function $http.get("/api/Groups/List")
@@ -15,7 +17,7 @@
  * It allows a search functionality and the user to mark off tasks with a checkbox. Users organize their
  * tasks through a group dropdown or they can just display ALL.
  **/
-app.controller('tasksController', function($scope, $http, $location) {
+app.controller('tasksController', function($scope, $http, $location, $rootScope) {
   $scope.message = 'This is the tasks Controller';
   console.log($scope.message);
 
@@ -24,17 +26,30 @@ app.controller('tasksController', function($scope, $http, $location) {
    $scope.currentGroupID = 0;
    $scope.ShowCompletedTF = false;
 
+   //CreateNewTask function
+   $scope.CreateNewTask = function() {
+     console.log("tasksController: CreateNewTask Function Hit");
+     bootbox.prompt({
+         title: "Enter the Name of your Task",
+         inputType: 'text',
+         callback: function (result) {
+             console.log("tasksController: CreateNewTask callback result - ", result);
+             $scope.newTask = {'TaskName': result, 'GroupID': $scope.currentGroupID, 'OwnerID': $rootScope.authUser.UserID};
+             console.log("tasksController: CreateNewTask callback result - ", $scope.newTask);
+             //Post for Creating a new Task
+             $http.post("/api/Tasks/CreateNewTask", $scope.newTask)
+              .then(function(data, response) {
+                console.log("tasksController: .then response data, ", data.data, response);
+                $location.path( "/tasks/taskDetails").search('id=' + data.data.RowID);
+               });
+         }
+     });
+   }
+
   //Initialization of GoToTaskDetails function passing in an object
   $scope.GoToTaskDetails = function(ID){
     console.log("tasksController: Going to Current Task Details, ", ID);
-    if(ID == 0)
-    {
-      $location.path( "/tasks/taskDetails").search('id=0');
-    }
-    else
-    {
-      $location.path( "/tasks/taskDetails").search('id=' + ID);
-    }
+    $location.path( "/tasks/taskDetails").search('id=' + ID);
   }
 
   //Initialization of CurrentSelectedGroup function passing in an ID
@@ -44,8 +59,9 @@ app.controller('tasksController', function($scope, $http, $location) {
     $scope.getTasks();
   }
 
+  //CompleteTaskFunction Called!
   $scope.CompleteTask = function() {
-
+    console.log("Complete Task Function Called!");
   }
 
   //Initialization of GoToGroupDetails function
