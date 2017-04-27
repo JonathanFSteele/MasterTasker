@@ -21,7 +21,7 @@ app.controller('tasksController', function($scope, $http, $location) {
 
   //Scope Variables
    $scope.Tasks = [];
-   $scope.currentTaskID = 0;
+   $scope.currentGroupID = 0;
    $scope.ShowCompletedTF = false;
 
   //Initialization of GoToTaskDetails function passing in an object
@@ -39,12 +39,13 @@ app.controller('tasksController', function($scope, $http, $location) {
 
   //Initialization of CurrentSelectedGroup function passing in an ID
   $scope.CurrentSelectedGroup = function(ID){
-    console.log("tasksController: Current Group by ID, ", $scope.currentTaskID);
+    $scope.currentGroupID = ID;
+    console.log("tasksController: Current Group by ID, ", $scope.currentGroupID);
     $scope.getTasks();
   }
 
   $scope.CompleteTask = function() {
-    
+
   }
 
   //Initialization of GoToGroupDetails function
@@ -57,7 +58,7 @@ app.controller('tasksController', function($scope, $http, $location) {
   $scope.getTasks = function(){
     console.log("tasksController: ShowCompletedTF, ", $scope.ShowCompletedTF);
     console.log("tasksController: getTasks function");
-    $http.get("/api/Tasks/List?GroupID="+$scope.currentTaskID)
+    $http.get("/api/Tasks/List?GroupID="+$scope.currentGroupID)
     .then(function(response) {
       console.log("tasksController: Task response, ",response);
       $scope.Tasks = response.data;

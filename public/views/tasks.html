@@ -27,7 +27,7 @@
 					<span class="input-group-btn">
 						<button class="btn btn-info" type="button" value="0" ng-click="GoToGroupsDetails()">+</button>
 					</span>
-					<select class="form-control" ng-options="group.ID as group.DisplayName for group in Groups" ng-model="currentGroupID" ng-change="CurrentSelectedGroup()">
+					<select class="form-control" ng-options="group.ID as group.DisplayName for group in Groups" ng-model="currentGroupID" ng-change="CurrentSelectedGroup(currentGroupID)">
 					</select>
 				</div>
 				<!-- END Groups Dropdown w/ + Button -->
