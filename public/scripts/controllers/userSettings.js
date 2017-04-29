@@ -81,10 +81,42 @@ app.controller('userSettingsController', function($scope, $rootScope, $http, loc
       });
     }
   }
-
+  
+  // Account Deletion
   $scope.DeleteUser = function(){
     console.log("Delete User Function Called...");
     //TODO: Set up Functionality for a PermaDelete for a Users Account..
+    
+    //copied from logout code
+    // var confirmTF = confirm("Are you sure you want to delete your account?");
+    bootbox.confirm({
+        message: "Are you sure you want to delete your account?",
+        buttons: {
+          confirm: {
+              label: 'Yes',
+              className: 'btn-danger'
+          },
+          cancel: {
+              label: 'No',
+              className: 'btn-info'
+          }
+        },
+        callback: function (result) {
+          console.log('This was logged in the callback: ' + result);
+      if(result == true)
+      {
+        console.log('User account being deleted...');
+        localStorageService.remove('authUser');
+        $rootScope.LoginTF = 0;
+        console.log("LoginTF: ", $rootScope.LoginTF);
+        $location.path( "/DeleteUser" );
+        if(!$scope.$$phase) $scope.$apply()
+        $location.path( "/login" );
+        if(!$scope.$$phase) $scope.$apply()
+      }
+    }
+			});
+   
   }
 
 });

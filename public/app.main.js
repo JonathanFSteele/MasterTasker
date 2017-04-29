@@ -44,11 +44,11 @@
     		buttons: {
         	confirm: {
             	label: 'Yes',
-            	className: 'btn-info'
+            	className: 'btn-warning'
         	},
         	cancel: {
             	label: 'No',
-            	className: 'btn-warning'
+            	className: 'btn-info'
         	}
     		},
     		callback: function (result) {
