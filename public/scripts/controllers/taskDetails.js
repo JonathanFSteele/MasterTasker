@@ -69,6 +69,7 @@ app.controller('taskDetailsController', function($scope, $location, $sce, $http,
       var user = $rootScope.authUser.UserID;
       var id = $location.search().id;
       var date = new Date();
+      DueDT = $scope.myDate;
       $scope.data = {"TaskName": TaskName, "Description": Description, "LastUpdateUser": user, "LastUpdateDT": date, "TagID": TagID, "DueDT": DueDT, "Street": Street, "City": City, "State": State, "ZipCode": ZipCode, 'ID': id };
       console.log("data: ", $scope.data);
       //console.log("data: ", data);
