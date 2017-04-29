@@ -106,13 +106,18 @@ app.controller('userSettingsController', function($scope, $rootScope, $http, loc
       if(result == true)
       {
         console.log('User account being deleted...');
+        $scope.NewauthUserPass = localStorageService.get('authUser');
+        console.log(">>>>>>NewauthUserPassID=", $scope.NewauthUserPass.UserID);
         localStorageService.remove('authUser');
         $rootScope.LoginTF = 0;
         console.log("LoginTF: ", $rootScope.LoginTF);
-        $location.path( "/DeleteUser" );
-        if(!$scope.$$phase) $scope.$apply()
-        $location.path( "/login" );
-        if(!$scope.$$phase) $scope.$apply()
+        $http.post("/api/UserSettings/DeleteUser", $scope.NewauthUserPass)
+        .then(function(data, response) {
+          console.log("userSettings: DeleteUser Post .then return data ", data.data);
+          localStorageService.remove('authUser');
+          $location.path("/login");
+          if(!$scope.$$phase) $scope.$apply()
+        });
       }
     }
 			});

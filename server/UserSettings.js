@@ -98,6 +98,7 @@ router.post('/UpdateDisplayName', function (req, res) {
     authorizedTF: false,
     message: "Incorrect User Parameters"
   }
+  console.log("DisplayName called");
   console.log("UserSettings: req.body items ",req.body);
        router.db_UpdateUserDisplayName(req.body.DisplayName, req.body.UserID)
        .then(function(setUserRows){
@@ -149,26 +150,16 @@ router.post('/UpdatePassword', function (req, res) {
 
 //Define the Users Deletion Action
 router.post('/DeleteUser', function (req, res) {
-  var response = { 
-    UserID: '',
-    authToken: '',
-    Email: '',
-    authorizedTF: true
-  }
+  console.log("DeleteUser called");
+  //var response = { }
   var badResponse = {
     authorizedTF: false,
     message: "Invalid Process"
   }
   console.log("UserSettings: req.body items ",req.body);
+  console.log(">>>>>>>USERID=", req.body.UserID);
     router.db_DeleteUser(req.body.UserID)
     .then(function(setUserRows){
-      //console.log("UserSettings: Password Return, ", req.body.Password);
-      response.message = "Good User and Token Saved";
-      response.UserID = req.body.UserID;
-      response.authToken = req.body.authToken;
-      response.Email = req.body.Email;
-      //response.Password = req.body.Password;
-      //response.DisplayName = req.body.DisplayName;
       res.send(response);
     },function(error){
       console.log(error);
