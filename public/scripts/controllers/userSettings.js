@@ -46,6 +46,7 @@ app.controller('userSettingsController', function($scope, $rootScope, $http, loc
       console.log("userSettings: Change Name Post .then return data ", data.data);
       localStorageService.set('authUser', data.data);
       location.reload();
+      if(!$scope.$$phase) $scope.$apply()
     });
   }
 
@@ -103,25 +104,24 @@ app.controller('userSettingsController', function($scope, $rootScope, $http, loc
         },
         callback: function (result) {
           console.log('This was logged in the callback: ' + result);
-      if(result == true)
-      {
-        console.log('User account being deleted...');
-        $scope.NewauthUserPass = localStorageService.get('authUser');
-        console.log(">>>>>>NewauthUserPassID=", $scope.NewauthUserPass.UserID);
-        localStorageService.remove('authUser');
-        $rootScope.LoginTF = 0;
-        console.log("LoginTF: ", $rootScope.LoginTF);
-        $http.post("/api/UserSettings/DeleteUser", $scope.NewauthUserPass)
-        .then(function(data, response) {
-          console.log("userSettings: DeleteUser Post .then return data ", data.data);
-          localStorageService.remove('authUser');
-          $location.path("/login");
-          if(!$scope.$$phase) $scope.$apply()
-        });
-      }
-    }
-			});
-   
+          if(result == true)
+          {
+            console.log('User account being deleted...');
+            $scope.NewauthUserPass = localStorageService.get('authUser');
+            //console.log(">>>>>>NewauthUserPassID=", $scope.NewauthUserPass.UserID);
+            localStorageService.remove('authUser');
+            $rootScope.LoginTF = 0;
+            console.log("LoginTF: ", $rootScope.LoginTF);
+            $http.post("/api/UserSettings/DeleteUser", $scope.NewauthUserPass)
+            .then(function(data, response) {
+              console.log("userSettings: DeleteUser Post .then return data ", data.data);
+              localStorageService.remove('authUser');
+              $location.path("/login");
+              if(!$scope.$$phase) $scope.$apply()
+            });
+          }
+        }
+    });
   }
 
-});
+}); //close app controller

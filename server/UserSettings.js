@@ -157,7 +157,7 @@ router.post('/DeleteUser', function (req, res) {
     message: "Invalid Process"
   }
   console.log("UserSettings: req.body items ",req.body);
-  console.log(">>>>>>>USERID=", req.body.UserID);
+  //console.log(">>>>>>>USERID=", req.body.UserID);
     router.db_DeleteUser(req.body.UserID)
     .then(function(setUserRows){
       res.send(response);

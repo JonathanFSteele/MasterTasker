@@ -32,9 +32,9 @@
     <!--END Form Email Address-->
     <!--START Form Display Name-->
 		<div class="form-group">
-			<label class="col-sm-2 col-form-label" for="displayName">Display Name:</label>
+			<label class="col-sm-2 col-form-label" for="DisplayName">Display Name:</label>
 			<div class="col-sm-4">
-				<input type="text" autocomplete="name" class="form-control" id="DisplayName" ng-model="DisplayNameValue" aria-describedby="DisplayName" placeholder={{DisplayName}}>
+				<input type="text" class="form-control" id="DisplayName" ng-model="DisplayNameValue" aria-describedby="DisplayName" placeholder={{DisplayName}}>
 			</div>
 			<div class="col-sm-2">
     <button type="button" class="btn btn-info" ng-click="ChangeName(DisplayNameValue)">Change Name</button>
@@ -44,11 +44,13 @@
     <!--START Gravitar-->
 		<div class="form-group">
 			<label class="col-sm-2 col-form-label" for="displayIcon">Profile Image:</label>
-			<div class="col-sm-3">
+			<div class="col-sm-4">
 				<img ng-hide="Email==Null" gravatar-src="'{{ Email }}'" gravatar-size="200" class="img-circle">
 			</div>
-			<div class="col-sm-7" style=" text-align:left;">
-    <span class="DESCRIPTION">Your avatar is shown by using your gravatar set up for your email.</label>
+			<div class="col-sm-6" style=" text-align:left;">
+			 <a href="https://secure.gravatar.com/site/wpcom" ><button type="button" class="btn btn-info">Change Gravatar <i class="fa fa-external-link fa-1x"></i></button></a>
+			 <br>
+    <span class="DESCRIPTION">Your avatar is shown by using your Gravatar set up for your email. Click the button above to access your Gravatar settings.</span>
 			</div>
 		</div>
     <!--END Gravitar-->
@@ -64,7 +66,7 @@
   		<div class="form-group">
   			<label class="col-sm-2 col-form-label" for="oldPass">Old Password:</label>
   			<div class="col-sm-4">
-  				<input type="password" autocomplete="password" class="form-control" ng-model="OldPassword" placeholder="Enter current password">
+  				<input type="password" class="form-control" ng-model="OldPassword" placeholder="Enter current password">
   			</div>
   		</div>
       <!-- END Form Old Password Input -->
