@@ -65,7 +65,7 @@ router.db_CreateNewTask = function(TaskName, GroupID, OwnerID)
       connection.end();
   });
   return deferred.promise;
-}; //end db_SetUserToken()
+}; //end db_CreateNewTask()
 
 //Routes for this module:
 router.use(function timeLog (req, res, next) {
