@@ -2,7 +2,10 @@ app.controller('taskDetailsController', function($scope, $location, $sce, $http,
   // create a message to display in our view
   $scope.message = 'This is the taskDetails Controller';
   $scope.myDate = new Date();
-  $scope.googleAddress ='2775 North Roadrunner, Las Cruces, NM 88011';
+  $scope.Tags = [];
+  $scope.currentGroupID = 0;
+  // $scope.googleAddress ='2775 North Roadrunner, Las Cruces, NM 88011';
+  $scope.googleAddress = '';
   $scope.getGoogleMapHTML = function(){
     return $sce.trustAsHtml(//'<iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBVpD1Dv4Y2NqPGJtk-nw6a5OP3WDp72uU&q=2775+North+Roadrunner, Las Cruces, NM 88011"></iframe>'
     '<iframe '
@@ -30,6 +33,13 @@ app.controller('taskDetailsController', function($scope, $location, $sce, $http,
 
   console.log($location.search().id);
 
+  $scope.getDate = function(date)
+  {
+    var newDate = new Date();
+    console.log("taskDetails: getDate Function date - ", date);
+    newDate.setDate((moment(date).toDate()).getDate());
+    return newDate;
+  }
 
   //Working on this
   $scope.load = function(){
@@ -46,6 +56,9 @@ app.controller('taskDetailsController', function($scope, $location, $sce, $http,
       $scope.City = TaskDetails.City;
       $scope.State = TaskDetails.State;
       $scope.ZipCode = TaskDetails.ZipCode;
+      //$scope.myDate = $scope.DueDT;
+      $scope.myDate = $scope.getDate($scope.DueDT);
+      $scope.googleAddress = $scope.Street + ', ' + $scope.City + ', ' + $scope.State + ' ' + $scope.ZipCode;
     });
   }
 
@@ -98,5 +111,35 @@ $scope.back = function(){
   $location.path("/task");
 }
 
+$scope.CurrentSelectedGroup = function(ID){
+  $scope.currentGroupID = ID;
+  console.log("tasksController: Current Group by ID, ", $scope.currentGroupID);
+  $scope.getTags();
+}
+
+//Initialization of getTasks function //Go to the server ang get the json array.
+$scope.getTags = function(){
+  console.log("taskDetailsController: getTags function");
+  $http.get("/api/TaskDetails/List?GroupID="+$scope.currentGroupID)
+  .then(function(response) {
+    console.log("taskDetailsController: Tag response, ",response);
+    $scope.Tags = response.data;
+  });
+};
+
+//$http.get function which generates the Tag Dropdown
+$http.get("/api/Tags/List")
+.then(function(response) {
+  console.log("taskDetailsController: Group response, ",response);
+  var defaultGroup = {
+    "ID":0,
+    "DisplayName":"NONE",
+    }
+  response.data.unshift(defaultGroup);
+  console.log("taskDetailsController: Group response, ",response);
+
+  $scope.Tags = response.data;
+  $scope.currentGroupID = 0;
+});
 
 });//end of the controller
