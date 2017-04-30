@@ -111,11 +111,12 @@ app.controller('taskDetailsController', function($scope, $location, $sce, $http,
     $scope.currentUser = UserID;
   }
 
-  $scope.submitUser = function(UserID){
-  console.log("submitUser function called", UserID);
+  $scope.submitUser = function(){
+  var uid = $scope.currentUser;
+  console.log("submitUser function called", uid);
   var user = $rootScope.authUser.UserID;
   var id = $location.search().id;
-  $scope.data = {"UserID": UserID, 'TaskID': id};
+  $scope.data = {'UserID': uid, 'TaskID': id};
   console.log("data: ", $scope.data);
   var message="";
 

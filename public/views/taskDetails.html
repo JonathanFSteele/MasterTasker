@@ -32,7 +32,7 @@
 				</select>
 			</div>
 			<div class="col-sm-2">
-					<button type="button" ng-click="submitUser(UserID)" class="btn btn-info">+</button>
+					<button type="button" ng-click="submitUser()" class="btn btn-info">+</button>
 			</div>
 		</div>
 		<table class = "table table-striped table-bordered">
@@ -44,9 +44,9 @@
 		      </tr>
 		   </thead>
 		   <tbody>
-		      <tr ng-repeat="groupMembers in GroupMembers">
-						<td>{{groupMembers.UserDisplayName}}</td>
-						<td>{{groupMembers.Email}}</td>
+		      <tr ng-repeat="users in Users">
+						<td>{{users.UserDisplayName}}</td>
+						<td>{{users.Email}}</td>
 						 <td>delete</td>
 		      </tr>
 		   </tbody>
