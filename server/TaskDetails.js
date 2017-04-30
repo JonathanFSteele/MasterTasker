@@ -150,6 +150,26 @@ router.post('/Users', function (req, res) {
     });
 })
 
+router.db_submitUser = function(UserID, TaskID)
+{
+  console.log("updating info in Assigned Users: ", UserID, TaskID);
+  var deferred = q.defer(); // Use Q
+  var date = new Date();
+  var connection = mysql.createConnection(router.dbConfig);
+  var query_str = "INSERT INTO tldb.TaskMembers_tbl (UserID, TaskID) VALUES ( ?, ?);";
+  var query_var = [UserID, TaskID];
+  var query = connection.query(query_str, query_var, function (err, rows, fields) {
+      if (err) {
+        deferred.reject(err);
+      }
+      else {
+        deferred.resolve(rows);
+      }
+      connection.end();
+  });
+  return deferred.promise;
+}; //end db_SetUserToken()
+
 router.db_submitND = function(TaskName, Description, LastUpdateUser, LastUpdateDT, TagID, DueDT, Street, City, State, ZipCode, UserID, id)
 {
   console.log("updating info in taskDetails: ", TaskName, Description);
@@ -207,6 +227,26 @@ router.db_deleteGP = function(id)
   });
   return deferred.promise;
 }; //end db_SetUserToken()
+
+
+router.post('/SubmitUser', function (req, res) {
+  var response = {
+    UserID: '',
+    TaskID: '',
+    message: ''
+  }
+  var badResponse = {
+    authorizedTF: false,
+    message: "Incorrect Parameters"
+  }
+
+    router.db_submitUser(req.body.UserID, req.body.TaskID);
+    console.log("TaskDetails assigned users, submiting: req.body items ",req.body);
+    response.UserID = req.body.UserID;
+    response.TaskID = req.body.TaskID;
+    response.message = "User is added";
+    res.send(response);
+})
 
 
 router.post('/SubmitND', function (req, res) {

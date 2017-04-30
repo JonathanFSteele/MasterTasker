@@ -1,7 +1,7 @@
 <div>
 	<h1>TaskDetails</h1>
 
-	<p>{{ TaskName }}{{ GroupID }}{{Tag}}</p>
+	<p>{{ TaskName }}{{Tag}}</p>
 <br>
 
 <form class="form-horizontal">
@@ -28,17 +28,11 @@
 		<div class="form-group">
 			<label class="col-sm-2 col-form-label">Assign Users:</label>
 			<div class="col-sm-8">
-				<select class="form-control" ng-options="user.ID as user.UserDisplayName for user in Users" ng-model="UserID" ng-change="TagSelected()">
+				<select class="form-control" ng-options="user.UserID as user.UserDisplayName for user in Users" ng-model="SelectedUser" ng-change="UserSelected(SelectedUser)">
 				</select>
-				<!-- <select class="form-control" id="group">
-					<option>Player1</option>
-					<option>Player2</option>
-					<option>Player3</option>
-					<option>Player4</option>
-				</select> -->
 			</div>
 			<div class="col-sm-2">
-					<button type="button" ng-click="GoToGroupsDetails(0)" class="btn btn-info">+</button>
+					<button type="button" ng-click="submitUser(UserID)" class="btn btn-info">+</button>
 			</div>
 		</div>
 		<table class = "table table-striped table-bordered">

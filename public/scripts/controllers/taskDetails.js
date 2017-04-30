@@ -5,6 +5,7 @@ app.controller('taskDetailsController', function($scope, $location, $sce, $http,
   $scope.Tags = [];
   $scope.Users = [];
   $scope.GroupID = null;
+  $scope.currentUser = null;
   // $scope.googleAddress ='2775 North Roadrunner, Las Cruces, NM 88011';
   $scope.googleAddress = '';
   $scope.getGoogleMapHTML = function(){
@@ -95,14 +96,34 @@ app.controller('taskDetailsController', function($scope, $location, $sce, $http,
       //    "UserDisplayName":"None",
       //    }
       //  data.data.unshift(defaultUser);
-       console.log("tasksController: User response, ",data);
+       console.log("tasksController: User response, ",data.data);
        $scope.Users = data.data;
+       console.log("Users: ", $scope.Users);
     });
   }
 
   $scope.TagSelected = function(){
     console.log("Tag Selected Called");
   }
+
+  $scope.UserSelected = function(UserID){
+    console.log("User Selected Called: User ID, ",UserID);
+    $scope.currentUser = UserID;
+  }
+
+  $scope.submitUser = function(UserID){
+  console.log("submitUser function called", UserID);
+  var user = $rootScope.authUser.UserID;
+  var id = $location.search().id;
+  $scope.data = {"UserID": UserID, 'TaskID': id};
+  console.log("data: ", $scope.data);
+  var message="";
+
+    $http.post("/api/taskDetails/SubmitUser", $scope.data)
+     .then(function(data, response) {
+     console.log("taskDetails: SubmitUser response, ", data);
+   });
+  };
 
 
   $scope.submitND = function(TaskName, Description, TagID, DueDT, Street, City, State, ZipCode){
