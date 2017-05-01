@@ -87,6 +87,7 @@ router.get('/List', authentication.required(), function (req, res) {
    });
 })
 
+// define Create New Group route
 router.post('/CreateNewGroup', function (req, res) {
   var response = {
     RowID: '',
@@ -101,7 +102,7 @@ router.post('/CreateNewGroup', function (req, res) {
     router.db_CreateNewGroup(req.body.GroupName, req.body.OwnerID)
     .then(function(data){
       console.log("Groups: creating: req.body items ",req.body);
-      console.log("Groups: created new task", req.body.GroupName);
+      console.log("\nGroups: created new task", req.body.GroupName);
       console.log("\n\nGroups: Created Group response - ", data);
       console.log("\nGroups: Created Group response insertID - ", data.insertId);
       response.RowID = data.insertId;

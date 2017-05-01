@@ -111,7 +111,8 @@ router.db_deleteGP = function(id)
   var deferred = q.defer(); // Use Q
   var date = new Date();
   var connection = mysql.createConnection(router.dbConfig);
-  var query_str = "UPDATE tldb.Groups_tbl SET DeleteDT= ? WHERE ID=?;";
+  var query_str = "UPDATE tldb.Groups_tbl SET DeleteDT=? WHERE ID=?;";
+  // "UPDATE tldb.Groups_tbl SET DeleteDT=? WHERE ID=?; "
   var query_var = [date, id];
   var query = connection.query(query_str, query_var, function (err, rows, fields) {
   if (err) {
@@ -122,7 +123,28 @@ router.db_deleteGP = function(id)
       }
   });
   return deferred.promise;
-}; //end db_SetUserToken()
+}; //end db_deleteGP()
+
+
+//
+router.db_deleteTasksOfGP = function(id, groupID)
+{
+   console.log("DELETING ALL TASKS FROM GROUP!!!!!: ", groupID);
+  var deferred = q.defer(); // Use Q
+  var date = new Date();
+  var connection = mysql.createConnection(router.dbConfig);
+  var query_str = "UPDATE tldb.Tasks_tbl SET DeleteDT=? WHERE ID=?, GroupID=?;";
+  var query_var = [date, id, groupID];
+  var query = connection.query(query_str, query_var, function (err, rows, fields) {
+  if (err) {
+        deferred.reject(err);
+      }
+      else {
+        deferred.resolve(rows);
+      }
+  });
+  return deferred.promise;
+}; //end db_deleteTasksOfGP()
 
 
 
