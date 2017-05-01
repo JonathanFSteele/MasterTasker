@@ -23,12 +23,33 @@ router.db_getTaskDetailsByID = function(TaskID)
   return deferred.promise;
 }; //end db_getTasksList()
 
-router.db_getTasksDescriptionByID = function(TaskID)
+// router.db_getTasksDescriptionByID = function(TaskID)
+// {
+//   var deferred = q.defer(); // Use Q
+//   var connection = mysql.createConnection(router.dbConfig);
+//   var query_str = "SELECT * FROM tldb.Tasks_tbl WHERE TaskID=?";
+//   var query_var = [TaskID];
+//   //var query_var; //null
+//   var query = connection.query(query_str, query_var, function (err, rows, fields) {
+//       if (err) {
+//         deferred.reject(err);
+//       }
+//       else {
+//         deferred.resolve(rows);
+//       }
+//       connection.end();
+//   });
+//   return deferred.promise;
+// }; //end db_getGroupsList()
+
+router.db_getTagsByID = function(GroupID)
 {
   var deferred = q.defer(); // Use Q
   var connection = mysql.createConnection(router.dbConfig);
-  var query_str = "SELECT * FROM tldb.Tasks_tbl WHERE TaskID=?";
-  var query_var = [TaskID];
+  // var query_str = "SELECT * FROM tldb.Tags_tbl WHERE GroupID=?";
+  // var query_var = [TagsID];
+  var query_str = "SELECT * FROM tldb.Tags_tbl WHERE GroupID=?";
+  var query_var = [GroupID];
   //var query_var; //null
   var query = connection.query(query_str, query_var, function (err, rows, fields) {
       if (err) {
@@ -40,7 +61,28 @@ router.db_getTasksDescriptionByID = function(TaskID)
       connection.end();
   });
   return deferred.promise;
-}; //end db_getGroupsList()
+}; //end db_getTagsList()
+
+router.db_getUsersByID = function(GroupID)
+{
+  var deferred = q.defer(); // Use Q
+  var connection = mysql.createConnection(router.dbConfig);
+  // var query_str = "SELECT * FROM tldb.Tags_tbl WHERE GroupID=?";
+  // var query_var = [TagsID];
+  var query_str = "SELECT * FROM tldb.GroupMembers_vw WHERE GroupID=?";
+  var query_var = [GroupID];
+  //var query_var; //null
+  var query = connection.query(query_str, query_var, function (err, rows, fields) {
+      if (err) {
+        deferred.reject(err);
+      }
+      else {
+        deferred.resolve(rows);
+      }
+      connection.end();
+  });
+  return deferred.promise;
+}; //end db_getTagsList()
 
 //Routes for this module:
 router.use(function timeLog (req, res, next) {
@@ -53,22 +95,22 @@ router.get('/', function (req, res) {
   res.send('GroupMembers')
 })
 
-// define the List route
-router.get('/ByID', function (req, res) {
-  var result = [];
-  console.log("req Tasks Details req.query.id: ",req.query.id); //req.authentication will tell you what user is currently logged in (req.authentication.Email - to get the current email for the logged in user.)
-
-  var GroupID = req.query.id;
-
-  router.db_getGroupByID(GroupID)
-   .then(function(rows){
-     console.log('rows result',rows);
-     res.send(rows);
-    },function(error){
-     console.log(error);
-     res.status(500).send(error);
-   });
-})
+// // define the List route
+// router.get('/ByID', function (req, res) {
+//   var result = [];
+//   console.log("req Tasks Details req.query.id: ",req.query.id); //req.authentication will tell you what user is currently logged in (req.authentication.Email - to get the current email for the logged in user.)
+//
+//   var GroupID = req.query.id;
+//
+//   router.db_getGroupByID(GroupID)
+//    .then(function(rows){
+//      console.log('rows result',rows);
+//      res.send(rows);
+//     },function(error){
+//      console.log(error);
+//      res.status(500).send(error);
+//    });
+// })
 // define the List route
 router.get('/Task', function (req, res) {
   var result = [];
@@ -85,6 +127,48 @@ router.get('/Task', function (req, res) {
      res.status(500).send(error);
    });
 })
+
+router.post('/Tags', function (req, res) {
+  var result = [];
+  console.log("req Tag req.query.id: ",req.query.id);
+  var GroupID = req.query.GroupID;
+    router.db_getTagsByID(req.body.GroupID)
+    .then(function(data){
+    console.log("Tags, returning data: data ",data);
+    res.send(data);
+    });
+})
+
+router.post('/Users', function (req, res) {
+  var result = [];
+  console.log("req User req.query.id: ",req.query.id);
+  var GroupID = req.query.GroupID;
+    router.db_getUsersByID(req.body.GroupID)
+    .then(function(data){
+    console.log("Users, returning data: data ",data);
+    res.send(data);
+    });
+})
+
+router.db_submitUser = function(UserID, TaskID)
+{
+  console.log("updating info in Assigned Users: ", UserID, TaskID);
+  var deferred = q.defer(); // Use Q
+  var date = new Date();
+  var connection = mysql.createConnection(router.dbConfig);
+  var query_str = "INSERT INTO tldb.TaskMembers_tbl (UserID, TaskID) VALUES ( ?, ?);";
+  var query_var = [UserID, TaskID];
+  var query = connection.query(query_str, query_var, function (err, rows, fields) {
+      if (err) {
+        deferred.reject(err);
+      }
+      else {
+        deferred.resolve(rows);
+      }
+      connection.end();
+  });
+  return deferred.promise;
+}; //end db_SetUserToken()
 
 router.db_submitND = function(TaskName, Description, LastUpdateUser, LastUpdateDT, TagID, DueDT, Street, City, State, ZipCode, UserID, id)
 {
@@ -144,6 +228,26 @@ router.db_deleteGP = function(id)
   });
   return deferred.promise;
 }; //end db_deleteGP()
+
+
+router.post('/SubmitUser', function (req, res) {
+  var response = {
+    UserID: '',
+    TaskID: '',
+    message: ''
+  }
+  var badResponse = {
+    authorizedTF: false,
+    message: "Incorrect Parameters"
+  }
+
+    router.db_submitUser(req.body.UserID, req.body.TaskID);
+    console.log("TaskDetails assigned users, submiting: req.body items ",req.body);
+    response.UserID = req.body.UserID;
+    response.TaskID = req.body.TaskID;
+    response.message = "User is added";
+    res.send(response);
+})
 
 
 router.post('/SubmitND', function (req, res) {

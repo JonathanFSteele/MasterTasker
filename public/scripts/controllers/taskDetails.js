@@ -3,7 +3,9 @@ app.controller('taskDetailsController', function($scope, $location, $sce, $http,
   $scope.message = 'This is the taskDetails Controller';
   $scope.myDate = new Date();
   $scope.Tags = [];
-  $scope.currentGroupID = 0;
+  $scope.Users = [];
+  $scope.GroupID = null;
+  $scope.currentUser = null;
   // $scope.googleAddress ='2775 North Roadrunner, Las Cruces, NM 88011';
   $scope.googleAddress = '';
   $scope.getGoogleMapHTML = function(){
@@ -41,7 +43,6 @@ app.controller('taskDetailsController', function($scope, $location, $sce, $http,
     return newDate;
   }
 
-  //Working on this
   $scope.load = function(){
     console.log("Loading load function");
     $http.get("/api/taskDetails/Task?id="+$location.search().id)
@@ -50,19 +51,81 @@ app.controller('taskDetailsController', function($scope, $location, $sce, $http,
       var TaskDetails = response.data[0];
       $scope.TaskName = TaskDetails.TaskName;
       $scope.Description = TaskDetails.Description;
-      $scope.TagID = TaskDetails.TagID;
+      $scope.GroupID = TaskDetails.GroupID;
       $scope.DueDT = TaskDetails.DueDT;
       $scope.Street = TaskDetails.Street;
       $scope.City = TaskDetails.City;
       $scope.State = TaskDetails.State;
       $scope.ZipCode = TaskDetails.ZipCode;
-      //$scope.myDate = $scope.DueDT;
       $scope.myDate = $scope.getDate($scope.DueDT);
       $scope.googleAddress = $scope.Street + ', ' + $scope.City + ', ' + $scope.State + ' ' + $scope.ZipCode;
+      $scope.TagID = TaskDetails.TagID;
+      $scope.loadtag();
+      $scope.loaduser();
+      //$scope.myDate = $scope.DueDT;
+    });
+  }
+  $scope.load();
+
+  $scope.loadtag = function(){
+    console.log("Loading loadtag function");
+    $scope.tagData = {"GroupID": $scope.GroupID};
+    console.log("loadtag GroupID", $scope.tagData);
+    $http.post("/api/taskDetails/Tags", $scope.tagData)
+     .then(function(data, response) {
+       console.log("Tags: response, ", data.data);
+       var defaultTag = {
+         "ID":0,
+         "Name":"None",
+         }
+       data.data.unshift(defaultTag);
+       console.log("tasksController: Tag response, ",data);
+       $scope.Tags = data.data;
     });
   }
 
-  $scope.load();
+  $scope.loaduser = function(){
+    console.log("Loading loaduser function");
+    $scope.userData = {"GroupID": $scope.GroupID};
+    console.log("loaduser GroupID", $scope.userData);
+    $http.post("/api/taskDetails/Users", $scope.userData)
+     .then(function(data, response) {
+       console.log("Users: response, ", data.data);
+      //  var defaultUser = {
+      //    "ID":0,
+      //    "UserDisplayName":"None",
+      //    }
+      //  data.data.unshift(defaultUser);
+       console.log("tasksController: User response, ",data.data);
+       $scope.Users = data.data;
+       console.log("Users: ", $scope.Users);
+    });
+  }
+
+  $scope.TagSelected = function(){
+    console.log("Tag Selected Called");
+  }
+
+  $scope.UserSelected = function(UserID){
+    console.log("User Selected Called: User ID, ",UserID);
+    $scope.currentUser = UserID;
+  }
+
+  $scope.submitUser = function(){
+  var uid = $scope.currentUser;
+  console.log("submitUser function called", uid);
+  var user = $rootScope.authUser.UserID;
+  var id = $location.search().id;
+  $scope.data = {'UserID': uid, 'TaskID': id};
+  console.log("data: ", $scope.data);
+  var message="";
+
+    $http.post("/api/taskDetails/SubmitUser", $scope.data)
+     .then(function(data, response) {
+     console.log("taskDetails: SubmitUser response, ", data);
+   });
+  };
+
 
   $scope.submitND = function(TaskName, Description, TagID, DueDT, Street, City, State, ZipCode){
       console.log("submitND function called", TaskName, Description, TagID, DueDT, Street, City, State, ZipCode);
@@ -112,35 +175,35 @@ $scope.back = function(){
   $location.path("/task");
 }
 
-$scope.CurrentSelectedGroup = function(ID){
-  $scope.currentGroupID = ID;
-  console.log("tasksController: Current Group by ID, ", $scope.currentGroupID);
-  $scope.getTags();
-}
-
-//Initialization of getTasks function //Go to the server ang get the json array.
-$scope.getTags = function(){
-  console.log("taskDetailsController: getTags function");
-  $http.get("/api/TaskDetails/List?GroupID="+$scope.currentGroupID)
-  .then(function(response) {
-    console.log("taskDetailsController: Tag response, ",response);
-    $scope.Tags = response.data;
-  });
-};
+// $scope.CurrentSelectedGroup = function(ID){
+//   $scope.currentGroupID = ID;
+//   console.log("tasksController: Current Group by ID, ", $scope.currentGroupID);
+//   $scope.getTags();
+// }
+//
+// //Initialization of getTasks function //Go to the server ang get the json array.
+// $scope.getTags = function(){
+//   console.log("taskDetailsController: getTags function");
+//   $http.get("/api/TaskDetails/List?GroupID="+$scope.currentGroupID)
+//   .then(function(response) {
+//     console.log("taskDetailsController: Tag response, ",response);
+//     $scope.Tags = response.data;
+//   });
+// };
 
 //$http.get function which generates the Tag Dropdown
-$http.get("/api/Tags/List")
-.then(function(response) {
-  console.log("taskDetailsController: Group response, ",response);
-  var defaultGroup = {
-    "ID":0,
-    "DisplayName":"NONE",
-    }
-  response.data.unshift(defaultGroup);
-  console.log("taskDetailsController: Group response, ",response);
-
-  $scope.Tags = response.data;
-  $scope.currentGroupID = 0;
-});
+// $http.get("/api/Tags/List")
+// .then(function(response) {
+//   console.log("taskDetailsController: Group response, ",response);
+//   var defaultGroup = {
+//     "ID":0,
+//     "DisplayName":"None",
+//     }
+//   response.data.unshift(defaultGroup);
+//   console.log("taskDetailsController: Group response, ",response);
+//
+//   $scope.Tags = response.data;
+//   $scope.currentGroupID = 0;
+// });
 
 });//end of the controller
