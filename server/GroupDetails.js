@@ -62,6 +62,48 @@ router.db_getTags = function(GroupID)
   return deferred.promise;
 }; //end db_getGroupsList()
 
+//db_getUser
+router.db_getUser = function(Email)
+{
+  console.log("calling db_getUser, agruments: ", Email);
+  var deferred = q.defer(); // Use Q
+  var connection = mysql.createConnection(router.dbConfig);
+  var query_str = "SELECT * FROM tldb.Users_tbl WHERE Email=?;";
+  var query_var = [Email];
+  //var query_var; //null
+  var query = connection.query(query_str, query_var, function (err, rows, fields) {
+      if (err) {
+        deferred.reject(err);
+      }
+      else {
+        deferred.resolve(rows);
+      }
+      connection.end();
+  });
+  return deferred.promise;
+}; //end db_getUser()
+
+
+// db_addUserToGroup
+router.db_addUserToGroup = function(UserID, GroupID)
+{
+  console.log("updating info in groupDetails: ", UserID, GroupID);
+  var deferred = q.defer(); // Use Q
+  var date = new Date();
+  var connection = mysql.createConnection(router.dbConfig);
+  var query_str = "INSERT INTO tldb.GroupMembers_tbl (UserID, GroupID) VALUES (?,?);";
+  var query_var = [UserID, GroupID];
+  var query = connection.query(query_str, query_var, function (err, rows, fields) {
+      if (err) {
+        deferred.reject(err);
+      }
+      else {
+        deferred.resolve(rows);
+      }
+      connection.end();
+  });
+  return deferred.promise;
+}; //end db_addUserToGroup()
 
 router.db_submitND = function(displayName, description, id, UserID)
 {
@@ -264,6 +306,45 @@ router.post('/deleteGP', function (req, res) {
     res.send(response);
 })
 
+router.post('/AddUserToGroupFind', function (req, res) {
+  var response = {
+    Email: '',
+    DisplayName: '',
+    LocalEmailTF: ''
+  }
+  var badResponse = {
+    authorizedTF: false,
+    message: "Incorrect Parameters"
+  }
+    router.db_getUser(req.body.EmailName)
+    .then(function(rows){
+      if(rows != null)
+      {
+        console.log("GroupDetails, submiting: req.body items ",req.body);
+        console.log("GroupDetails, printing row: ", rows);
+        postTaskMember(rows[0], req.body.GroupID);
+        response.Email = req.body.EmailName;
+        response.DisplayName = req.body.DisplayName;
+        response.LocalEmailTF = 'true';
+        res.send(response);
+      } else
+      {
+        console.log("GroupDetails, sending invite; user does not exist");
+        response.Email = req.body.EmailName;
+        response.DisplayName = req.body.DisplayName;
+        response.LocalEmailTF = 'false';
+        res.send(response);
+      }
+    });
+})
+
+var postTaskMember = function (User, GroupID) {
+  console.log("postTaskMember called; args: ", User.ID, GroupID);
+  router.db_addUserToGroup(User.ID, GroupID)
+    .then(function(rows){
+      console.log("postTaskMemeber, success! user found");      
+    });
+}
 
 
 module.exports = router
