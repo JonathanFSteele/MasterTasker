@@ -53,7 +53,7 @@ router.db_CreateNewTask = function(TaskName, GroupID, OwnerID)
   console.log("Tasks: Creating A New Task ", TaskName, GroupID, OwnerID);
   var deferred = q.defer();
   var connection = mysql.createConnection(router.dbConfig);
-  var query_str = "INSERT INTO tldb.Tasks_tbl (TaskName, GroupID, OwnerID) VALUES ( ?, ?, ?);";
+  var query_str = "INSERT INTO tldb.Tasks_tbl (TaskName, GroupID, OwnerID, CompletedTF) VALUES ( ?, ?, ?, 'false');";
   var query_var = [TaskName, GroupID, OwnerID];
   var query = connection.query(query_str, query_var, function (err, rows, fields) {
       if (err) {
@@ -66,6 +66,46 @@ router.db_CreateNewTask = function(TaskName, GroupID, OwnerID)
   });
   return deferred.promise;
 }; //end db_CreateNewTask()
+
+router.db_CompleteTaskT = function(id, UserID)
+{
+  var deferred = q.defer();
+  var connection = mysql.createConnection(router.dbConfig);
+  var date = new Date();
+  var query_str = "UPDATE `tldb`.`Tasks_tbl` SET `LastUpdateUser`=?, `LastUpdateDT`=?, `CompletedTF`='true' WHERE `ID`= ?;";
+  var query_var = [ UserID, date, id];
+  var query = connection.query(query_str, query_var, function (err, rows, fields) {
+      if (err) {
+        deferred.reject(err);
+      }
+      else {
+        deferred.resolve(rows);
+      }
+      connection.end();
+  });
+  return deferred.promise;
+}; //end db_CreateNewTask()
+
+
+router.db_CompleteTaskF = function(id, UserID)
+{
+  var deferred = q.defer();
+  var connection = mysql.createConnection(router.dbConfig);
+  var date = new Date();
+  var query_str = "UPDATE `tldb`.`Tasks_tbl` SET `LastUpdateUser`=?, `LastUpdateDT`=?, `CompletedTF`='false' WHERE `ID`= ?;";
+  var query_var = [ UserID, date, id];
+  var query = connection.query(query_str, query_var, function (err, rows, fields) {
+      if (err) {
+        deferred.reject(err);
+      }
+      else {
+        deferred.resolve(rows);
+      }
+      connection.end();
+  });
+  return deferred.promise;
+}; //end db_CreateNewTask()
+
 
 //Routes for this module:
 router.use(function timeLog (req, res, next) {
@@ -122,6 +162,48 @@ router.post('/CreateNewTask', function (req, res) {
       res.status(500).send(error);
     });
 })
+
+router.post('/CompleteTaskT', function (req, res) {
+  var response = {
+    id: '',
+    UserID: '',
+  }
+  var badResponse = {
+    authorizedTF: false,
+    message: "Incorrect User Parameters"
+  }
+    router.db_CompleteTaskT(req.body.id, req.body.UserID)
+    .then(function(data){
+      console.log("Tasks: completeing: task req.ID ", req.body.id);
+      response.id = req.body.id;
+      response.UserID = req.body.UserID;
+      res.send(response);
+    },function(error){
+      console.log(error);
+      res.status(500).send(error);
+    });
+    })
+
+    router.post('/CompleteTaskF', function (req, res) {
+      var response = {
+        id: '',
+        UserID: '',
+      }
+      var badResponse = {
+        authorizedTF: false,
+        message: "Incorrect User Parameters"
+      }
+        router.db_CompleteTaskF(req.body.id, req.body.UserID)
+        .then(function(data){
+          console.log("Tasks: completeing: task req.ID ", req.body.id);
+          response.id = req.body.id;
+          response.UserID = req.body.UserID;
+          res.send(response);
+        },function(error){
+          console.log(error);
+          res.status(500).send(error);
+        });
+    })
 
 
 module.exports = router

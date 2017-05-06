@@ -98,14 +98,14 @@
 			<th style="text-align: right;">CompletedTF</th>
 	 	</tr>
 		 	<tr ng-repeat="tasks in Tasks" ng-click="GoToTaskDetails(tasks.TaskID)" style="font-size: 16px;">
-		   	<td style="text-align: left;">{{tasks.TaskName}}</td>
+		   	<td style="text-align: left;">{{tasks.TaskName}}{{tasks.CompletedTF}}</td>
 		   	<td style="text-align: center;">{{tasks.DisplayName}}</td>
 				<td style="text-align: center;">{{tasks.TagID}}</td>
 				<td style="text-align: center;">{{tasks.DueDT | date:'fullDate'}}</td>
 		   	<td ng-click="$event.stopPropagation()">
 					<div class="checkbox" style="float:right">
 						<label style="font-size: 1.0em">
-								<input ng-model="tasks.CompletedTF" type="checkbox" ng-click="CompleteTask(tasks.TaskID)">
+								<input ng-model="tasks.CompletedTF" type="checkbox" ng-click="CompleteTask(tasks.TaskID , tasks.CompletedTF)">
 								<span class="cr"><i class="cr-icon fa fa-check"></i></span>
 						</label>
 					</div>
