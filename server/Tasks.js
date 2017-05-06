@@ -22,20 +22,35 @@ var q = require('q');
 var router = express.Router();
 
 //SQL Query functions:
-router.db_getTasksList = function(GroupID, UserID)
+router.db_getTasksList = function(GroupID, ShowCompletedTF, UserID)
 {
   var deferred = q.defer(); // Use Q
   var connection = mysql.createConnection(router.dbConfig);
+  if ( ShowCompletedTF == true) {
   if(GroupID == 0)
-  {
-    var query_str = "SELECT * FROM tldb.Tasks_vw WHERE GroupUserID = ?";
-    var query_var = [UserID];
-  }
+    {
+        var query_str = "SELECT * FROM tldb.Tasks_vw WHERE GroupUserID = ? AND CompletedTF = 1";
+        var query_var = [UserID];
+    }
   else
-  {
-    var query_str = "SELECT * FROM tldb.Tasks_vw WHERE GroupID = ? AND GroupUserID = ?";
-    var query_var = [GroupID, UserID];
+    {
+        var query_str = "SELECT * FROM tldb.Tasks_vw WHERE GroupID = ? AND GroupUserID = ? AND CompletedTF = 1";
+        var query_var = [GroupID, UserID];
+    }
   }
+  else {
+    if(GroupID == 0)
+    {
+       var query_str = "SELECT * FROM tldb.Tasks_vw WHERE GroupUserID = ? AND CompletedTF = 0";
+       var query_var = [UserID];
+   }
+else
+    {
+       var query_str = "SELECT * FROM tldb.Tasks_vw WHERE GroupID = ? AND GroupUserID = ? AND CompletedTF = 0";
+       var query_var = [GroupID, UserID];
+   }
+}
+
   var query = connection.query(query_str, query_var, function (err, rows, fields) {
       if (err) {
         deferred.reject(err);
@@ -119,11 +134,10 @@ router.get('/', function (req, res) {
 })
 
 // define the List route
-router.get('/List', function (req, res) {
+router.post('/List', function (req, res) {
   var result = [];
-  console.log("req user record: ",req.authentication);
-  var GroupID = req.query.GroupID;
-  router.db_getTasksList(GroupID, req.authentication.ID)
+  //console.log("req user record: ",req.authentication);
+  router.db_getTasksList( req.body.currentGroupID, req.body.ShowCompletedTF, req.body.UserID)
    .then(function(rows){
      console.log('rows result',rows);
      res.send(rows);
