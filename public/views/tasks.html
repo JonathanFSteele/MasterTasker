@@ -105,7 +105,7 @@
 		   	<td ng-click="$event.stopPropagation()">
 					<div class="checkbox" style="float:right">
 						<label style="font-size: 1.0em">
-								<input ng-model="tasks.CompletedTF" type="checkbox" ng-click="CompleteTask(tasks.TaskID)">
+								<input ng-model="tasks.CompletedTF" type="checkbox" ng-click="CompleteTask(tasks.TaskID , tasks.CompletedTF)">
 								<span class="cr"><i class="cr-icon fa fa-check"></i></span>
 						</label>
 					</div>
