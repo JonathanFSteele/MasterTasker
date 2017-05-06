@@ -209,6 +209,7 @@ router.db_createND = function(TaskName, Description, LastUpdateUser, LastUpdateD
   return deferred.promise;
 }; //end db_SetUserToken()
 
+//WIP!!!!!
 router.db_deleteGP = function(id)
 {
    console.log("DELETING TASK!!!!!: ", id);
@@ -226,7 +227,7 @@ router.db_deleteGP = function(id)
       }
   });
   return deferred.promise;
-}; //end db_SetUserToken()
+}; //end db_deleteGP()
 
 
 router.post('/SubmitUser', function (req, res) {
