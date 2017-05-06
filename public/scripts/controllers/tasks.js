@@ -64,8 +64,13 @@ app.controller('tasksController', function($scope, $http, $location, $rootScope)
   }
 
   //CompleteTaskFunction Called!
-  $scope.CompleteTask = function() {
+  $scope.CompleteTask = function( id ) {
     console.log("Complete Task Function Called!");
+    var user = $rootScope.authUser.UserID;
+    $scope.newTask = {'id': id, 'UserID': user};
+    console.log("tasksController: Complete Task callback result - ", $scope.newTask);
+    //Post for Creating a new Task
+    $http.post("/api/Tasks/CompleteTask", $scope.newTask)
   }
 
   //Initialization of GoToGroupDetails function

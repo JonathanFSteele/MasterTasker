@@ -67,6 +67,26 @@ router.db_CreateNewTask = function(TaskName, GroupID, OwnerID)
   return deferred.promise;
 }; //end db_CreateNewTask()
 
+router.db_CompleteTask = function(id, UserID)
+{
+  var deferred = q.defer();
+  var connection = mysql.createConnection(router.dbConfig);
+  var date = new Date();
+  var query_str = "UPDATE `tldb`.`Tasks_tbl` SET `LastUpdateUser`=?, `LastUpdateDT`=?, `CompletedTF`='1' WHERE `ID`='1';";
+  var query_var = [ UserID, date, id];
+  var query = connection.query(query_str, query_var, function (err, rows, fields) {
+      if (err) {
+        deferred.reject(err);
+      }
+      else {
+        deferred.resolve(rows);
+      }
+      connection.end();
+  });
+  return deferred.promise;
+}; //end db_CreateNewTask()
+
+
 //Routes for this module:
 router.use(function timeLog (req, res, next) {
   console.log('Tasks Module Started: ', Date.now())
@@ -122,6 +142,27 @@ router.post('/CreateNewTask', function (req, res) {
       res.status(500).send(error);
     });
 })
+
+router.post('/CompleteTask', function (req, res) {
+  var response = {
+    id: '',
+    UserID: '',
+  }
+  var badResponse = {
+    authorizedTF: false,
+    message: "Incorrect User Parameters"
+  }
+    router.db_CompleteTask(req.body.id, req.body.UserID)
+    .then(function(data){
+      console.log("Tasks: completeing: task req.ID ", req.body.id);
+      response.id = req.body.id;
+      response.UserID = req.body.UserID;
+      res.send(response);
+    },function(error){
+      console.log(error);
+      res.status(500).send(error);
+    });
+    })
 
 
 module.exports = router
