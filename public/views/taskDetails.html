@@ -52,7 +52,7 @@
 	<br>
 	<!-- START Assign Users Input Area -->
 	<!-- TODO: Change this to a Popover -->
-	<!-- <div class="form-group">
+	<div class="form-group">
 		<label class="col-sm-2 col-form-label">Assign Users:</label>
 		<div class="col-sm-8">
 			<select style="border: solid 1px #000000" class="form-control" ng-options="user.UserID as user.UserDisplayName for user in Users" ng-model="SelectedUser" ng-change="UserSelected(SelectedUser)">
@@ -61,7 +61,7 @@
 		<div class="col-sm-2">
 				<button type="button" ng-click="submitUser()" class="btn btn-info">+</button>
 		</div>
-	</div> -->
+	</div>
 	<!-- END Assign Users Input Area -->
 	<!-- START User Members Table Area -->
 	<div class="form-group">
@@ -77,16 +77,13 @@
 					</thead>
 
 					<tbody>
-						<tr ng-repeat="users in Users">
-							<td>{{users.UserDisplayName}}</td>
-							<td>{{users.Email}}</td>
+						<tr ng-repeat="taskusers in TaskUserDetails">
+							<td>{{taskusers.UserDisplayName}}</td>
+							<td>{{taskusers.Email}}</td>
 							 <td>Remove</td>
 						</tr>
 					</tbody>
 				</table>
-			</div>
-			<div class="col-sm-1">
-				<button type="button" class="btn btn-info">+</button>
 			</div>
 		</div>
 	</div>

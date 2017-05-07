@@ -84,6 +84,25 @@ router.db_getUsersByID = function(GroupID)
   return deferred.promise;
 }; //end db_getTagsList()
 
+router.db_getTaskUsersByID = function(TaskID)
+{
+  var deferred = q.defer(); // Use Q
+  var connection = mysql.createConnection(router.dbConfig);
+  var query_str = "SELECT * FROM tldb.TaskMembers_vw WHERE TaskID=?";
+  var query_var = [TaskID];
+  //var query_var; //null
+  var query = connection.query(query_str, query_var, function (err, rows, fields) {
+      if (err) {
+        deferred.reject(err);
+      }
+      else {
+        deferred.resolve(rows);
+      }
+      connection.end();
+  });
+  return deferred.promise;
+}; //end db_getTaskUsersByID()
+
 //Routes for this module:
 router.use(function timeLog (req, res, next) {
   console.log('Tasks Module Started: ', Date.now())
@@ -112,6 +131,23 @@ router.get('/', function (req, res) {
 //    });
 // })
 // define the List route
+
+router.get('/TaskUsers', function (req, res) {
+  var result = [];
+  console.log("req TaskUsers req.query.id: ",req.query.id); //req.authentication will tell you what user is currently logged in (req.authentication.Email - to get the current email for the logged in user.)
+
+  var TaskID = req.query.id;
+
+  router.db_getTaskUsersByID(TaskID)
+   .then(function(data){
+     console.log('data result',data);
+     res.send(data);
+    },function(error){
+     console.log(error);
+     res.status(500).send(error);
+   });
+})
+
 router.get('/Task', function (req, res) {
   var result = [];
   console.log("req Task req.query.id: ",req.query.id); //req.authentication will tell you what user is currently logged in (req.authentication.Email - to get the current email for the logged in user.)
