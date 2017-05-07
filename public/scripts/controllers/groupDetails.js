@@ -83,11 +83,13 @@ app.controller('groupDetailsController', function($scope, $http, $location, $roo
         {
           return; //Return when Cancel was clicked so it doesnt create just random empty actions
         }
+        var Owner =$scope.OwnerID;
+        if (user == Owner) {
         console.log("groupsController: AddUserToGroupDialog callback result - ", result);
         var groupID = $location.search().id;
         $scope.newUserToGroup = {'EmailName': result, 'GroupID': groupID};
         console.log("groupsController: AddUserToGroupDialog callback newresult - ", $scope.newUserToGroup);
-        
+
         //Get for adding new user to group
         $http.post("/api/GroupDetails/AddUserToGroupFind", $scope.newUserToGroup)
         .then(function(data, response) {
@@ -95,6 +97,11 @@ app.controller('groupDetailsController', function($scope, $http, $location, $roo
           location.reload();
           if(!$scope.$$phase) $scope.$apply()
         });
+      }
+      else {
+      //TODO:  add prompt to say "you cannot remove a group member if you are not the leader"
+        console.log("YOU AINT ALLOWED TO TOUCH THAT, STAAAAAAHHHHHP");
+      }
       },
     });
    } // end AddUserToGroupDialog()
@@ -121,14 +128,21 @@ app.controller('groupDetailsController', function($scope, $http, $location, $roo
             var groupID = $location.search().id;
             $scope.oldUserFromGroup = {'UserID': userID, 'GroupID': groupID};
             console.log("groupsController: RemoveUserFromGroupDialog callback scope result - ", $scope.oldUserFromGroup);
-            
+
             //Remove user from group
+            var Owner =$scope.OwnerID;
+            if (user == Owner) {
             $http.post("/api/GroupDetails/RemoveUserFromGroup", $scope.oldUserFromGroup)
             .then(function(data, response) {
               console.log("groupDetails: .then response data, ", data.data, response);
               location.reload();
               if(!$scope.$$phase) $scope.$apply()
             });
+            }
+            else {
+            //TODO:  add prompt to say "you cannot remove a group member if you are not the leader"
+              console.log("YOU AINT ALLOWED TO TOUCH THAT, STAAAAAAHHHHHP");
+            }
           }
         },
       });
