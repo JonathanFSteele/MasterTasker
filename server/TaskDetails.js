@@ -117,24 +117,6 @@ router.get('/', function (req, res) {
   res.send('tasks')
 })
 
-// // define the List route
-// router.get('/ByID', function (req, res) {
-//   var result = [];
-//   console.log("req Tasks Details req.query.id: ",req.query.id); //req.authentication will tell you what user is currently logged in (req.authentication.Email - to get the current email for the logged in user.)
-//
-//   var GroupID = req.query.id;
-//
-//   router.db_getGroupByID(GroupID)
-//    .then(function(rows){
-//      console.log('rows result',rows);
-//      res.send(rows);
-//     },function(error){
-//      console.log(error);
-//      res.status(500).send(error);
-//    });
-// })
-// define the List route
-
 router.get('/TaskUsersList', authentication.required(), function (req, res) {
   var result = [];
   console.log("\n\nTaskUsers List TaskID: ", req.query.id);
@@ -348,7 +330,41 @@ router.post('/deleteGP', function (req, res) {
     res.send(response);
 })
 
+router.db_removeUser = function(UserID, TaskID)
+{
+  console.log("TaskDetails: db_removeUser called");
+  console.log("\nargs: ", UserID, TaskID);
+  var deferred = q.defer();
+  var connection = mysql.createConnection(router.dbConfig);
+  var query_str = "DELETE FROM tldb.TaskMembers_tbl WHERE UserID=? AND TaskID=?;";
+  var query_var = [UserID, TaskID];
+  var query = connection.query(query_str, query_var, function (err, rows, fields) {
+      if (err) {
+        deferred.reject(err);
+      }
+      else {
+        deferred.resolve(rows);
+      }
+      connection.end();
+  });
+  return deferred.promise;
+}; //end db_removeUser()
 
-
+router.post('/RemoveUser', function (req, res) {
+  console.log("RemoveUser called");
+  //var response = { }
+  var badResponse = {
+    authorizedTF: false,
+    message: "Invalid Process"
+  }
+  console.log("TaskDetailsSettings: req.body items ",req.body);
+  router.db_removeUser(req.body.UserID, req.body.TaskID)
+  .then(function(setUserRows){
+    res.send(response);
+  },function(error){
+    console.log(error);
+    res.status(500).send(error);
+  });
+})
 
 module.exports = router

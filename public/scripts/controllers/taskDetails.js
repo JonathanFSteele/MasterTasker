@@ -7,7 +7,6 @@ app.controller('taskDetailsController', function($scope, $location, $sce, $http,
   $scope.TaskUsers = [];
   $scope.GroupID = null;
   $scope.currentUser = null;
-  // $scope.googleAddress ='2775 North Roadrunner, Las Cruces, NM 88011';
   $scope.googleAddress = '';
   $scope.getGoogleMapHTML = function(){
     return $sce.trustAsHtml(//'<iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBVpD1Dv4Y2NqPGJtk-nw6a5OP3WDp72uU&q=2775+North+Roadrunner, Las Cruces, NM 88011"></iframe>'
@@ -184,6 +183,42 @@ $scope.getTaskMembers = function(){
   });
 }
 $scope.getTaskMembers();
+
+
+// RemoveUser Function
+  $scope.RemoveUser = function(UserID) {
+  console.log("TaskDetailsController: RemoveUser Function Hit");
+    bootbox.confirm({
+      message: "Are you sure you want to remove this user?",
+      buttons: {
+        confirm: {
+            label: 'Yes',
+            className: 'btn-warning'
+        },
+        cancel: {
+            label: 'No',
+            className: 'btn-info'
+        }
+      },
+      callback: function (result) {
+        if(result == true)
+        {
+          console.log("TaskDetailsController: RemoveUser callback result - ", result);
+          var TaskID = $location.search().id;
+          $scope.oldUserFromTask = {'UserID': UserID, 'TaskID': TaskID};
+          console.log("TaskDetailsController: RemoveUser callback scope result - ", $scope.oldUserFromTask);
+          //Remove user from task
+          $http.post("/api/TaskDetails/RemoveUser", $scope.oldUserFromTask)
+          .then(function(data, response) {
+            console.log("taskDetails: .then response data, ", data.data, response);
+            if(!$scope.$$phase) $scope.$apply()
+          });
+        }
+        $scope.getTaskMembers();
+      },
+    });
+ } // end RemoveUser()
+
 
 // $scope.CurrentSelectedGroup = function(ID){
 //   $scope.currentGroupID = ID;

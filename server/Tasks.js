@@ -67,9 +67,10 @@ router.db_CreateNewTask = function(TaskName, GroupID, OwnerID)
 {
   console.log("Tasks: Creating A New Task ", TaskName, GroupID, OwnerID);
   var deferred = q.defer();
+  var date = new Date();
   var connection = mysql.createConnection(router.dbConfig);
-  var query_str = "INSERT INTO tldb.Tasks_tbl (TaskName, GroupID, OwnerID, CompletedTF) VALUES ( ?, ?, ?, 'false');";
-  var query_var = [TaskName, GroupID, OwnerID];
+  var query_str = "INSERT INTO tldb.Tasks_tbl (TaskName, GroupID, OwnerID, CompletedTF, DueDT) VALUES ( ?, ?, ?, 'false', ?);";
+  var query_var = [TaskName, GroupID, OwnerID, date];
   var query = connection.query(query_str, query_var, function (err, rows, fields) {
       if (err) {
         deferred.reject(err);

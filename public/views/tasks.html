@@ -100,7 +100,7 @@
 		 	<tr ng-repeat="tasks in Tasks | filter: SearchInput" ng-click="GoToTaskDetails(tasks.TaskID)" style="font-size: 16px;">
 		   	<td style="text-align: left;">{{tasks.TaskName}}</td>
 		   	<td style="text-align: center;">{{tasks.DisplayName}}</td>
-				<td style="text-align: center;">{{tasks.TagID}}</td>
+				<td style="text-align: center;"><button class="btn" style="background-color:{{tasks.TagColor}}; padding:10px; border-radius:20px;"</td>
 				<td style="text-align: center;">{{tasks.DueDT | date:'fullDate'}}</td>
 		   	<td ng-click="$event.stopPropagation()">
 					<div class="checkbox" style="float:right">
