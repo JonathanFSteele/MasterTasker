@@ -18,6 +18,7 @@
     "express-authentication": "^0.3.2",
     "moment": "^2.18.1",
     "mysql": "^2.13.0",
+    "ngjs-color-picker": "^1.1.2",
     "q": "^1.4.1"
   },
   "devDependencies": {
