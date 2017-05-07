@@ -124,6 +124,7 @@ app.controller('taskDetailsController', function($scope, $location, $sce, $http,
     $http.post("/api/taskDetails/SubmitUser", $scope.data)
      .then(function(data, response) {
      console.log("taskDetails: SubmitUser response, ", data);
+     $scope.getTaskMembers();
    });
   };
 
@@ -175,12 +176,14 @@ app.controller('taskDetailsController', function($scope, $location, $sce, $http,
 $scope.back = function(){
   $location.path("/task");
 }
-
- $http.get("/api/TaskDetails/TaskUsersList?id="+$location.search().id)
- .then(function(response) {
-   console.log("TaskUsers response: ", response);
-   $scope.TaskUsers = response.data;
- });
+$scope.getTaskMembers = function(){
+  $http.get("/api/TaskDetails/TaskUsersList?id="+$location.search().id)
+  .then(function(response) {
+    console.log("TaskUsers response: ", response);
+    $scope.TaskUsers = response.data;
+  });
+}
+$scope.getTaskMembers();
 
 // $scope.CurrentSelectedGroup = function(ID){
 //   $scope.currentGroupID = ID;
