@@ -65,12 +65,12 @@
 					<tr ng-repeat="groupMembers in GroupMembers">
 						<td>{{groupMembers.UserDisplayName}}</td>
 						<td>{{groupMembers.Email}}</td>
-						<td><a ng-hide="OwnerID != UserID" ng-click="RemoveUserFromGroupDialog(groupMembers.UserID)">Remove</a></td>
+						<td><a ng-hide="OwnerID != userDataID || OwnerID == groupMembers.UserID" ng-click="RemoveUserFromGroupDialog(groupMembers.UserID)">Remove</a></td>
 					</tr>
 				</tbody>
 			</table>
 			</div>
-			<div ng-hide="OwnerID != UserID" class="col-sm-1">
+			<div ng-hide="OwnerID != userDataID" class="col-sm-1">
 				<button type="button" ng-click="AddUserToGroupDialog()" class="btn btn-info">+</button>
 			</div>
 		</div>
@@ -121,7 +121,7 @@
 	</div>
 	<div class="col-sm-6">
 	</div>
-	<div ng-hide="OwnerID != UserID">
+	<div ng-hide="OwnerID != userDataID">
     <button type="button" class="btn btn-danger" ng-click="deleteGP()">Delete</button>
 		</div>
 

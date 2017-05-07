@@ -1,6 +1,7 @@
 app.controller('groupDetailsController', function($scope, $http, $location, $rootScope) {
   $scope.message = 'This is the group Details Controller';
   console.log($scope.message, $location.search().id);
+  $scope.userDataID = $rootScope.authUser.UserID;
   //$scope.OwnerID = 0;
 
   $http.get("/api/GroupDetails/ByID?id="+$location.search().id)
@@ -84,6 +85,7 @@ app.controller('groupDetailsController', function($scope, $http, $location, $roo
           return; //Return when Cancel was clicked so it doesnt create just random empty actions
         }
         var Owner =$scope.OwnerID;
+        var user = $rootScope.authUser.UserID;
         if (user == Owner) {
         console.log("groupsController: AddUserToGroupDialog callback result - ", result);
         var groupID = $location.search().id;
@@ -131,6 +133,7 @@ app.controller('groupDetailsController', function($scope, $http, $location, $roo
 
             //Remove user from group
             var Owner =$scope.OwnerID;
+            var user = $rootScope.authUser.UserID;
             if (user == Owner) {
             $http.post("/api/GroupDetails/RemoveUserFromGroup", $scope.oldUserFromGroup)
             .then(function(data, response) {
