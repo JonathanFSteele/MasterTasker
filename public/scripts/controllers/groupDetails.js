@@ -99,4 +99,39 @@ app.controller('groupDetailsController', function($scope, $http, $location, $roo
     });
    } // end AddUserToGroupDialog()
 
+  // RemoveUserFromGroupDialog Function
+		$scope.RemoveUserFromGroupDialog = function(userID) {
+    console.log("groupsController: RemoveUserFromGroupDialog Function Hit");
+      bootbox.confirm({
+        message: "Are you sure you want to remove this user?",
+        buttons: {
+          confirm: {
+              label: 'Yes',
+              className: 'btn-warning'
+          },
+          cancel: {
+              label: 'No',
+              className: 'btn-info'
+          }
+        },
+        callback: function (result) {
+          if(result == true)
+          {
+            console.log("groupsController: RemoveUserFromGroupDialog callback result - ", result);
+            var groupID = $location.search().id;
+            $scope.oldUserFromGroup = {'UserID': userID, 'GroupID': groupID};
+            console.log("groupsController: RemoveUserFromGroupDialog callback scope result - ", $scope.oldUserFromGroup);
+            
+            //Remove user from group
+            $http.post("/api/GroupDetails/RemoveUserFromGroup", $scope.oldUserFromGroup)
+            .then(function(data, response) {
+              console.log("groupDetails: .then response data, ", data.data, response);
+              location.reload();
+              if(!$scope.$$phase) $scope.$apply()
+            });
+          }
+        },
+      });
+   } // end RemoveUserFromGroupDialog()
+
 });

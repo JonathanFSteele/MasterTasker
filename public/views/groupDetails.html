@@ -65,7 +65,7 @@
 					<tr ng-repeat="groupMembers in GroupMembers">
 						<td>{{groupMembers.UserDisplayName}}</td>
 						<td>{{groupMembers.Email}}</td>
-						<td><a>Remove</a></td>
+						<td><a ng-click="RemoveUserFromGroupDialog(groupMembers.UserID)">Remove</a></td>
 					</tr>
 				</tbody>
 			</table>

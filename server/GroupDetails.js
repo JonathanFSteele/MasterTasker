@@ -346,5 +346,45 @@ var postTaskMember = function (User, GroupID) {
     });
 }
 
+// define db_removeUserFromGroup
+router.db_removeUserFromGroup = function(UserID, GroupID)
+{
+  console.log("GroupDetails: db_removeUserFromGroup called");
+  console.log("\nargs: ", UserID, GroupID);
+  var deferred = q.defer();
+  var connection = mysql.createConnection(router.dbConfig);
+  var query_str = "DELETE FROM tldb.GroupMembers_tbl WHERE UserID=? AND GroupID=?;";
+  var query_var = [UserID, GroupID];
+  var query = connection.query(query_str, query_var, function (err, rows, fields) {
+      if (err) {
+        deferred.reject(err);
+      }
+      else {
+        deferred.resolve(rows);
+      }
+      connection.end();
+  });
+  return deferred.promise;
+}; //end db_removeUserFromGroup()
+
+
+//Define the deletion from groups action
+router.post('/RemoveUserFromGroup', function (req, res) {
+  console.log("RemoveUserFromGroup called");
+  //var response = { }
+  var badResponse = {
+    authorizedTF: false,
+    message: "Invalid Process"
+  }
+  console.log("GroupSettings: req.body items ",req.body);
+  router.db_removeUserFromGroup(req.body.UserID, req.body.GroupID)
+  .then(function(setUserRows){
+    res.send(response);
+  },function(error){
+    console.log(error);
+    res.status(500).send(error);
+  });
+})
+
 
 module.exports = router
