@@ -65,7 +65,7 @@
 				<div class="col-xs-12 col-sm-11">
 					<form class="navbar-form" role="search" style="padding: 0px;">
 						<div class="input-group add-on" style="margin-left: 15px; margin-right: 15px;">
-							<input class="form-control" placeholder="Search" type="text">
+							<input class="form-control" ng-model="SearchInput" placeholder="Search" type="text">
 							<div class="input-group-btn">
 								<button class="btn btn-warning" type="submit"><i class="glyphicon glyphicon-search"></i></button>
 							</div>
@@ -97,7 +97,7 @@
 			<th style="text-align: center;">Due Date</th>
 			<th style="text-align: right;">CompletedTF</th>
 	 	</tr>
-		 	<tr ng-repeat="tasks in Tasks" ng-click="GoToTaskDetails(tasks.TaskID)" style="font-size: 16px;">
+		 	<tr ng-repeat="tasks in Tasks | filter: SearchInput" ng-click="GoToTaskDetails(tasks.TaskID)" style="font-size: 16px;">
 		   	<td style="text-align: left;">{{tasks.TaskName}}</td>
 		   	<td style="text-align: center;">{{tasks.DisplayName}}</td>
 				<td style="text-align: center;">{{tasks.TagID}}</td>
