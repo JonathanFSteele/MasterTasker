@@ -185,6 +185,42 @@ $scope.getTaskMembers = function(){
 }
 $scope.getTaskMembers();
 
+
+// RemoveUserFromGroupDialog Function
+  $scope.RemoveUser = function(UserID) {
+  console.log("TaskDetailsController: RemoveUser Function Hit");
+    bootbox.confirm({
+      message: "Are you sure you want to remove this user?",
+      buttons: {
+        confirm: {
+            label: 'Yes',
+            className: 'btn-warning'
+        },
+        cancel: {
+            label: 'No',
+            className: 'btn-info'
+        }
+      },
+      callback: function (result) {
+        if(result == true)
+        {
+          console.log("TaskDetailsController: RemoveUser callback result - ", result);
+          var TaskID = $location.search().id;
+          $scope.oldUserFromTask = {'UserID': UserID, 'TaskID': TaskID};
+          console.log("TaskDetailsController: RemoveUser callback scope result - ", $scope.oldUserFromTask);
+          //Remove user from task
+          $http.post("/api/TaskDetails/RemoveUser", $scope.oldUserFromTask)
+          .then(function(data, response) {
+            console.log("taskDetails: .then response data, ", data.data, response);
+            $scope.getTaskMembers();
+            if(!$scope.$$phase) $scope.$apply()
+          });
+        }
+      },
+    });
+ } // end RemoveUser()
+
+
 // $scope.CurrentSelectedGroup = function(ID){
 //   $scope.currentGroupID = ID;
 //   console.log("tasksController: Current Group by ID, ", $scope.currentGroupID);

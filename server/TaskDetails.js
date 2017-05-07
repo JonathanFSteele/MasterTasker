@@ -348,7 +348,41 @@ router.post('/deleteGP', function (req, res) {
     res.send(response);
 })
 
+router.db_removeUser = function(UserID, TaskID)
+{
+  console.log("TaskDetails: db_removeUser called");
+  console.log("\nargs: ", UserID, TaskID);
+  var deferred = q.defer();
+  var connection = mysql.createConnection(router.dbConfig);
+  var query_str = "DELETE FROM tldb.TaskMembers_tbl WHERE UserID=? AND TaskID=?;";
+  var query_var = [UserID, TaskID];
+  var query = connection.query(query_str, query_var, function (err, rows, fields) {
+      if (err) {
+        deferred.reject(err);
+      }
+      else {
+        deferred.resolve(rows);
+      }
+      connection.end();
+  });
+  return deferred.promise;
+}; //end db_removeUser()
 
-
+router.post('/RemoveUser', function (req, res) {
+  console.log("RemoveUser called");
+  //var response = { }
+  var badResponse = {
+    authorizedTF: false,
+    message: "Invalid Process"
+  }
+  console.log("TaskDetailsSettings: req.body items ",req.body);
+  router.db_removeUser(req.body.UserID, req.body.TaskID)
+  .then(function(setUserRows){
+    res.send(response);
+  },function(error){
+    console.log(error);
+    res.status(500).send(error);
+  });
+})
 
 module.exports = router

@@ -80,7 +80,7 @@
 						<tr ng-repeat="taskusers in TaskUsers">
 							<td>{{taskusers.UserDisplayName}}</td>
 							<td>{{taskusers.Email}}</td>
-							 <td>Remove</td>
+							 <td><a ng-click="RemoveUser(taskusers.UserID)">Remove</a></td>
 						</tr>
 					</tbody>
 				</table>
