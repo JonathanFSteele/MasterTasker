@@ -1,5 +1,6 @@
 # MasterTasker
-##Description:
+TaskForce TEAM: Jonathan Steele, Zachary Morgan, Charles Choi, and Jonathan Loya
+## Description:
 > The Master Tasker is a web application designed by the Task Force Team to allow users to create every day Tasks that allows them to manage and keep organized what they have to do. Users will be allowed to create an account and manage their groups allowing others to have access to those tasks while able to implement and change tasks on their own. Users will be able to check off items that they have completed or add any special details to that item giving them full mobility of the creation of Tasks.
 ## How to Install and Implement the Master Tasker:
 > The Master Tasker is a user friendly system and is easy to use. Just follow these steps below to install the project.
