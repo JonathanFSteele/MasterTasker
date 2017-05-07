@@ -44,19 +44,6 @@ app.controller('taskDetailsController', function($scope, $location, $sce, $http,
     return newDate;
   }
 
-  $scope.loadTaskUser = function(){
-    console.log("Loading loadTaskUser function");
-    $http.get("/api/taskDetails/TaskUsers?id="+$location.search().id)
-    .then(function(response) {
-      console.log("TaskUser response: ",response.data[0]);
-      var TaskUserDetails = response.data[0];
-      $scope.UserID = TaskUserDetails.UserID;
-      $scope.UserDisplayName = TaskUserDetails.UserDisplayName;
-      $scope.Email = TaskUserDetails.Email;
-    });
-  }
-  $scope.loadTaskUser();
-
   $scope.load = function(){
     console.log("Loading load function");
     $http.get("/api/taskDetails/Task?id="+$location.search().id)
@@ -188,6 +175,12 @@ app.controller('taskDetailsController', function($scope, $location, $sce, $http,
 $scope.back = function(){
   $location.path("/task");
 }
+
+ $http.get("/api/TaskDetails/TaskUsersList?id="+$location.search().id)
+ .then(function(response) {
+   console.log("TaskUsers response: ", response);
+   $scope.TaskUsers = response.data;
+ });
 
 // $scope.CurrentSelectedGroup = function(ID){
 //   $scope.currentGroupID = ID;
