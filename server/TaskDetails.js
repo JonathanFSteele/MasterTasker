@@ -1,4 +1,5 @@
 var express = require('express');
+var authentication = require('express-authentication');
 var mysql = require("mysql");
 var q = require('q');
 var router = express.Router();
@@ -84,12 +85,13 @@ router.db_getUsersByID = function(GroupID)
   return deferred.promise;
 }; //end db_getTagsList()
 
-router.db_getTaskUsersByID = function(TaskID)
+router.db_getTaskUsersByID = function(TaskDetailsID)
 {
+  console.log("calling db_getTaskUsersByID, agruments: ", TaskDetailsID);
   var deferred = q.defer(); // Use Q
   var connection = mysql.createConnection(router.dbConfig);
-  var query_str = "SELECT * FROM tldb.TaskMembers_vw WHERE TaskID=?";
-  var query_var = [TaskID];
+  var query_str = "SELECT * FROM tldb.TaskMembers_vw WHERE TaskDetailsID=?;";
+  var query_var = [TaskDetailsID];
   //var query_var; //null
   var query = connection.query(query_str, query_var, function (err, rows, fields) {
       if (err) {
@@ -103,6 +105,7 @@ router.db_getTaskUsersByID = function(TaskID)
   return deferred.promise;
 }; //end db_getTaskUsersByID()
 
+
 //Routes for this module:
 router.use(function timeLog (req, res, next) {
   console.log('Tasks Module Started: ', Date.now())
@@ -111,7 +114,7 @@ router.use(function timeLog (req, res, next) {
 
 // define the Users default route
 router.get('/', function (req, res) {
-  res.send('GroupMembers')
+  res.send('tasks')
 })
 
 // // define the List route
@@ -132,16 +135,15 @@ router.get('/', function (req, res) {
 // })
 // define the List route
 
-router.get('/TaskUsers', function (req, res) {
+router.get('/TaskUsersList', authentication.required(), function (req, res) {
   var result = [];
-  console.log("req TaskUsers req.query.id: ",req.query.id); //req.authentication will tell you what user is currently logged in (req.authentication.Email - to get the current email for the logged in user.)
-
-  var TaskID = req.query.id;
-
-  router.db_getTaskUsersByID(TaskID)
-   .then(function(data){
-     console.log('data result',data);
-     res.send(data);
+  console.log("\n\nTaskUsers List TaskID: ", req.query.id);
+  console.log("req task user record: ",req.authentication.ID); //req.authentication will tell you what user is currently logged in (req.authentication.Email - to get the current email for the logged in user.)
+  console.log("req.query");
+  router.db_getTaskUsersByID(req.query.id)
+   .then(function(rows){
+     console.log('rows result',rows);
+     res.send(rows);
     },function(error){
      console.log(error);
      res.status(500).send(error);
@@ -345,6 +347,8 @@ router.post('/deleteGP', function (req, res) {
     response.GroupID = req.body.ID;
     res.send(response);
 })
+
+
 
 
 module.exports = router
