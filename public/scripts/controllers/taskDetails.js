@@ -77,11 +77,26 @@ app.controller('taskDetailsController', function($scope, $location, $sce, $http,
        var defaultTag = {
          "ID":0,
          "Name":"None",
+         "Color": "#ffffff"
          }
        data.data.unshift(defaultTag);
        console.log("tasksController: Tag response, ",data);
        $scope.Tags = data.data;
     });
+  }
+
+  $scope.getColorByTagID = function(TagID) {
+    console.log("GetColorByTagID Function Called ", TagID);
+    var result = $scope.Tags.filter(function (Tag) {
+        return Tag.ID === TagID;
+      },TagID);
+    if(result && result.length > 0) {
+      console.log("Tag found", result[0]);
+      return result[0].Color;
+    } else {
+      console.log("Tag not found, returning default color. TagID=", TagID);
+      return "#ffffff";
+    }
   }
 
   $scope.loaduser = function(){

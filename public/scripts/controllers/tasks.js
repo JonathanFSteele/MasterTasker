@@ -71,9 +71,20 @@ app.controller('tasksController', function($scope, $http, $location, $rootScope)
     console.log("tasksController: Complete Task callback result - ", $scope.newTask);
     //Post for Creating a new Task
 
-    if ( tf == true)   $http.post("/api/Tasks/CompleteTaskT", $scope.newTask)
-
-    if (tf == false)   $http.post("/api/Tasks/CompleteTaskF", $scope.newTask)
+    if ( tf == true)
+    {
+      $http.post("/api/Tasks/CompleteTaskT", $scope.newTask)
+      .then(function(data, response) {
+          $scope.getTasks();
+       });
+    }
+    if (tf == false)
+    {
+      $http.post("/api/Tasks/CompleteTaskF", $scope.newTask)
+      .then(function(data, response) {
+          $scope.getTasks();
+       });
+    }
   }
 
   //Initialization of GoToGroupDetails function
