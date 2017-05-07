@@ -154,4 +154,43 @@ $scope.getTags();
       });
    } // end RemoveUserFromGroupDialog()
 
+   $scope.myvar = "this is not bold.";
+
+   //AddTag Function
+   $scope.AddTag = function(){
+     console.log("Add function Called");
+     $scope.newTag = {'Name': $scope.newTag.Name, 'Color': $scope.newTag.Color, 'GroupID': $location.search().id};
+     console.log("Add", $scope.newTag);
+     $http.post("/api/GroupDetails/AddTag", $scope.newTag)
+     .then(function(data, response) {
+       console.log("groupDetails: .then response data, ", data.data, response);
+       $scope.getTags();
+       $scope.newTag = {'Name': '', 'Color': '#db6f20'};
+     });
+   }
+
+   //SaveTag Function
+   $scope.SaveTag = function(tag){
+     console.log("Save function Called");
+     $scope.SavedTag = {'Name': tag.Name, 'Color': tag.Color, 'ID': tag.ID};
+     console.log("Add", $scope.SavedTag);
+     $http.post("/api/GroupDetails/SaveTag", $scope.SavedTag)
+     .then(function(data, response) {
+       console.log("GroupDetail: Save .then response data, ", data.data, response);
+       $scope.getTags();
+     });
+   }
+
+   //RemoveTag Function
+   $scope.RemoveTag = function(tag){
+     console.log("Remove Tag function Called");
+     $scope.TagRemoval = {'ID': tag.ID};
+     console.log("Removing: ", $scope.TagRemoval);
+     $http.post("/api/GroupDetails/RemoveTag", $scope.TagRemoval)
+     .then(function(data, response) {
+       console.log("groupDetails RemoveTag: .then response data, ", data.data, response);
+       $scope.getTags();
+     });
+   }
+
 });

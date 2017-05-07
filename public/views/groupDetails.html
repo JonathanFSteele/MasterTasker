@@ -75,11 +75,6 @@
 			</div>
 		</div>
 	</div>
-	<color-picker ng-model="color">
-	</color-picker>
-	<button type="button" class="btn btn-info"></button>
-
-
 	<div class="form-group">
 		<label class="col-sm-2 col-form-label">Tags:</label>
 		<div class="row">
@@ -94,9 +89,14 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat="tags in Tags">
-					<td>{{tags.Name}}</td>
-					<td style="background-color:{{tags.Color}}">{{tags.Color}}</td>
-					<td><a>Remove</a></td>
+					<td><input type="text" class="form-control" aria-describedby="basic-addon1" ng-model="tags.Name"/></td>
+					<td><button uib-popover-template="'myPopoverTemplate.html'" popover-placement="top-left" style="background-color: {{tags.Color}}; padding: 14px; border-radius: 40px;" class="btn"></button>	{{$scope.SavedTag.ID}}</td>
+					<td><a ng-click="SaveTag(tags)">Save</a> | <a ng-click="RemoveTag(tags)">Remove</a></td>
+				</tr>
+				<tr>
+					<td><input type="text" class="form-control" aria-describedby="basic-addon1" ng-model="newTag.Name"/></td>
+					<td><button uib-popover-template="'myPopoverTemplateNew.html'" popover-placement="top-left" style="background-color: {{newTag.Color}}; padding: 14px; border-radius: 40px;" class="btn"></button></td>
+					<td><a ng-click="AddTag()">Add</a></td>
 				</tr>
 			</tbody>
 		</table>
@@ -106,6 +106,20 @@
   </div>
 	</div>
 </div>
+<script type="text/ng-template" id="myPopoverTemplateNew.html">
+	<div style="width: 690px; height: 240px;">
+		<color-picker ng-model="$parent.newTag.Color">
+		</color-picker>
+		<!-- <input ng-model="$parent.newTag.Color"/> -->
+	</div>
+</script>
+<script type="text/ng-template" id="myPopoverTemplate.html">
+	<div style="width: 690px; height: 240px;">
+		<color-picker ng-model="$parent.tags.Color">
+		</color-picker>
+		<!-- <input ng-model="$parent.tags.Color"/> -->
+	</div>
+</script>
 <!-- For Version 2.0 -->
 	<!-- <div class="form-group">
 		<label class="col-sm-2 col-form-label">Attachment</label>

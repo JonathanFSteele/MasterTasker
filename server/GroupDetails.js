@@ -105,6 +105,26 @@ router.db_addUserToGroup = function(UserID, GroupID)
   return deferred.promise;
 }; //end db_addUserToGroup()
 
+// db_AddTag
+router.db_AddTag = function(Name, Color, GroupID)
+{
+  console.log("Inserting New Tag: ", Name, Color, GroupID);
+  var deferred = q.defer(); // Use Q
+  var connection = mysql.createConnection(router.dbConfig);
+  var query_str = "INSERT INTO tldb.Tags_tbl (Name, Color, GroupID) VALUES (?,?,?);";
+  var query_var = [Name, Color, GroupID];
+  var query = connection.query(query_str, query_var, function (err, rows, fields) {
+      if (err) {
+        deferred.reject(err);
+      }
+      else {
+        deferred.resolve(rows);
+      }
+      connection.end();
+  });
+  return deferred.promise;
+}; //end db_addUserToGroup()
+
 router.db_submitND = function(displayName, description, id, UserID)
 {
   console.log("updating info in groupDetails: ", displayName, description);
@@ -166,6 +186,48 @@ router.db_deleteGP = function(id)
   });
   return deferred.promise;
 }; //end db_deleteGP()
+
+//Save Tag
+router.db_SaveTag = function(Name, Color, ID)
+{
+   console.log("Save Tag: ", Name, Color, ID);
+  var deferred = q.defer(); // Use Q
+  var connection = mysql.createConnection(router.dbConfig);
+  var query_str = "UPDATE tldb.Tags_tbl SET Name=?, Color=? WHERE ID=?;";
+  var query_var = [Name, Color, ID];
+  var query = connection.query(query_str, query_var, function (err, rows, fields) {
+  if (err) {
+        deferred.reject(err);
+        console.log("Save Tag AFTER reject: ", Name, Color, ID, err);
+      }
+      else {
+        deferred.resolve(rows);
+        console.log("Save Tag AFTER resolve: ", Name, Color, ID, rows);
+      }
+  });
+  return deferred.promise;
+}; //end db_SaveTag()
+
+//db_RemoveTag()
+router.db_RemoveTag = function(ID)
+{
+   console.log("Remove Tag: ", ID);
+  var deferred = q.defer(); // Use Q
+  var connection = mysql.createConnection(router.dbConfig);
+  var query_str = "DELETE FROM tldb.Tags_tbl WHERE ID=?;";
+  var query_var = [ID];
+  var query = connection.query(query_str, query_var, function (err, rows, fields) {
+  if (err) {
+        deferred.reject(err);
+        console.log("Remove Tag AFTER reject: ", ID);
+      }
+      else {
+        deferred.resolve(rows);
+        console.log("Remove Tag AFTER resolve: ", ID);
+      }
+  });
+  return deferred.promise;
+}; //end db_RemoveTag()
 
 
 //
@@ -342,7 +404,7 @@ var postTaskMember = function (User, GroupID) {
   console.log("postTaskMember called; args: ", User.ID, GroupID);
   router.db_addUserToGroup(User.ID, GroupID)
     .then(function(rows){
-      console.log("postTaskMemeber, success! user found");      
+      console.log("postTaskMemeber, success! user found");
     });
 }
 
@@ -386,5 +448,67 @@ router.post('/RemoveUserFromGroup', function (req, res) {
   });
 })
 
+//Add Tag
+router.post('/AddTag', function (req, res) {
+  console.log("AddTag Called");
+  var response = {
+    Name: '',
+    Color: ''
+  }
+  var badResponse = {
+    authorizedTF: false,
+    message: "Invalid Process"
+  }
+  console.log("GroupDetail: req.body items ",req.body);
+  router.db_AddTag(req.body.Name, req.body.Color, req.body.GroupID)
+  .then(function(setUserRows){
+    res.send(response);
+  },function(error){
+    console.log(error);
+    res.status(500).send(error);
+  });
+})
+
+//Save Tags
+router.post('/SaveTag', function (req, res) {
+  console.log("SaveTag Called");
+  var response = {
+    Name: '',
+    Color: ''
+  }
+  var badResponse = {
+    authorizedTF: false,
+    message: "Invalid Process"
+  }
+  console.log("GroupDetail: req.body items ",req.body);
+  router.db_SaveTag(req.body.Name, req.body.Color, req.body.ID)
+  .then(function(setUserRows){
+    res.send(response);
+  },function(error){
+    console.log(error);
+    res.status(500).send(error);
+  });
+})
+
+//Remove Tag
+router.post('/RemoveTag', function (req, res) {
+  console.log("Remove Tag Called");
+  var response = {
+    Name: '',
+    Color: ''
+  }
+  var badResponse = {
+    authorizedTF: false,
+    message: "Invalid Process"
+  }
+  console.log("GroupDetail: req.body items ",req.body);
+  router.db_RemoveTag(req.body.ID)
+  .then(function(setUserRows){
+    res.send(response);
+  },function(error){
+    console.log(error);
+    res.status(500).send(error);
+  });
+})
 
 module.exports = router
