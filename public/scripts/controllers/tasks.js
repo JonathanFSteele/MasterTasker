@@ -86,7 +86,8 @@ app.controller('tasksController', function($scope, $http, $location, $rootScope)
   $scope.getTasks = function(){
     console.log("tasksController: ShowCompletedTF, ", $scope.ShowCompletedTF);
     console.log("tasksController: getTasks function");
-    $http.get("/api/Tasks/List?GroupID="+$scope.currentGroupID)
+    $scope.TaskData = {'currentGroupID': $scope.currentGroupID, 'ShowCompletedTF':$scope.ShowCompletedTF, "UserID": $rootScope.authUser.UserID};
+    $http.post("/api/Tasks/List", $scope.TaskData)
     .then(function(response) {
       console.log("tasksController: Task response, ",response);
       $scope.Tasks = response.data;

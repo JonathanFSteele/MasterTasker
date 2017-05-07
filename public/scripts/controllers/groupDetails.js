@@ -68,9 +68,70 @@ app.controller('groupDetailsController', function($scope, $http, $location, $roo
        }
   };
 
-$scope.back = function(){
-  $location.path("/groups");
-}
+  $scope.back = function(){
+    $location.path("/groups");
+  }
 
+  // AddUserToGroupDialog Function
+		$scope.AddUserToGroupDialog = function() {
+    console.log("groupsController: AddUserToGroupDialog Function Hit");
+      bootbox.prompt({
+      title: "Enter the email of the user you would like to add:",
+      inputType: 'text',
+      callback: function (result) {
+        if(result == null)
+        {
+          return; //Return when Cancel was clicked so it doesnt create just random empty actions
+        }
+        console.log("groupsController: AddUserToGroupDialog callback result - ", result);
+        var groupID = $location.search().id;
+        $scope.newUserToGroup = {'EmailName': result, 'GroupID': groupID};
+        console.log("groupsController: AddUserToGroupDialog callback newresult - ", $scope.newUserToGroup);
+        
+        //Get for adding new user to group
+        $http.post("/api/GroupDetails/AddUserToGroupFind", $scope.newUserToGroup)
+        .then(function(data, response) {
+          console.log("groupDetails: .then response data, ", data.data, response);
+          location.reload();
+          if(!$scope.$$phase) $scope.$apply()
+        });
+      },
+    });
+   } // end AddUserToGroupDialog()
+
+  // RemoveUserFromGroupDialog Function
+		$scope.RemoveUserFromGroupDialog = function(userID) {
+    console.log("groupsController: RemoveUserFromGroupDialog Function Hit");
+      bootbox.confirm({
+        message: "Are you sure you want to remove this user?",
+        buttons: {
+          confirm: {
+              label: 'Yes',
+              className: 'btn-warning'
+          },
+          cancel: {
+              label: 'No',
+              className: 'btn-info'
+          }
+        },
+        callback: function (result) {
+          if(result == true)
+          {
+            console.log("groupsController: RemoveUserFromGroupDialog callback result - ", result);
+            var groupID = $location.search().id;
+            $scope.oldUserFromGroup = {'UserID': userID, 'GroupID': groupID};
+            console.log("groupsController: RemoveUserFromGroupDialog callback scope result - ", $scope.oldUserFromGroup);
+            
+            //Remove user from group
+            $http.post("/api/GroupDetails/RemoveUserFromGroup", $scope.oldUserFromGroup)
+            .then(function(data, response) {
+              console.log("groupDetails: .then response data, ", data.data, response);
+              location.reload();
+              if(!$scope.$$phase) $scope.$apply()
+            });
+          }
+        },
+      });
+   } // end RemoveUserFromGroupDialog()
 
 });

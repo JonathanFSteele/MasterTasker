@@ -4,6 +4,7 @@ app.controller('taskDetailsController', function($scope, $location, $sce, $http,
   $scope.myDate = new Date();
   $scope.Tags = [];
   $scope.Users = [];
+  $scope.TaskUsers = [];
   $scope.GroupID = null;
   $scope.currentUser = null;
   // $scope.googleAddress ='2775 North Roadrunner, Las Cruces, NM 88011';
@@ -42,6 +43,19 @@ app.controller('taskDetailsController', function($scope, $location, $sce, $http,
     newDate.setDate((moment(date).toDate()).getDate());
     return newDate;
   }
+
+  $scope.loadTaskUser = function(){
+    console.log("Loading loadTaskUser function");
+    $http.get("/api/taskDetails/TaskUsers?id="+$location.search().id)
+    .then(function(response) {
+      console.log("TaskUser response: ",response.data[0]);
+      var TaskUserDetails = response.data[0];
+      $scope.UserID = TaskUserDetails.UserID;
+      $scope.UserDisplayName = TaskUserDetails.UserDisplayName;
+      $scope.Email = TaskUserDetails.Email;
+    });
+  }
+  $scope.loadTaskUser();
 
   $scope.load = function(){
     console.log("Loading load function");
