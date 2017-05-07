@@ -12,20 +12,23 @@ app.controller('groupDetailsController', function($scope, $http, $location, $roo
     $scope.OwnerID = response.data[0].OwnerID;
   });
 
+$scope.getGroupMembers = function(){
   $http.get("/api/GroupDetails/GroupMembers?id="+$location.search().id)
   .then(function(response) {
     console.log("GroupMembers response: ", response);
     $scope.GroupMembers = response.data;
   });
+}
+$scope.getGroupMembers();
 
-
+$scope.getTags = function(){
   $http.get("/api/GroupDetails/Tags?id="+$location.search().id)
   .then(function(response) {
     console.log("Tags response: ", response);
     $scope.Tags = response.data;
   });
-
-
+}
+$scope.getTags();
   // $scope.Groups = [];
 
 
@@ -96,7 +99,7 @@ app.controller('groupDetailsController', function($scope, $http, $location, $roo
         $http.post("/api/GroupDetails/AddUserToGroupFind", $scope.newUserToGroup)
         .then(function(data, response) {
           console.log("groupDetails: .then response data, ", data.data, response);
-          location.reload();
+          $scope.getGroupMembers();
           if(!$scope.$$phase) $scope.$apply()
         });
       }
@@ -138,9 +141,9 @@ app.controller('groupDetailsController', function($scope, $http, $location, $roo
             $http.post("/api/GroupDetails/RemoveUserFromGroup", $scope.oldUserFromGroup)
             .then(function(data, response) {
               console.log("groupDetails: .then response data, ", data.data, response);
-              location.reload();
               if(!$scope.$$phase) $scope.$apply()
             });
+            $scope.getGroupMembers();
             }
             else {
             //TODO:  add prompt to say "you cannot remove a group member if you are not the leader"
