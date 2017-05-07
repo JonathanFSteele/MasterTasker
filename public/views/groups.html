@@ -26,7 +26,7 @@
 			 <div class="col-xs-12 col-sm-11">
 				 <form class="navbar-form" role="search" style="padding: 0px;">
 					 <div class="input-group add-on" style="margin-left: 15px; margin-right: 15px;">
-						 <input class="form-control" placeholder="Search" type="text">
+						 <input class="form-control" ng-model="SearchInput" placeholder="Search" type="text">
 						 <div class="input-group-btn">
 							 <button class="btn btn-warning" type="submit"><i class="glyphicon glyphicon-search"></i></button>
 						 </div>
@@ -58,7 +58,7 @@
      </tr>
    </thead>
    <tbody>
-		 <tr ng-repeat="groups in Groups" ng-click="GoToGroupsDetails(groups)">
+		 <tr ng-repeat="groups in Groups | filter: SearchInput" ng-click="GoToGroupsDetails(groups)">
     	 <td>{{groups.DisplayName}}</td>
     	 <td>{{groups.UserDisplayName}}</td>
   	 </tr>
