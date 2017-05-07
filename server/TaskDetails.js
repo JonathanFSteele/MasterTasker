@@ -117,24 +117,6 @@ router.get('/', function (req, res) {
   res.send('tasks')
 })
 
-// // define the List route
-// router.get('/ByID', function (req, res) {
-//   var result = [];
-//   console.log("req Tasks Details req.query.id: ",req.query.id); //req.authentication will tell you what user is currently logged in (req.authentication.Email - to get the current email for the logged in user.)
-//
-//   var GroupID = req.query.id;
-//
-//   router.db_getGroupByID(GroupID)
-//    .then(function(rows){
-//      console.log('rows result',rows);
-//      res.send(rows);
-//     },function(error){
-//      console.log(error);
-//      res.status(500).send(error);
-//    });
-// })
-// define the List route
-
 router.get('/TaskUsersList', authentication.required(), function (req, res) {
   var result = [];
   console.log("\n\nTaskUsers List TaskID: ", req.query.id);
