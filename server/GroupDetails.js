@@ -166,15 +166,14 @@ router.db_createND = function(displayName, description, Ownerid)
   return deferred.promise;
 }; //end db_SetUserToken()
 
-
+//db_deleteGP - Soft Delete Group
 router.db_deleteGP = function(id)
 {
    console.log("DELETING GROUP!!!!!: ", id);
   var deferred = q.defer(); // Use Q
   var date = new Date();
   var connection = mysql.createConnection(router.dbConfig);
-  var query_str = "UPDATE tldb.Groups_tbl SET DeleteDT=? WHERE ID=?;";
-  // "UPDATE tldb.Groups_tbl SET DeleteDT=? WHERE ID=?; "
+  var query_str = "UPDATE tldb.Groups_tbl SET DeleteDT=? WHERE ID=?;"
   var query_var = [date, id];
   var query = connection.query(query_str, query_var, function (err, rows, fields) {
   if (err) {
@@ -185,7 +184,27 @@ router.db_deleteGP = function(id)
       }
   });
   return deferred.promise;
-}; //end db_deleteGP()
+}; //end db_deleteGP
+
+//db_deleteTasksInGroups - Delete Tags based off of group that is deleted
+router.db_deleteTasksInGroups = function(id)
+{
+  console.log("deleteTasksInGroups: Deleting Groups Tasks", id);
+  var deferred = q.defer(); // Use Q
+  var date = new Date();
+  var connection = mysql.createConnection(router.dbConfig);
+  var query_str = "UPDATE tldb.Tasks_tbl SET DeleteDT=? WHERE GroupID=?;"
+  var query_var = [date, id];
+  var query = connection.query(query_str, query_var, function (err, rows, fields) {
+  if (err) {
+        deferred.reject(err);
+      }
+      else {
+        deferred.resolve(rows);
+      }
+  });
+  return deferred.promise;
+}; //end db_deleteTasksInGroups
 
 //Save Tag
 router.db_SaveTag = function(Name, Color, ID)
@@ -361,12 +380,23 @@ router.post('/deleteGP', function (req, res) {
     message: "Incorrect Parameters"
   }
 
-    router.db_deleteGP(req.body.ID);
-    console.log("UserSettings, submiting: req.body items ",req.body);
-    response.message = "Group is gone FOREVER!";
-    response.GroupID = req.body.ID;
-    res.send(response);
+    router.db_deleteGP(req.body.ID)
+    .then(function(rows){
+      console.log("deleteGP: req.body items ",req.body);
+      DeleteTasks(req.body.ID);
+      response.message = "Group is soft Deleted, With Tasks linked with it";
+      response.GroupID = req.body.ID;
+      res.send(response);
+    });
 })
+
+var DeleteTasks = function(id)
+{
+  router.db_deleteTasksInGroups(id)
+  .then(function(rows){
+    console.log("DeleteTasks: deleted Tasks linked with -> ", id);
+  });
+}
 
 router.post('/AddUserToGroupFind', function (req, res) {
   var response = {

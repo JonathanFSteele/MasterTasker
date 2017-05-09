@@ -229,10 +229,10 @@ router.db_createND = function(TaskName, Description, LastUpdateUser, LastUpdateD
   return deferred.promise;
 }; //end db_SetUserToken()
 
-//WIP!!!!!
-router.db_deleteGP = function(id)
+//db_deleteTask
+router.db_deleteTask = function(id)
 {
-   console.log("DELETING TASK!!!!!: ", id);
+   console.log("deleteTask: ", id);
   var deferred = q.defer(); // Use Q
   var date = new Date();
   var connection = mysql.createConnection(router.dbConfig);
@@ -313,7 +313,7 @@ router.post('/SubmitND', function (req, res) {
 })
 
 
-router.post('/deleteGP', function (req, res) {
+router.post('/deleteTask', function (req, res) {
   var response = {
     GroupID: '',
     message: ''
@@ -323,7 +323,7 @@ router.post('/deleteGP', function (req, res) {
     message: "Incorrect Parameters"
   }
 
-    router.db_deleteGP(req.body.ID);
+    router.db_deleteTask(req.body.ID);
     console.log("TaskDetails, submiting: req.body items ",req.body);
     response.message = "Task is deleted";
     response.GroupID = req.body.ID;

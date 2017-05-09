@@ -163,29 +163,23 @@ app.controller('taskDetailsController', function($scope, $location, $sce, $http,
         });
     };
 
-    $scope.deleteGP = function(){
-        console.log("deleteGP function called");
-        var user = $rootScope.authUser.UserID;
-        var Owner =$scope.OwnerID;
-        var id = $location.search().id;
-        console.log("taskDetails: OwnerID within deleteGP, ", $scope.OwnerID);
-        $scope.data = {"ID": id };
-        console.log("data: ", $scope.data);
-        var message="";
+$scope.deleteTask = function(){
+    console.log("deleteTask function called");
+    var user = $rootScope.authUser.UserID;
+    var Owner =$scope.OwnerID;
+    var id = $location.search().id;
+    console.log("taskDetails: OwnerID within deleteTask, ", $scope.OwnerID);
+    $scope.data = {"ID": id };
+    console.log("data: ", $scope.data);
+    var message="";
 
-        if (user == Owner) {
-        $http.post("/api/taskDetails/deleteGP", $scope.data)
-         .then(function(data, response) {
-         console.log("taskDetails: deleteGP response, ", data);
-         $location.url($location.path())
-         $location.path("/task");
-         })
-      }
-       else {
-         //TODO:  add prompt to say "you cannot delete a group if you are not the leader"
-           console.log("You cannot delete a group if you are not the leader");
-       }
-  };
+    $http.post("/api/taskDetails/deleteTask", $scope.data)
+     .then(function(data, response) {
+       console.log("taskDetails: deleteTask response, ", data);
+       $location.url($location.path())
+       $location.path("/tasks");
+     })
+};
 
 $scope.back = function(){
   $location.path("/task");

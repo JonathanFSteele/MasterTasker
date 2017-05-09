@@ -29,24 +29,24 @@ router.db_getTasksList = function(GroupID, ShowCompletedTF, UserID)
   if ( ShowCompletedTF == true) {
   if(GroupID == 0)
     {
-        var query_str = "SELECT * FROM tldb.Tasks_vw WHERE GroupUserID = ? AND CompletedTF = 1";
+        var query_str = "SELECT * FROM tldb.Tasks_vw WHERE GroupUserID = ? AND CompletedTF = 1 AND DeleteDT IS NULL";
         var query_var = [UserID];
     }
   else
     {
-        var query_str = "SELECT * FROM tldb.Tasks_vw WHERE GroupID = ? AND GroupUserID = ? AND CompletedTF = 1";
+        var query_str = "SELECT * FROM tldb.Tasks_vw WHERE GroupID = ? AND GroupUserID = ? AND CompletedTF = 1 AND DeleteDT IS NULL";
         var query_var = [GroupID, UserID];
     }
   }
   else {
     if(GroupID == 0)
     {
-       var query_str = "SELECT * FROM tldb.Tasks_vw WHERE GroupUserID = ? AND CompletedTF = 0";
+       var query_str = "SELECT * FROM tldb.Tasks_vw WHERE GroupUserID = ? AND CompletedTF = 0 AND DeleteDT IS NULL";
        var query_var = [UserID];
    }
 else
     {
-       var query_str = "SELECT * FROM tldb.Tasks_vw WHERE GroupID = ? AND GroupUserID = ? AND CompletedTF = 0";
+       var query_str = "SELECT * FROM tldb.Tasks_vw WHERE GroupID = ? AND GroupUserID = ? AND CompletedTF = 0 AND DeleteDT IS NULL";
        var query_var = [GroupID, UserID];
    }
 }
