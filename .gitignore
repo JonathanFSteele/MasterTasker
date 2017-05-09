@@ -3,3 +3,5 @@ dbConfig.js
 Thumbs.db
 Certs/**
 *.old
+dist
+distzip
